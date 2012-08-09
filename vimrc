@@ -61,7 +61,7 @@
 
     " Language Settings {
         set nospell
-        set spelllang=en_us,de_20
+        set spelllang=en_us
     " }
     
     " Backup, Swap & Undo {
@@ -115,6 +115,7 @@
             Bundle 'Lokaltog/vim-powerline'
             Bundle 'altercation/vim-colors-solarized'
             Bundle 'chriskempson/vim-tomorrow-theme'
+            Bundle 'sjl/badwolf'
         " }
 
         " Autocompletion and Snippets {
@@ -140,6 +141,7 @@
             Bundle 'tpope/vim-surround'
             Bundle 'Townk/vim-autoclose'
             Bundle 'matchit.zip'
+            Bundle 'spiiph/vim-space'
         " }
         
         " Environment {
@@ -173,6 +175,7 @@
             Bundle 'tpope/vim-git'
             Bundle 'tpope/vim-liquid'
             Bundle 'hail2u/vim-css3-syntax'
+            Bundle 'othree/html5.vim'
 
             if (os == 'Darwin' || os == 'Mac')
                 Bundle 'vim-scripts/applescript.vim'
@@ -244,12 +247,11 @@
         let g:solarized_termtrans = 1
         let g:solarized_visibility = "high"
         let g:solarized_contrast = "high"
-        colorscheme solarized
+        colorscheme badwolf
 
-        hi LineNR ctermfg=237 ctermbg=black
-        hi Folded ctermfg=darkgrey ctermbg=black
+        hi LineNR ctermfg=237 
+        hi Folded ctermfg=darkgrey
         hi SignColumn ctermbg=black
-        hi CursorLine ctermbg=black
     " }
 
     " Statusline -- Powerline {
@@ -526,7 +528,7 @@
 
             function! CommitFile() " {
                setlocal spell
-               setlocal spelllang=en_us
+               setlocal spelllang=de_20
                call setpos('.', [0, 1, 1, 0])
             endfunction " }
 
