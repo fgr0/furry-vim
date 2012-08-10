@@ -52,7 +52,7 @@
         set cmdheight=2
     
         set autoread
-        set clipboard+=unnamedplus
+        set clipboard+=unnamed
         set shortmess+=aIoOtT
         set hidden
 
@@ -87,14 +87,6 @@
         set directory=$HOME/.vim/swap
     " }
     
-    " Source local vimrc {
-        " If vimconfiguration is shared over several systems
-        " localrc can be used to have system-specific settings
-        let s:localrc = expand($HOME . '/.local.vimrc')
-        if filereadable(s:localrc)
-            source s:localrc
-        endif
-    " }
 " }
 
 " Plugins -- Vundle
@@ -107,7 +99,7 @@
         Bundle 'gmarik/vundle'
     " }
 
-    " Use local bundles if available {
+    " Source Local Bundles {
         " This file should be used to have systemspecific 
         " Plugins instead of .local.vimrc
         if filereadable(expand("~/.bundles.local.vimrc"))
@@ -115,7 +107,18 @@
         endif
 
         if ! exists('g:furry_packages')
-            let g:furry_packages = ['colors', 'environment', 'utility', 'autocompletion', 'views', 'devel', 'git', 'markup', 'latex', 'html', 'ctags']
+            let g:furry_packages = [
+                        \'colors',
+                        \'environment',
+                        \'utility',
+                        \'autocompletion',
+                        \'views',
+                        \'devel',
+                        \'git',
+                        \'markup', 
+                        \'latex',
+                        \'html',
+                        \'ctags']
         endif
     " }
 
@@ -156,7 +159,9 @@
                 Bundle 'Townk/vim-autoclose'
                 Bundle 'matchit.zip'
                 Bundle 'spiiph/vim-space'
-                Bundle 'mutewinter/GIFL'
+                if has('ruby')
+                    Bundle 'mutewinter/GIFL'
+                endif
             endif
         " }
 
@@ -243,11 +248,6 @@
         highlight link cMember Special
         let g:easytags_by_filetype = "~/.ctags"
         let g:easytags_python_enabled = 1
-    " }
-
-    " Gundo {
-        " let g:gundo_preview_bottom = 1
-        " let g:gundo_help = 0
     " }
 
     " SingleCompile {
@@ -435,12 +435,13 @@
     " Theme & Customization {
         set term=screen-256color
         set t_Co=256
+
+
         set background=dark
-        let g:solarized_termcolors = 256
-        let g:solarized_termtrans = 1
-        let g:solarized_visibility = "high"
-        let g:solarized_contrast = "high"
-        colorscheme badwolf
+
+        if count(g:furry_packages, 'colors')
+            colorscheme badwolf
+        endif
 
         hi LineNR ctermfg=237 
         hi Folded ctermfg=darkgrey
@@ -449,10 +450,13 @@
 
     " Statusline -- Powerline {
         set laststatus=2
-        let g:Powerline_stl_path_style = "short"
-         
-        " For Fancy symbols you need a supporting Font!
-        let g:Powerline_symbols = "fancy"
+
+        if count(g:furry_packages, 'colors')
+            let g:Powerline_stl_path_style = "short"
+             
+            " For Fancy symbols you need a supporting Font!
+            let g:Powerline_symbols = "fancy"
+        endif
     " }
 " }
 
@@ -646,4 +650,14 @@
 
     nmap <silent> <F11> :call ToggleList("Location List", 'l')<CR>
     nmap <silent> <F12> :call ToggleList("Quickfix List", 'c')<CR>
+
+" }
+
+" Source local vimrc {
+    " If vimconfiguration is shared over several systems
+    " localrc can be used to have system-specific settings
+    let s:localrc = expand($HOME . '/.local.vimrc')
+    if filereadable(s:localrc)
+        source s:localrc
+    endif
 " }
