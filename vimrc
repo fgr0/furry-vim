@@ -436,6 +436,30 @@
         set term=screen-256color
         set t_Co=256
 
+            if match($TERM_PROGRAM, 'Apple_Terminal') != -1
+                let term_bg_rgb = split(system("oascript -e 'tell application \"Terminal\" to get background color of current settings of selected tab of front window'"), ', ')
+            elseif match($TERM_PROGRAM, 'iTerm') != -1
+                let term_bg_rgb = split(system("osascript -e 'tell application \"iTerm\" to get background color of current session of current terminal'"), ', ')
+            else
+                let term_bg_rgb = [0, 0, 0]
+            endif
+
+            " Calculate luminance
+            " Y = 0.21206 * R + 0.7152 * G + 0.0722 * B
+            let coefficients = [0.2126, 0.7152, 0.0722]
+            let luminance = 0
+
+            for i in range(3)
+                let luminance += coefficients[i] * term_bg_rgb[i]
+            endfor
+
+            if luminance < (65535 * 0.3)
+                set background=dark
+                colorscheme badwolf
+            else
+                set background=light
+                colorscheme Tomorrow
+            endif
 
         set background=dark
 
