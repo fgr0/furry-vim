@@ -86,9 +86,18 @@
 
         set directory=$HOME/.vim/swap
     " }
+    
+    " Source local vimrc {
+        " If vimconfiguration is shared over several systems
+        " localrc can be used to have system-specific settings
+        let s:localrc = expand($HOME . '/.local.vimrc')
+        if filereadable(s:localrc)
+            source s:localrc
+        endif
+    " }
 " }
 
-" Plugins -- Vundle {
+" Plugins -- Vundle
     " Initializing Vundle {
         " Use Bundle as Plugin Manager
         set rtp+=~/.vim/bundle/vundle/
@@ -99,92 +108,129 @@
     " }
 
     " Use local bundles if available {
-        if filereadable(expand("~/.vimrc.bundles.local"))
+        " This file should be used to have systemspecific 
+        " Plugins instead of .local.vimrc
+        if filereadable(expand("~/.bundles.local.vimrc"))
             source ~/.vimrc.bundles.local
+        endif
+
+        if ! exists('g:furry_packages')
+            let g:furry_packages = ['colors', 'environment', 'utility', 'autocompletion', 'views', 'devel', 'git', 'markup', 'latex', 'html', 'ctags']
         endif
     " }
 
     " Plugins themselfes {
-        " Dependencies {
-            Bundle 'tomtom/tlib_vim'
-            Bundle 'vim-addon-mw-utils'
-            Bundle 'mattn/webapi-vim'
-        " }
-        
         " Colors {
-            Bundle 'Lokaltog/vim-powerline'
-            Bundle 'altercation/vim-colors-solarized'
-            Bundle 'chriskempson/vim-tomorrow-theme'
-            Bundle 'sjl/badwolf'
+            if count(g:furry_packages, 'colors')
+                Bundle 'Lokaltog/vim-powerline'
+
+                Bundle 'altercation/vim-colors-solarized'
+                Bundle 'chriskempson/vim-tomorrow-theme'
+                Bundle 'sjl/badwolf'
+
+                Bundle 'roman/golden-ratio'
+            endif
+        " }
+
+        " Environment {
+            if count(g:furry_packages, 'environment')
+                Bundle 'kien/ctrlp.vim'
+
+                if has('python') || has('python3')
+                    Bundle 'sjl/gundo.vim'
+                else
+                    echo "To use some Bundles from the Environment-Package you need to have Pythonsupport in vim"
+                endif
+
+                Bundle 'file-line'
+                Bundle 'ZoomWin'
+            endif
+        " }
+
+        " Utility {
+            if count(g:furry_packages, 'utility')
+                Bundle 'Align'
+                Bundle 'tpope/vim-commentary'
+                Bundle 'tpope/vim-unimpaired'
+                Bundle 'tpope/vim-surround'
+                Bundle 'Townk/vim-autoclose'
+                Bundle 'matchit.zip'
+                Bundle 'spiiph/vim-space'
+                Bundle 'mutewinter/GIFL'
+            endif
         " }
 
         " Autocompletion and Snippets {
-            " Still not sure which Snippet-Engine to use...
-            Bundle 'Shougo/neocomplcache'
-            Bundle 'Shougo/neocomplcache-snippets-complete'
-
-            " Bundle 'garbas/vim-snipmate'
-            Bundle 'spf13/snipmate-snippets'
-            if filereadable(expand("~/.vim/bundle/snipmate-snippets/snippets/support_functions.vim"))
-                source ~/.vim/bundle/snipmate-snippets/snippets/support_functions.vim
+            if count(g:furry_packages, 'autocompletion')
+                " Still not sure which Snippet-Engine to use...
+                Bundle 'Shougo/neocomplcache'
+                Bundle 'Shougo/neocomplcache-snippets-complete'
             endif
         " }
-        
-        " Features {
-            if has('python') || has('python3')
-                Bundle 'sjl/gundo.vim'
-            endif
 
-            Bundle 'godlygeek/tabular'
-            Bundle 'tpope/vim-commentary'
-            Bundle 'tpope/vim-unimpaired'
-            Bundle 'tpope/vim-surround'
-            Bundle 'Townk/vim-autoclose'
-            Bundle 'matchit.zip'
-            Bundle 'spiiph/vim-space'
-        " }
-        
-        " Environment {
-            Bundle 'kien/ctrlp.vim'
-            Bundle 'roman/golden-ratio'
-            Bundle 'tpope/vim-fugitive'
-            
-            " CARE! Restore view automates Views
-            " This can get some unintendet behavior!
-            Bundle 'vim-scripts/restore_view.vim'
+        " Views {
+            if count(g:furry_packages, 'views')
+                " CARE! Restore view automates Views
+                " This can get some unintendet behavior!
+                Bundle 'vim-scripts/restore_view.vim'
 
-            Bundle 'vim-scripts/sessionman.vim'
-        " }
-
-        " Ctaging {
-            if executable('ctags')
-                Bundle 'majutsushi/tagbar'
-                Bundle 'xolox/vim-easytags'
+                Bundle 'xolox/vim-session'
             endif
         " }
 
         " Developing {
-            Bundle 'xuhdev/SingleCompile'
-            Bundle 'scrooloose/syntastic'
-            Bundle 'mattn/gist-vim'
+            if count(g:furry_packages, 'devel')
+                Bundle 'xuhdev/SingleCompile'
+                Bundle 'scrooloose/syntastic'
+            endif
         " }
 
-        " File Specific {
-            Bundle 'plasticboy/vim-markdown'
-            Bundle 'LaTeX-Box-Team/LaTeX-Box'
-            Bundle 'tpope/vim-git'
-            Bundle 'tpope/vim-liquid'
-            Bundle 'hail2u/vim-css3-syntax'
-            Bundle 'othree/html5.vim'
+        " Git {
+            if count(g:furry_packages, 'git')
+                Bundle 'tpope/vim-fugitive'
+                Bundle 'gregsexton/gitv'
 
-            if (os == 'Darwin' || os == 'Mac')
-                Bundle 'vim-scripts/applescript.vim'
+                Bundle 'tpope/vim-git'
+                
+                Bundle 'mattn/gist-vim'
+                Bundle 'mattn/webapi-vim'
+            endif
+        " }
+        
+        " Markup {
+            if count(g:furry_packages, 'markup')
+                Bundle 'plasticboy/vim-markdown'
+                Bundle 'tpope/vim-liquid'
+            endif
+        " }
+
+        " LaTeX {
+            if count(g:furry_packages, 'latex')
+                Bundle 'LaTeX-Box-Team/LaTeX-Box'
+            endif
+        " }
+
+        " HTML & CSS {
+            if count(g:furry_packages, 'html')
+                Bundle 'hail2u/vim-css3-syntax'
+                Bundle 'othree/html5.vim'
+
+                Bundle 'Rykka/colorv.vim'
+            endif
+        " }
+
+        " Ctags {
+            if executable('ctags') && count(g:furry_packages, 'ctags')
+                Bundle 'majutsushi/tagbar'
+                Bundle 'xolox/vim-easytags'
+            elseif !executable('ctags') && count(g:furry_packages, 'ctags')
+                echo "To use ctags-Packages you must have ctags installed!"
             endif
         " }
     " }
 
     filetype plugin indent on
-" }
+" 
 
 " Plugins -- Settings {
     " Autoclose {
