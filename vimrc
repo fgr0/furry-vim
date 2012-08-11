@@ -61,7 +61,6 @@
 
     " Language Settings {
         set nospell
-        set spelllang=en_us
     " }
     
     " Backup, Swap & Undo {
@@ -593,7 +592,6 @@
         endfunction " }
 
         function! MarkdownFile() " {
-            setlocal spell
             setlocal tw=80
             setlocal ft=mkd syntax=liquid
             if getline(1) == '---'
@@ -610,8 +608,6 @@
         endfunction " }
 
         function! LaTeXFile() " {
-            setlocal spell
-            setlocal ft=tex spelllang=de_20
             if executable('latexmk')
                 call SingleCompile#SetCompilerTemplate('tex','latexmk','latexmk','latexmk','-pdf','open %<.pdf')
                 call SingleCompile#ChooseCompiler('tex', 'latexmk')
@@ -619,8 +615,6 @@
         endfunction " }
 
         function! CommitFile() " {
-            setlocal spell
-            setlocal spelllang=de_20
             call setpos('.', [0, 1, 1, 0])
         endfunction " }
 
