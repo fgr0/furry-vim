@@ -88,7 +88,7 @@
     
 " }
 
-" Plugins -- Vundle
+" Plugins -- Vundle {
     " Initializing Vundle {
         " Use Bundle as Plugin Manager
         set rtp+=~/.vim/bundle/vundle/
@@ -158,9 +158,6 @@
                 Bundle 'Townk/vim-autoclose'
                 Bundle 'matchit.zip'
                 Bundle 'spiiph/vim-space'
-                if has('ruby')
-                    Bundle 'mutewinter/GIFL'
-                endif
             endif
         " }
 
@@ -169,6 +166,14 @@
                 " Still not sure which Snippet-Engine to use...
                 Bundle 'Shougo/neocomplcache'
                 Bundle 'Shougo/neocomplcache-snippets-complete'
+
+                Bundle 'garbas/vim-snipmate'
+                Bundle 'MarcWeber/vim-addon-mw-utils'
+                Bundle 'tomtom/tlib_vim'
+                Bundle 'spf13/snipmate-snippets'
+                if filereadable(expand("~/.vim/bundle/snipmate-snippets/snippets/support_functions.vim"))
+                    source ~/.vim/bundle/snipmate-snippets/snippets/support_functions.vim
+                endif
             endif
         " }
 
@@ -218,6 +223,7 @@
             if count(g:furry_packages, 'html')
                 Bundle 'hail2u/vim-css3-syntax'
                 Bundle 'othree/html5.vim'
+                Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 
                 Bundle 'Rykka/colorv.vim'
             endif
@@ -234,7 +240,7 @@
     " }
 
     filetype plugin indent on
-" 
+" }
 
 " Plugins -- Settings {
     " Autoclose {
