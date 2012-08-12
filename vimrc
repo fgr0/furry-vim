@@ -405,7 +405,7 @@
     " Fire up wildmenu {
         set wildmenu
         " Do not show these files in the Tabcompletion (in CMD)
-        set wildignore=*.o,*.~,.*.class,*.exe,*.aux,*.fdb_latexmk,*.pdf
+        set wildignore=*.o,*.~,.*.class,*.exe,*.aux,*.fdb_latexmk,*.pdf,*.DS_Store
     " }
 
     " Search {
