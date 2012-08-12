@@ -102,7 +102,7 @@
         " This file should be used to have systemspecific 
         " Plugins instead of .local.vimrc
         if filereadable(expand("~/.bundles.local.vimrc"))
-            source ~/.vimrc.bundles.local
+            source ~/.bundles.local.vimrc
         endif
 
         if ! exists('g:furry_packages')
@@ -117,6 +117,7 @@
                         \'markup', 
                         \'latex',
                         \'html',
+                        \'python',
                         \'ctags']
         endif
     " }
@@ -221,11 +222,19 @@
 
         " HTML & CSS {
             if count(g:furry_packages, 'html')
-                Bundle 'hail2u/vim-css3-syntax'
                 Bundle 'othree/html5.vim'
                 Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 
+                Bundle 'hail2u/vim-css3-syntax'
+                Bundle 'jQuery'
+
                 Bundle 'Rykka/colorv.vim'
+            endif
+        " }
+
+        " Python {
+            if count(g:furry_packages, 'python')
+                Bundle 'klen/python-mode'
             endif
         " }
 
