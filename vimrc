@@ -27,7 +27,14 @@
 "   Readme in the Repository at https://github.com/laerador
 " 
 
-" Environment {
+" Startup {
+    " Versioncheck {
+        if v:version < 702
+            echo 'this .vimrc requires at least Vim 7.2 or greater'
+            echo 'expect wierd behavior!'
+        endif
+    " }
+
     " Windows or *nix? {
         if has('win32') || has('win64')
             set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
@@ -37,59 +44,9 @@
         endif
     " }
 
-    " Basic Behavior {
-        " Mouse Movement, Encoding
-        " Commandlineoptions, Messagesettings
-        " Default Clipboard
-        set nocompatible
+    set nocompatible
+    filetype off
 
-        set encoding=utf-8
-        if has('mouse')
-            set mouse=a
-        endif
-
-        set showcmd
-        set cmdheight=2
-    
-        set autoread
-        set autowrite
-        set clipboard+=unnamed
-        set shortmess+=aIoOtT
-        set hidden
-
-        filetype off
-    " }
-
-    " Language Settings {
-        set nospell
-    " }
-    
-    " Backup, Swap & Undo {
-        " Longer Commandhistory
-        set history=1000
-
-        " Persistent Undo and Session/view Magic
-        " Need vim 7.3 + Compilerfeatures
-        " Persistent Undo enabled by default,
-        " for usage of views look :h mkview
-        if has('persistent_undo')
-            set undodir=$HOME/.vim/undo
-            set undofile
-            set undolevels=1000
-            set undoreload=10000
-        endif
-
-        if has('mksession')
-            set viewdir=$HOME/.vim/view
-            set viewoptions=folds,options,cursor,unix,slash
-        endif
-
-        set directory=$HOME/.vim/swap
-    " }
-    
-" }
-
-" Plugins -- Vundle {
     " Initializing Vundle {
         " Use Bundle as Plugin Manager
         set rtp+=~/.vim/bundle/vundle/
@@ -99,13 +56,19 @@
         Bundle 'gmarik/vundle'
     " }
 
-    " Source Local Bundles {
+    " Source local vimrc {
         " This file should be used to have systemspecific 
         " Plugins instead of .local.vimrc
-        if filereadable(expand("~/.bundles.local.vimrc"))
-            source ~/.bundles.local.vimrc
+        if filereadable(expand("~/.local.vimrc"))
+            source ~/.local.vimrc
+        elseif filereadable(expand("~/.before.local.vimrc"))
+            source ~/.before.local.vimrc
         endif
+    " }
+" }
 
+" Plugins -- Vundle {
+    " Set Packages {
         if ! exists('g:furry_packages')
             let g:furry_packages = [
                         \'colors',
@@ -249,6 +212,7 @@
         " }
     " }
 
+    " Let the Magic happen
     filetype plugin indent on
 " }
 
@@ -392,6 +356,55 @@
      " }
 " }
 
+" Environment {
+    " Basic Behavior {
+        " Mouse Movement, Encoding
+        " Commandlineoptions, Messagesettings
+        " Default Clipboard
+        set encoding=utf-8
+        if has('mouse')
+            set mouse=a
+        endif
+
+        set showcmd
+        set cmdheight=2
+    
+        set autoread
+        set autowrite
+        set clipboard+=unnamed
+        set shortmess+=aIoOtT
+        set hidden
+    " }
+
+    " Language Settings {
+        set nospell
+    " }
+    
+    " Backup, Swap & Undo {
+        " Longer Commandhistory
+        set history=1000
+
+        " Persistent Undo and Session/view Magic
+        " Need vim 7.3 + Compilerfeatures
+        " Persistent Undo enabled by default,
+        " for usage of views look :h mkview
+        if has('persistent_undo')
+            set undodir=$HOME/.vim/undo
+            set undofile
+            set undolevels=1000
+            set undoreload=10000
+        endif
+
+        if has('mksession')
+            set viewdir=$HOME/.vim/view
+            set viewoptions=folds,options,cursor,unix,slash
+        endif
+
+        set directory=$HOME/.vim/swap
+    " }
+    
+" }
+
 " Userinterface {
     syntax on
 
@@ -405,7 +418,7 @@
     " Fire up wildmenu {
         set wildmenu
         " Do not show these files in the Tabcompletion (in CMD)
-        set wildignore=*.o,*.~,.*.class,*.exe,*.aux,*.fdb_latexmk,*.pdf,*.DS_Store
+        set wildignore=*.o,*.~,.*.class,*.exe,*.aux,*.fdb_latexmk,*.pdf
     " }
 
     " Search {
@@ -687,10 +700,10 @@
 
 " }
 
-" Source local vimrc {
+" Source after.local vimrc {
     " If vimconfiguration is shared over several systems
     " localrc can be used to have system-specific settings
-    let s:localrc = expand($HOME . '/.local.vimrc')
+    let s:localrc = expand($HOME . '/.after.local.vimrc')
     if filereadable(s:localrc)
         source s:localrc
     endif
