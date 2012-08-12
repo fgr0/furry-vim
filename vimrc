@@ -29,9 +29,9 @@
 
 " Startup {
     " Versioncheck {
-        if v:version < 702
-            echo 'this .vimrc requires at least Vim 7.2 or greater'
-            echo 'expect wierd behavior!'
+        if v:version < 703
+            echo 'This .vimrc requires at least Vim 7.3 or greater'
+            finish
         endif
     " }
 
@@ -167,8 +167,10 @@
 
                 Bundle 'tpope/vim-git'
                 
-                Bundle 'mattn/gist-vim'
-                Bundle 'mattn/webapi-vim'
+                if executable('curl')
+                    Bundle 'mattn/gist-vim'
+                    Bundle 'mattn/webapi-vim'
+                endif
             endif
         " }
         
@@ -711,10 +713,10 @@
         endfunction " }
 
         function! MarkdownFile() " {
-            setlocal ft=mkd syntax=liquid
             setlocal formatoptions+=a
+
             if getline(1) == '---'
-                let b:liquid_subtype = 'mkd'
+                let b:liquid_subtype = 'markdown'
                 set ft=liquid
             endif
         endfunction " }
