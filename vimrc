@@ -52,6 +52,7 @@
         set cmdheight=2
     
         set autoread
+        set autowrite
         set clipboard+=unnamed
         set shortmess+=aIoOtT
         set hidden
