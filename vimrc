@@ -544,6 +544,7 @@
     " Terminal {
         set term=screen-256color
         set t_Co=256
+        set ttyfast
 
         if &term =~ 'xterm'
             if &termencoding == ''
