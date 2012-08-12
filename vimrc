@@ -385,7 +385,7 @@
         " Need vim 7.3 + Compilerfeatures
         " Persistent Undo enabled by default,
         " for usage of views look :h mkview
-        if ! exists('g:furry_persitent')
+        if ! exists('g:furry_persistent')
             let g:furry_persitent = 2
         endif
 
