@@ -17,14 +17,14 @@
 "        'V/'  /##//##//##//###/
 "                 ++
 "
-"   This is a Vim Config File (.vimrc) by Franz Greiling. it gives a general
-"   Idea of what Options and Configurations are possible. It should work on
-"   (hopefully) every System with at least Vim 7.2 installed. You can simply
-"   clone the repository, but it is probably better if you just cherry-pick
-"   the parts you want and understand.
+"   This is a Vim Config File (.vimrc) by Franz Greiling. it gives
+"   a general Idea of what Options and Configurations are possible. It
+"   should work on (hopefully) every System with at least Vim 7.2
+"   installed. You can simply clone the repository, but it is probably
+"   better if you just cherry-pick the parts you want and understand.
 "
-"   For a more general Informationsource full with credits, check out the
-"   Readme in the Repository at https://github.com/laerador
+"   For a more general Informationsource full with credits, check out
+"   the Readme in the Repository at https://github.com/laerador
 " 
 
 " Startup {
@@ -105,6 +105,7 @@
 
                 if has('python') || has('python3')
                     Bundle 'sjl/gundo.vim'
+                    Bundle 'gregsexton/VimCalc'
                 else
                     echo "To use some Bundles from the Environment-Package you need to have Pythonsupport in vim"
                 endif
@@ -362,17 +363,11 @@
         " Commandlineoptions, Messagesettings
         " Default Clipboard
         set encoding=utf-8
-        if has('mouse')
-            set mouse=a
-        endif
+        set nofsync
 
-        set showcmd
-        set cmdheight=2
-    
         set autoread
         set autowrite
         set clipboard+=unnamed
-        set shortmess+=aIoOtT
         set hidden
     " }
 
@@ -388,19 +383,25 @@
         " Need vim 7.3 + Compilerfeatures
         " Persistent Undo enabled by default,
         " for usage of views look :h mkview
-        if has('persistent_undo')
+        if ! exists('g:furry_persitent')
+            let g:furry_persitent = 2
+        endif
+
+        if has('persistent_undo') && g:furry_persitent >= 2
             set undodir=$HOME/.vim/undo
             set undofile
             set undolevels=1000
             set undoreload=10000
         endif
 
-        if has('mksession')
+        if has('mksession') && g:furry_persitent >= 1
             set viewdir=$HOME/.vim/view
             set viewoptions=folds,options,cursor,unix,slash
         endif
 
-        set directory=$HOME/.vim/swap
+        if g:furry_persitent >= 0
+            set directory=$HOME/.vim/swap
+        endif
     " }
     
 " }
@@ -409,16 +410,47 @@
     syntax on
 
     " Set some Layout {
-        set title
+        " Title {
+            if has('title') && (has('gui_running') || &title)
+                set titlestring=%f\
+                set titlestring+=%h%m%r%w
+                set titlestring+=\ -\ %{v:progname}
+                set titlestring+=\ -\ %{substitute(getcwd(),\ $HOME,\ '~',\ '')}
+            endif
+
+            if has('title') && &term =~ 'xterm'
+                let &titleold = 'Terminal'
+                set title
+            endif
+        " }
+
         set number
         set ruler
         set cursorline
+
+        set showcmd
+        set cmdheight=2
+        set showmode
+
+        set winminheight=1
+
+        set shortmess+=aIoOtT
+        set more
+
+        set visualbell
     " }
 
     " Fire up wildmenu {
         set wildmenu
+
         " Do not show these files in the Tabcompletion (in CMD)
-        set wildignore=*.o,*.~,.*.class,*.exe,*.aux,*.fdb_latexmk,*.pdf
+        set wildignore+=.hg,.git,.svn
+        set wildignore+=*.aux,*.out,*.toc
+        set wildignore+=*.jpg,*.jpeg,*.bmp,*.gif,*.png
+        set wildignore+=*.o,*.obj,*.exe,*.dll
+        set wildignore+=*.pyc,*.class
+        set wildignore+=*.~,*.aux,*.fdb_latexmk,*.pdf
+        set wildignore+=*.DS_Store
     " }
 
     " Search {
@@ -426,21 +458,42 @@
         set smartcase
         set incsearch
         set hlsearch
+        set wrapscan
+
+        set showmatch
+        set matchtime=3
+        set matchpairs+=<:>
 
         set gdefault
     " }
 
+    " Print {
+        set printoptions+=syntax:y
+        set printoptions+=number:y
+    " }
+
     " Movement {
         set whichwrap+=<,>,h,l,[,]
-        set showmatch
 
         " Backspace
         set backspace=indent,eol,start
 
-        set virtualedit=onemore
+        set virtualedit+=onemore,block
 
         " Set Line, at which buffer starts moving
         set scrolloff=3
+        set sidescroll=1
+
+        set selection=old
+    " }
+
+    " Format {
+        set wrap 
+        set textwidth=72
+
+        set linebreak
+
+        set formatoptions=crqanj1
     " }
 
     " Tabs {
@@ -458,41 +511,77 @@
         " Enable Folding, but start with a very low level
         set foldenable
         set foldlevel=8
+        set foldnestmax=3
     " }
 
-    " Theme & Customization {
+    " GUI Options {
+        if has('gui_running')
+            set guifont=Mensch\ for\ Powerline:h12
+
+            set guioptions+=m
+            set guioptions-=TlLRa
+
+            if has('gui_macvim')
+                set fuopt+=maxvert,maxhorz
+
+                let macvim_hig_shift_movement=1
+            endif
+        endif
+    " }
+
+    " Mouse {
+        if has('mouse')
+            set mouse=a
+            set mousemodel=popup_setpos
+            set mousehide
+            
+            if has('mouse') && &term =~ 'xterm'
+                set ttymouse=xterm2
+            endif
+        endif
+    " }
+
+    " Terminal {
         set term=screen-256color
         set t_Co=256
 
-            if match($TERM_PROGRAM, 'Apple_Terminal') != -1
-                let term_bg_rgb = split(system("oascript -e 'tell application \"Terminal\" to get background color of current settings of selected tab of front window'"), ', ')
-            elseif match($TERM_PROGRAM, 'iTerm') != -1
-                let term_bg_rgb = split(system("osascript -e 'tell application \"iTerm\" to get background color of current session of current terminal'"), ', ')
-            else
-                let term_bg_rgb = [0, 0, 0]
+        if &term =~ 'xterm'
+            if &termencoding == ''
+                set termencoding=utf-8
             endif
 
-            " Calculate luminance
-            " Y = 0.21206 * R + 0.7152 * G + 0.0722 * B
-            let coefficients = [0.2126, 0.7152, 0.0722]
-            let luminance = 0
+            set restorescreen
+        endif
+    " }
 
-            for i in range(3)
-                let luminance += coefficients[i] * term_bg_rgb[i]
-            endfor
+    " Theme & Customization {
+        if match($TERM_PROGRAM, 'Apple_Terminal') != -1
+            let term_bg_rgb = split(system("oascript -e 'tell application \"Terminal\" to get background color of current settings of selected tab of front window'"), ', ')
+        elseif match($TERM_PROGRAM, 'iTerm') != -1
+            let term_bg_rgb = split(system("osascript -e 'tell application \"iTerm\" to get background color of current session of current terminal'"), ', ')
+        else
+            let term_bg_rgb = [0, 0, 0]
+        endif
 
-            if luminance < (65535 * 0.3)
-                set background=dark
+        " Calculate luminance
+        " Y = 0.21206 * R + 0.7152 * G + 0.0722 * B
+        let coefficients = [0.2126, 0.7152, 0.0722]
+        let luminance = 0
+
+        for i in range(3)
+            let luminance += coefficients[i] * term_bg_rgb[i]
+        endfor
+
+        if luminance < (65535 * 0.3)
+            set background=dark
+            if count(g:furry_packages, 'colors')
                 colorscheme badwolf
-            else
-                set background=light
+            endif
+        else
+            set background=light
+            if count(g:furry_packages, 'colors')
                 colorscheme Tomorrow
             endif
-
-        set background=dark
-
-        if count(g:furry_packages, 'colors')
-            colorscheme badwolf
         endif
 
         hi LineNR ctermfg=237 
@@ -621,8 +710,8 @@
         endfunction " }
 
         function! MarkdownFile() " {
-            setlocal tw=80
             setlocal ft=mkd syntax=liquid
+            setlocal formatoptions+=a
             if getline(1) == '---'
                 let b:liquid_subtype = 'mkd'
                 set ft=liquid
@@ -645,6 +734,7 @@
 
         function! CommitFile() " {
             call setpos('.', [0, 1, 1, 0])
+            setlocal formatoptions+=a
         endfunction " }
 
         function! HtmlFile() " {
