@@ -95,7 +95,7 @@
                 Bundle 'chriskempson/vim-tomorrow-theme'
                 Bundle 'sjl/badwolf'
 
-                Bundle 'roman/golden-ratio'
+                " Bundle 'roman/golden-ratio'
             endif
         " }
 
@@ -374,6 +374,7 @@
     " }
 
     " Language Settings {
+        language en_US
         set nospell
     " }
     
@@ -495,7 +496,7 @@
 
         set linebreak
 
-        set formatoptions=crqanj1
+        set formatoptions=crqnj1
     " }
 
     " Tabs {
@@ -546,7 +547,6 @@
     " Terminal {
         set term=screen-256color
         set t_Co=256
-        set ttyfast
 
         if &term =~ 'xterm'
             if &termencoding == ''
@@ -713,7 +713,7 @@
         endfunction " }
 
         function! MarkdownFile() " {
-            setlocal formatoptions+=a
+            " setlocal formatoptions+=a
 
             if getline(1) == '---'
                 let b:liquid_subtype = 'markdown'
@@ -761,35 +761,11 @@
 " }
 
 " Functions {
-    function! GetBufferList()
-        redir =>buflist
-        silent! ls
-        redir END
-        return buflist
-    endfunction
 
-    function! ToggleList(bufname, pfx)
-        let buflist = GetBufferList()
-        for bufnum in map(filter(split(buflist, '\n'), 'v:val =~ "'.a:bufname.'"'), 'str2nr(matchstr(v:val, "\\d\\+"))')
-            if bufwinnr(bufnum) != -1
-                exec(a:pfx.'close')
-                return
-            endif
-        endfor
-        if a:pfx == 'l' && len(getloclist(0)) == 0
-            echohl ErrorMsg
-            echo "Location List is Empty."
-            return
-        endif
-        let winnr = winnr()
-        exec(a:pfx.'open')
-        if winnr() != winnr
-            wincmd p
-        endif
-    endfunction
+    Bundle 'milkypostman/vim-togglelist'
 
-    nmap <silent> <F11> :call ToggleList("Location List", 'l')<CR>
-    nmap <silent> <F12> :call ToggleList("Quickfix List", 'c')<CR>
+    nmap <silent> <F11> :call ToggleLocationList()<CR>
+    nmap <silent> <F12> :call ToggleQuickfixList()<CR>
 
 " }
 
