@@ -17,7 +17,7 @@
 "        'V/'  /##//##//##//###/
 "                 ++
 "
-"   This is a Vim Config File (.vimrc) by Franz Greiling. it gives
+"   This is a Vim Config File (.vimrc) by Franz Greiling. It gives
 "   a general Idea of what Options and Configurations are possible. It
 "   should work on (hopefully) every System with at least Vim 7.2
 "   installed. You can simply clone the repository, but it is probably
@@ -95,7 +95,7 @@
                 Bundle 'chriskempson/vim-tomorrow-theme'
                 Bundle 'sjl/badwolf'
 
-                " Bundle 'roman/golden-ratio'
+                Bundle 'roman/golden-ratio'
             endif
         " }
 
@@ -587,6 +587,7 @@
             endif
         endif
 
+        " Set Highlight Options
         hi LineNR ctermfg=237 
         hi Folded ctermfg=darkgrey
         hi SignColumn ctermbg=black
@@ -611,10 +612,10 @@
     
     " Movement {
         " Easier Move between Splits
-        map <C-J> <C-W>j<C-W>_
-        map <C-K> <C-W>k<C-W>_
-        map <C-L> <C-W>l<C-W>_
-        map <C-H> <C-W>h<C-W>_
+        map <C-J> <C-W>j
+        map <C-K> <C-W>k
+        map <C-L> <C-W>l
+        map <C-H> <C-W>h
 
         " Easier Movement between wraped lines
         noremap j gj
@@ -629,6 +630,12 @@
         " visual shifting (does not exit Visual mode)
         vnoremap < <gv
         vnoremap > >gv
+
+        " Provide 'unimpaired' Mappings for Tabs
+        nnoremap <silent> [t :tabnext<CR>
+        nnoremap <silent> ]t :tabprevious<CR>
+        nnoremap <silent> [T :tabmove +1<CR>
+        nnoremap <silent> ]T :tabmove -1<CR>
     " }
 
     " Code Folding {
