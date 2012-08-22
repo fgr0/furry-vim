@@ -208,7 +208,9 @@
         " Ctags {
             if executable('ctags') && count(g:furry_packages, 'ctags')
                 Bundle 'majutsushi/tagbar'
-                Bundle 'xolox/vim-easytags'
+                " Removed because it causes errors with Powerline - and
+                " PL is way more important ;)
+                " Bundle 'xolox/vim-easytags'
             elseif !executable('ctags') && count(g:furry_packages, 'ctags')
                 echo "To use ctags-Packages you must have ctags installed!"
             endif
