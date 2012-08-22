@@ -496,7 +496,7 @@
 
         set linebreak
 
-        set formatoptions=crqnj1
+        " set formatoptions=crqnj1
     " }
 
     " Tabs {
@@ -587,10 +587,16 @@
             endif
         endif
 
-        " Set Highlight Options
+        " Set Highlighting Options
         hi LineNR ctermfg=237 
         hi Folded ctermfg=darkgrey
-        hi SignColumn ctermbg=black
+        hi SignColumn ctermbg=blue
+
+        " Set Diff Highlighting Options
+        hi DiffAdd term=reverse cterm=bold ctermfg=green ctermbg=black
+        hi DiffChange term=reverse cterm=bold ctermfg=cyan ctermbg=black
+        hi DiffText term=reverse cterm=bold 
+        hi DiffDelete term=reverse ctermfg=red
     " }
 
     " Statusline -- Powerline {
