@@ -45,6 +45,7 @@
     " }
 
     set nocompatible
+
     filetype off
 
     " Initializing Vundle {
@@ -123,6 +124,7 @@
                 Bundle 'tpope/vim-surround'
                 Bundle 'Townk/vim-autoclose'
                 Bundle 'matchit.zip'
+                Bundle 'milkypostman/vim-togglelist'
                 Bundle 'spiiph/vim-space'
             endif
         " }
@@ -689,6 +691,10 @@
         if filereadable(expand('~/.vim/bundle/tagbar/autoload/tagbar.vim'))
             nmap <F8> :TagbarToggle<CR>
         endif
+
+        " ToggleLists
+        nmap <silent> <F11> :call ToggleLocationList()<CR>
+        nmap <silent> <F12> :call ToggleQuickfixList()<CR>
     " }
 " }
 
@@ -773,15 +779,6 @@
         autocmd BufRead,BufNewFile *.html                call HtmlFile()
         " }
     endif
-" }
-
-" Functions {
-
-    Bundle 'milkypostman/vim-togglelist'
-
-    nmap <silent> <F11> :call ToggleLocationList()<CR>
-    nmap <silent> <F12> :call ToggleQuickfixList()<CR>
-
 " }
 
 " Source after.local vimrc {
