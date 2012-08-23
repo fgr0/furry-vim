@@ -500,7 +500,7 @@
 
         set linebreak
 
-        " set formatoptions=crqnj1
+        set formatoptions=crqnj1
     " }
 
     " Tabs {
@@ -734,8 +734,6 @@
         endfunction " }
 
         function! MarkdownFile() " {
-            " setlocal formatoptions+=a
-
             if getline(1) == '---'
                 let b:liquid_subtype = 'markdown'
                 set ft=liquid
