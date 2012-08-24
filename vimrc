@@ -642,10 +642,10 @@
         vnoremap > >gv
 
         " Provide 'unimpaired' Mappings for Tabs
-        nnoremap <silent> [t :tabnext<CR>
-        nnoremap <silent> ]t :tabprevious<CR>
-        nnoremap <silent> [T :tabmove +1<CR>
-        nnoremap <silent> ]T :tabmove -1<CR>
+        nmap <silent> [t :tabnext<CR>
+        nmap <silent> ]t :tabprevious<CR>
+        nmap <silent> [T :tabmove +1<CR>
+        nmap <silent> ]T :tabmove -1<CR>
     " }
 
     " Code Folding {
