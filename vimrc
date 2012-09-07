@@ -764,6 +764,10 @@
             call SingleCompile#ChooseCompiler('html', 'open')
             nmap <F10> :SCCompile<CR><CR>
         endfunction   " }
+
+        function! MaildropFile() " {
+            setlocal syntax=perl ft=maildrop
+        endfunction   " }
         " }
 
         " Autocommands {
@@ -775,6 +779,7 @@
         autocmd filetype git,svn,*commit*                call CommitFile()
         autocmd FileType gitcommit                       call CommitFile()
         autocmd BufRead,BufNewFile *.html                call HtmlFile()
+        autocmd BufRead,BufNewFile .maildrop*            call MaildropFile()
         " }
     endif
 " }
