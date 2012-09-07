@@ -107,7 +107,7 @@
                 if has('python') || has('python3')
                     Bundle 'sjl/gundo.vim'
                     Bundle 'gregsexton/VimCalc'
-                else
+                elseif ! (filereadable(expand("~/.local.vimrc")) || filereadable(expand("~/.before.local.vimrc")))
                     echo "To use some Bundles from the Environment-Package you need to have Pythonsupport in vim"
                 endif
 
@@ -197,7 +197,7 @@
                 Bundle 'hail2u/vim-css3-syntax'
                 Bundle 'jQuery'
 
-                Bundle 'Rykka/colorv.vim'
+                " Bundle 'Rykka/colorv.vim'
             endif
         " }
 
@@ -213,7 +213,7 @@
                 " Removed because it causes errors with Powerline - and
                 " PL is way more important ;)
                 " Bundle 'xolox/vim-easytags'
-            elseif !executable('ctags') && count(g:furry_packages, 'ctags')
+            elseif !executable('ctags') && count(g:furry_packages, 'ctags') && ! (filereadable(expand("~/.local.vimrc")) || filereadable(expand("~/.before.local.vimrc")))
                 echo "To use ctags-Packages you must have ctags installed!"
             endif
         " }
