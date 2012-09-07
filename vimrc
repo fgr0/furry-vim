@@ -500,7 +500,7 @@
 
         set linebreak
 
-        set formatoptions=crqnj1
+        set formatoptions=crqn1
     " }
 
     " Tabs {
