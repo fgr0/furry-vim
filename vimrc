@@ -62,8 +62,10 @@
         " Plugins instead of .local.vimrc
         if filereadable(expand("~/.local.vimrc"))
             source ~/.local.vimrc
+            let g:furry_local = 1
         elseif filereadable(expand("~/.before.local.vimrc"))
             source ~/.before.local.vimrc
+            let g:furry_local = 1
         endif
     " }
 " }
@@ -103,16 +105,14 @@
         " Environment {
             if count(g:furry_packages, 'environment')
                 Bundle 'kien/ctrlp.vim'
+                Bundle 'file-line'
 
                 if has('python') || has('python3')
                     Bundle 'sjl/gundo.vim'
                     Bundle 'gregsexton/VimCalc'
-                elseif ! (filereadable(expand("~/.local.vimrc")) || filereadable(expand("~/.before.local.vimrc")))
+                elseif g:furry_local != 1
                     echo "To use some Bundles from the Environment-Package you need to have Pythonsupport in vim"
                 endif
-
-                Bundle 'file-line'
-                Bundle 'ZoomWin'
             endif
         " }
 
@@ -213,7 +213,7 @@
                 " Removed because it causes errors with Powerline - and
                 " PL is way more important ;)
                 " Bundle 'xolox/vim-easytags'
-            elseif !executable('ctags') && count(g:furry_packages, 'ctags') && ! (filereadable(expand("~/.local.vimrc")) || filereadable(expand("~/.before.local.vimrc")))
+            elseif !executable('ctags') && count(g:furry_packages, 'ctags') && g:furry_local != 1
                 echo "To use ctags-Packages you must have ctags installed!"
             endif
         " }
@@ -562,6 +562,8 @@
     " }
 
     " Theme & Customization {
+        " Luminance Calculation by Sorin Ionescu
+        " https://github.com/sorin-ionescu/dot-files/blob/master/vimrc
         if match($TERM_PROGRAM, 'Apple_Terminal') != -1
             let term_bg_rgb = split(system("oascript -e 'tell application \"Terminal\" to get background color of current settings of selected tab of front window'"), ', ')
         elseif match($TERM_PROGRAM, 'iTerm') != -1
@@ -582,12 +584,12 @@
         if luminance < (65535 * 0.3)
             set background=dark
             if count(g:furry_packages, 'colors')
-                colorscheme badwolf
+                silent! colorscheme badwolf
             endif
         else
             set background=light
             if count(g:furry_packages, 'colors')
-                colorscheme Tomorrow
+                silent! colorscheme Tomorrow
             endif
         endif
 
