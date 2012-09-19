@@ -135,13 +135,13 @@
                 Bundle 'Shougo/neocomplcache'
                 Bundle 'Shougo/neocomplcache-snippets-complete'
 
-                Bundle 'garbas/vim-snipmate'
-                Bundle 'MarcWeber/vim-addon-mw-utils'
-                Bundle 'tomtom/tlib_vim'
-                Bundle 'spf13/snipmate-snippets'
-                if filereadable(expand("~/.vim/bundle/snipmate-snippets/snippets/support_functions.vim"))
-                    source ~/.vim/bundle/snipmate-snippets/snippets/support_functions.vim
-                endif
+                " Bundle 'garbas/vim-snipmate'
+                " Bundle 'MarcWeber/vim-addon-mw-utils'
+                " Bundle 'tomtom/tlib_vim'
+                " Bundle 'spf13/snipmate-snippets'
+                " if filereadable(expand("~/.vim/bundle/snipmate-snippets/snippets/support_functions.vim"))
+                "     source ~/.vim/bundle/snipmate-snippets/snippets/support_functions.vim
+                " endif
             endif
         " }
 
@@ -285,13 +285,13 @@
     
     " neocomplcache {
         " Keine Ahnung was das hier eigentlich genau macht, aber es funktioniert.
-        let g:neocomplcache_enable_at_startup = 1
-        let g:neocomplcache_enable_camel_case_completion = 1
-        let g:neocomplcache_enable_smart_case = 1
         let g:neocomplcache_auto_completion_start_length = 3
-        let g:neocomplcache_enable_underbar_completion = 1
+        let g:neocomplcache_enable_at_startup = 1
         let g:neocomplcache_enable_auto_delimiter = 1
         let g:neocomplcache_enable_auto_select = 1
+        let g:neocomplcache_enable_camel_case_completion = 1
+        let g:neocomplcache_enable_smart_case = 1
+        let g:neocomplcache_enable_underbar_completion = 1
         let g:neocomplcache_snippets_dir = '~/.vim/bundle/snipmate-snippets/snippets/'
 
         " Enable omni completion. 
@@ -305,12 +305,14 @@
         if !exists('g:neocomplcache_omni_patterns') 
             let g:neocomplcache_omni_patterns = {} 
         endif 
-        let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::' 
-        let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 
         " Plugin key-mappings.
         imap <C-k>     <Plug>(neocomplcache_snippets_expand)
         smap <C-k>     <Plug>(neocomplcache_snippets_expand)
+
+        inoremap <expr><CR>     neocomplcache#smart_close_popup() . "\<CR>"
+        inoremap <expr><TAB>    pumvisible() ? "\<C-n>" : "\<TAB>"
+        inoremap <expr><BS>     neocomplcache#smart_close_popup() . "\<C-h>"
 
         " SuperTab like snippets behavior.
         imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
