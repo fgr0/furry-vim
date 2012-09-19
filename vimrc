@@ -596,7 +596,6 @@
         " Set Highlighting Options
         hi LineNR ctermfg=237 
         hi Folded ctermfg=darkgrey
-        hi SignColumn ctermbg=blue
 
         " Set Diff Highlighting Options
         hi DiffAdd term=reverse cterm=bold ctermfg=green ctermbg=black
