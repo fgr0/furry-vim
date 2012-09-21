@@ -125,23 +125,13 @@
                 Bundle 'Townk/vim-autoclose'
                 Bundle 'matchit.zip'
                 Bundle 'milkypostman/vim-togglelist'
-                Bundle 'spiiph/vim-space'
             endif
         " }
 
         " Autocompletion and Snippets {
             if count(g:furry_packages, 'autocompletion')
-                " Still not sure which Snippet-Engine to use...
                 Bundle 'Shougo/neocomplcache'
                 Bundle 'Shougo/neocomplcache-snippets-complete'
-
-                " Bundle 'garbas/vim-snipmate'
-                " Bundle 'MarcWeber/vim-addon-mw-utils'
-                " Bundle 'tomtom/tlib_vim'
-                " Bundle 'spf13/snipmate-snippets'
-                " if filereadable(expand("~/.vim/bundle/snipmate-snippets/snippets/support_functions.vim"))
-                "     source ~/.vim/bundle/snipmate-snippets/snippets/support_functions.vim
-                " endif
             endif
         " }
 
@@ -170,8 +160,8 @@
                 Bundle 'tpope/vim-git'
                 
                 if executable('curl')
-                    Bundle 'mattn/gist-vim'
                     Bundle 'mattn/webapi-vim'
+                    Bundle 'mattn/gist-vim'
                 endif
             endif
         " }
@@ -196,8 +186,6 @@
 
                 Bundle 'hail2u/vim-css3-syntax'
                 Bundle 'jQuery'
-
-                " Bundle 'Rykka/colorv.vim'
             endif
         " }
 
@@ -210,9 +198,6 @@
         " Ctags {
             if executable('ctags') && count(g:furry_packages, 'ctags')
                 Bundle 'majutsushi/tagbar'
-                " Removed because it causes errors with Powerline - and
-                " PL is way more important ;)
-                " Bundle 'xolox/vim-easytags'
             elseif !executable('ctags') && count(g:furry_packages, 'ctags') && g:furry_local != 1
                 echo "To use ctags-Packages you must have ctags installed!"
             endif
@@ -324,19 +309,6 @@
         endif
     " }
 
-    " Tabularize {
-        nmap <Leader>t= :Tabularize /=<CR>
-        vmap <Leader>t= :Tabularize /=<CR>
-        nmap <Leader>t: :Tabularize /:<CR>
-        vmap <Leader>t: :Tabularize /:<CR>
-        nmap <Leader>t:: :Tabularize /:\zs<CR>
-        vmap <Leader>t:: :Tabularize /:\zs<CR>
-        nmap <Leader>t, :Tabularize /,<CR>
-        vmap <Leader>t, :Tabularize /,<CR>
-        nmap <Leader>t<Bar> :Tabularize /<Bar><CR>
-        vmap <Leader>t<Bar> :Tabularize /<Bar><CR>
-    " }
-    
      " Session List {
         set sessionoptions=blank,buffers,curdir,folds,tabpages,winsize
         nmap <leader>sl :SessionList<CR>
@@ -576,14 +548,14 @@
 
         " Calculate luminance
         " Y = 0.21206 * R + 0.7152 * G + 0.0722 * B
-        let coefficients = [0.2126, 0.7152, 0.0722]
-        let luminance = 0
+        let s:coefficients = [0.2126, 0.7152, 0.0722]
+        let s:luminance = 0
 
         for i in range(3)
-            let luminance += coefficients[i] * term_bg_rgb[i]
+            let s:luminance += s:coefficients[i] * term_bg_rgb[i]
         endfor
 
-        if luminance < (65535 * 0.3)
+        if s:luminance < (65535 * 0.3)
             set background=dark
             if count(g:furry_packages, 'colors')
                 silent! colorscheme badwolf
