@@ -762,8 +762,7 @@
 " Source after.local vimrc {
     " If vimconfiguration is shared over several systems
     " localrc can be used to have system-specific settings
-    let s:localrc = expand($HOME . '/.after.local.vimrc')
-    if filereadable(s:localrc)
-        source s:localrc
+    if filereadable(expand("~/.after.local.vimrc"))
+        source ~/.after.local.vimrc
     endif
 " }
