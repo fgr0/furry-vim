@@ -295,7 +295,6 @@
         imap <C-k>     <Plug>(neocomplcache_snippets_expand)
         smap <C-k>     <Plug>(neocomplcache_snippets_expand)
 
-        inoremap <expr><CR>     neocomplcache#smart_close_popup() . "\<CR>"
         inoremap <expr><TAB>    pumvisible() ? "\<C-n>" : "\<TAB>"
         inoremap <expr><BS>     neocomplcache#smart_close_popup() . "\<C-h>"
 
