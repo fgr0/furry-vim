@@ -351,7 +351,7 @@
     " }
 
     " Language Settings {
-        language en_US
+        silent! language en_US
         set nospell
     " }
     
