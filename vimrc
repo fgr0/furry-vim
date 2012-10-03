@@ -522,7 +522,9 @@
     " }
 
     " Terminal {
-        set term=xterm-256color
+        if  !(&term =~ 'screen-256color')
+            set term=xterm-256color
+        endif
         set t_Co=256
 
         if &term =~ 'xterm'
