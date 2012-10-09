@@ -625,12 +625,6 @@
         " visual shifting (does not exit Visual mode)
         vnoremap < <gv
         vnoremap > >gv
-
-        " Provide 'unimpaired' Mappings for Tabs
-        nmap <silent> [t :tabnext<CR>
-        nmap <silent> ]t :tabprevious<CR>
-        nmap <silent> [T :tabmove +1<CR>
-        nmap <silent> ]T :tabmove -1<CR>
     " }
 
     " Code Folding {
