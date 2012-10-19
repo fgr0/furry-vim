@@ -168,7 +168,6 @@
         
         " Markup {
             if count(g:furry_packages, 'markup')
-                Bundle 'plasticboy/vim-markdown'
                 Bundle 'tpope/vim-liquid'
                 Bundle 'vim-pandoc/vim-pandoc'
             endif
@@ -716,6 +715,10 @@
             if getline(1) == '---'
                 let b:liquid_subtype = 'markdown'
                 set ft=liquid
+            endif
+
+            if filereadable(expand('~/.vim/bundle/vim-pandoc/plugin/pandoc.vim'))
+                set ft=pandoc
             endif
         endfunction " }
 
