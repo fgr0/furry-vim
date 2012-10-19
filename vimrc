@@ -228,26 +228,26 @@
         " let g:netrw_browse_split = 4
 
         " Make it Toggleble (Function) {
-        function! ToggleVExplorer()
-            if exists("t:expl_buf_num")
-                let expl_win_num = bufwinnr(t:expl_buf_num)
-                if expl_win_num != -1
-                    let cur_win_nr = winnr()
-                    exec expl_win_num . 'wincmd w'
-                    close
-                    exec cur_win_nr . 'wincmd w'
-                    unlet t:expl_buf_num
+            function! ToggleVExplorer()
+                if exists("t:expl_buf_num")
+                    let expl_win_num = bufwinnr(t:expl_buf_num)
+                    if expl_win_num != -1
+                        let cur_win_nr = winnr()
+                        exec expl_win_num . 'wincmd w'
+                        close
+                        exec cur_win_nr . 'wincmd w'
+                        unlet t:expl_buf_num
+                    else
+                        unlet t:expl_buf_num
+                    endif
                 else
-                    unlet t:expl_buf_num
+                    exec '1wincmd w'
+                    Vexplore
+                    let t:expl_buf_num = bufnr("%")
                 endif
-            else
-                exec '1wincmd w'
-                Vexplore
-                let t:expl_buf_num = bufnr("%")
-            endif
-        endfunction
-        nmap <silent><F6> :call ToggleVExplorer()<CR>
-        nmap <S-F6> :45Vex<CR>
+            endfunction
+            nmap <silent><F6> :call ToggleVExplorer()<CR>
+            nmap <S-F6> :45Vex<CR>
         " }
     " }
 
@@ -260,7 +260,7 @@
             let g:syntastic_python_checker = 'pyflakes'
         endif
     " }
-    
+
     " neocomplcache {
         " Keine Ahnung was das hier eigentlich genau macht, aber es funktioniert.
         let g:neocomplcache_auto_completion_start_length = 3
@@ -301,32 +301,32 @@
         endif
     " }
 
-     " Session List {
+    " Session List {
         set sessionoptions=blank,buffers,curdir,folds,tabpages,winsize
         nmap <leader>sl :SessionList<CR>
         nmap <leader>ss :SessionSave<CR>
-     " }
+    " }
 
-     " Fugitive {
+    " Fugitive {
         nnoremap <silent> <leader>gs :Gstatus<CR>
         nnoremap <silent> <leader>gd :Gdiff<CR>
         nnoremap <silent> <leader>gc :Gcommit<CR>
         nnoremap <silent> <leader>gb :Gblame<CR>
         nnoremap <silent> <leader>gl :Glog<CR>
         nnoremap <silent> <leader>gp :Git push<CR>
-     " }
+    " }
 
-     " Gist {
-        if (os == 'Darwin' || os == 'Mac')
+    " Gist {
+        if (os == 'darwin' || os == 'mac')
             let g:gist_clip_command = 'pbcopy'
-        elseif (os == 'Linux')
+        elseif (os == 'linux')
             let g:gist_clip_command = 'xclip -selection clipboard'
         endif
 
         let g:gist_detect_filetype = 1
         let g:gist_open_browser_after_post = 1
         let g:gist_show_privates = 1
-     " }
+    " }
 " }
 
 " Environment {
