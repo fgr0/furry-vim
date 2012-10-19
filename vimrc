@@ -214,13 +214,6 @@
         let g:AutoCloseExpandSpace = 0
     " }
 
-    " Easytags {
-        let g:easytags_include_members = 1
-        highlight link cMember Special
-        let g:easytags_by_filetype = "~/.ctags"
-        let g:easytags_python_enabled = 1
-    " }
-
     " SingleCompile {
         let g:SingleCompile_usedialog = 0
         let g:SingleCompile_menumode = 0
