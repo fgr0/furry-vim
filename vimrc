@@ -170,6 +170,7 @@
             if count(g:furry_packages, 'markup')
                 Bundle 'plasticboy/vim-markdown'
                 Bundle 'tpope/vim-liquid'
+                Bundle 'vim-pandoc/vim-pandoc'
             endif
         " }
 
@@ -270,7 +271,6 @@
         let g:neocomplcache_enable_camel_case_completion = 1
         let g:neocomplcache_enable_smart_case = 1
         let g:neocomplcache_enable_underbar_completion = 1
-        let g:neocomplcache_enable_insert_char_pre = 1
 
         " Enable omni completion. 
         autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS 
