@@ -131,7 +131,7 @@
         " Autocompletion and Snippets {
             if count(g:furry_packages, 'autocompletion')
                 Bundle 'Shougo/neocomplcache'
-                Bundle 'Shougo/neocomplcache-snippets-complete'
+                Bundle 'Shougo/neosnippet'
             endif
         " }
 
@@ -284,14 +284,15 @@
         endif 
 
         " Plugin key-mappings.
-        imap <C-k>     <Plug>(neocomplcache_snippets_expand)
-        smap <C-k>     <Plug>(neocomplcache_snippets_expand)
+        imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+        smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 
         inoremap <expr><TAB>    pumvisible() ? "\<C-n>" : "\<TAB>"
         inoremap <expr><BS>     neocomplcache#smart_close_popup() . "\<C-h>"
 
         " SuperTab like snippets behavior.
-        imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+        imap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+        smap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
         " For snippet_complete marker.
         if has('conceal')
@@ -337,6 +338,7 @@
         set nofsync
 
         set autoread
+        set autochdir
         set autowrite
         set clipboard+=unnamed
         set hidden
@@ -488,10 +490,9 @@
 
     " GUI Options {
         if has('gui_running')
-            set guifont=Mensch\ for\ Powerline:h12
+            set guifont=Source\ Code\ Pro:h11
 
-            set guioptions+=m
-            set guioptions-=TlLRa
+            set guioptions=mcg
 
             if has('gui_macvim')
                 set fuopt+=maxvert,maxhorz
@@ -514,7 +515,7 @@
     " }
 
     " Terminal {
-        if  !(&term =~ 'screen-256color')
+        if  !(&term =~ 'screen-256color') && !has('gui_running')
             set term=xterm-256color
         endif
         set t_Co=256
@@ -713,13 +714,13 @@
 
         function! MarkdownFile() " {
             if getline(1) == '---'
-                let b:liquid_subtype = 'markdown'
+                let b:liquid_subtype = 'pandoc'
                 set ft=liquid
-            endif
-
-            if filereadable(expand('~/.vim/bundle/vim-pandoc/plugin/pandoc.vim'))
+            elseif filereadable(expand('~/.vim/bundle/vim-pandoc/plugin/pandoc.vim'))
                 set ft=pandoc
             endif
+            
+            set conceallevel=0
         endfunction " }
 
         function! PythonFile() " {
@@ -734,6 +735,8 @@
                 call SingleCompile#SetCompilerTemplate('tex','latexmk','latexmk','latexmk','-pdf','open %<.pdf')
                 call SingleCompile#ChooseCompiler('tex', 'latexmk')
             endif
+
+            set conceallevel=0
         endfunction " }
 
         function! CommitFile() " {
