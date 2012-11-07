@@ -66,6 +66,8 @@
         elseif filereadable(expand("~/.before.local.vimrc"))
             source ~/.before.local.vimrc
             let g:furry_local = 1
+        else
+            let g:furry_local = 0
         endif
     " }
 " }
