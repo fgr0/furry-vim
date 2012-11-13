@@ -200,6 +200,7 @@
         " Ctags {
             if executable('ctags') && count(g:furry_packages, 'ctags')
                 Bundle 'majutsushi/tagbar'
+                Bundle 'xolox/vim-easytags'
             elseif !executable('ctags') && count(g:furry_packages, 'ctags') && g:furry_local != 1
                 echo "To use ctags-Packages you must have ctags installed!"
             endif
@@ -280,7 +281,7 @@
         autocmd FileType python setlocal omnifunc=pythoncomplete#Complete 
         autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags 
 
-        " Enable heavy omni completion. 
+        " " Enable heavy omni completion. 
         if !exists('g:neocomplcache_omni_patterns') 
             let g:neocomplcache_omni_patterns = {} 
         endif 
@@ -328,6 +329,13 @@
         let g:gist_detect_filetype = 1
         let g:gist_open_browser_after_post = 1
         let g:gist_show_privates = 1
+        hi link cMember Special
+    " }
+
+    " Easytags {
+        " set tags=./tags;
+        let g:easytags_by_filetype = "~/.tags/"
+        let g:easytags_include_members = 1
     " }
 " }
 
@@ -687,8 +695,8 @@
             augroup cline
                au WinLeave * set nocursorline
                au WinEnter * set cursorline
-               au InsertEnter * hi CursorLine ctermbg=NONE
-               au InsertLeave * hi CursorLine ctermbg=235
+               au InsertEnter * set nocursorline
+               au InsertLeave * set cursorline
             augroup END
         " }
     endif
