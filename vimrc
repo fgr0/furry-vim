@@ -216,6 +216,10 @@
 " }
 
 " Plugins -- Settings {
+    " Define Leaders
+    let mapleader = ","
+    let maplocalleader = '\\'
+    
     " Utl {
         let g:utl_cfg_hdl_scm_http = "!open %u#f"
     " }
@@ -614,10 +618,6 @@
 " }
 
 " Key Mappings {
-    " Define Leaders
-    let mapleader = ","
-    let maplocalleader = '\\'
-    
     " Movement {
         " Easier Move between Splits
         map <C-J> <C-W>j
