@@ -222,6 +222,8 @@
     
     " Utl {
         let g:utl_cfg_hdl_scm_http = "!open %u#f"
+        " Mnoric is 'follow link'
+        nmap <Leader>fl :Utl
     " }
 
     " Autoclose {
