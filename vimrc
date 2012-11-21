@@ -120,12 +120,16 @@
 
         " Utility {
             if count(g:furry_packages, 'utility')
+                Bundle 'tpope/vim-unimpaired'
+
+                Bundle 'utl.vim'
+
                 Bundle 'Align'
                 Bundle 'tpope/vim-commentary'
-                Bundle 'tpope/vim-unimpaired'
                 Bundle 'tpope/vim-surround'
                 Bundle 'Townk/vim-autoclose'
                 Bundle 'matchit.zip'
+
                 Bundle 'milkypostman/vim-togglelist'
             endif
         " }
@@ -212,6 +216,10 @@
 " }
 
 " Plugins -- Settings {
+    " Utl {
+        let g:utl_cfg_hdl_scm_http = "!open %u#f"
+    " }
+
     " Autoclose {
         let g:AutoCloseSelectionWrapPrefix="<leader>a"
         let g:AutoCloseExpandSpace = 0
@@ -652,7 +660,7 @@
 
     " Fast editing & saving of the vimrc
     map <leader>ev :e! ~/.vimrc<CR>
-    map <leader>sv :source $MYVIMRC<CR>
+    map <leader>sv :source ~/.vimrc<CR>
     
     " Search
     nnoremap <silent><leader>n :noh<CR>
