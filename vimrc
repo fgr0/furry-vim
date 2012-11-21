@@ -96,10 +96,12 @@
             if count(g:furry_packages, 'colors')
                 Bundle 'Lokaltog/vim-powerline'
 
+                Bundle 'sjl/badwolf'
                 Bundle 'altercation/vim-colors-solarized'
                 Bundle 'chriskempson/vim-tomorrow-theme'
-                Bundle 'sjl/badwolf'
 
+                " Should only be used with 
+                Bundle 'ricardovaleriano/vim-github-theme'
                 Bundle 'roman/golden-ratio'
             endif
         " }
@@ -222,10 +224,19 @@
     let mapleader = ","
     let maplocalleader = '\\'
     
+    " Badwolf {
+        let g:badwolf_tabline = 2
+        let g:badwolf_css_props_highlight = 1
+    " }
+
+    " Solarized {
+        let g:solarized_termcolors = 256
+    " } 
+    
     " Utl {
-        let g:utl_cfg_hdl_scm_http = "!open %u#f"
+        let g:utl_cfg_hdl_scm_http = "exec 'silent !open %u#f' | redraw!"
         " Mnoric is 'follow link'
-        nmap <Leader>fl :Utl
+        nmap <Leader>fl :Utl<CR>
     " }
 
     " Autoclose {
@@ -568,44 +579,12 @@
         " Luminance Calculation by Sorin Ionescu
         " https://github.com/sorin-ionescu/dot-files/blob/master/vimrc
         if g:furry_usertheme == 0
-            if match($TERM_PROGRAM, 'Apple_Terminal') != -1
-                let term_bg_rgb = split(system("oascript -e 'tell application \"Terminal\" to get background color of current settings of selected tab of front window'"), ', ')
-            elseif match($TERM_PROGRAM, 'iTerm') != -1
-                let term_bg_rgb = split(system("osascript -e 'tell application \"iTerm\" to get background color of current session of current terminal'"), ', ')
-            else
-                let term_bg_rgb = [0, 0, 0]
-            endif
-
-            " Calculate luminance
-            " Y = 0.21206 * R + 0.7152 * G + 0.0722 * B
-            let s:coefficients = [0.2126, 0.7152, 0.0722]
-            let s:luminance = 0
-
-            for i in range(3)
-                let s:luminance += s:coefficients[i] * term_bg_rgb[i]
-            endfor
-
-            if s:luminance < (65535 * 0.3)
-                set background=dark
-                if count(g:furry_packages, 'colors')
-                    silent! colorscheme badwolf
-                endif
-            else
-                set background=light
-                if count(g:furry_packages, 'colors')
-                    silent! colorscheme Tomorrow
-                endif
-            endif
+            set background=dark
+            colorscheme badwolf
 
             " Set Highlighting Options
             hi LineNR ctermfg=237 
             hi Folded ctermfg=darkgrey
-
-            " Set Diff Highlighting Options
-            hi DiffAdd term=reverse cterm=bold ctermfg=green ctermbg=black
-            hi DiffChange term=reverse cterm=bold ctermfg=cyan ctermbg=black
-            hi DiffText term=reverse cterm=bold 
-            hi DiffDelete term=reverse ctermfg=red
         endif
     " }
 
