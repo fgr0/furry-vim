@@ -202,6 +202,7 @@
         " Python {
             if count(g:furry_packages, 'python')
                 Bundle 'klen/python-mode'
+                Bundle 'davidhalter/jedi-vim'
             endif
         " }
 
@@ -329,6 +330,21 @@
           set conceallevel=2
           set concealcursor=""
         endif
+    " }
+
+    " Jedi {
+        let g:jedi#auto_initialization = 1
+        let g:jedi#show_function_definition = 0
+        " let g:jedi#popup_on_dot = 0
+        autocmd FileType python setlocal omnifunc=jedi#complete
+
+        " to work with Neocomplcache:
+        let g:neocomplcache_omni_patterns.python = '[^. \t\.\w*'
+
+        let g:jedi#goto_command = '<leader>jg'
+        let g:jedi#get_definition_command = '<leader>jd'
+        let g:jedi#pydoc = '<leader>jk'
+        let g:jedi#rename_command = '<leader>jn'
     " }
 
     " Session List {
@@ -726,6 +742,7 @@
 
         function! PythonFile() " {
             setlocal ft=python syntax=python3
+            let b:bib_ftplugin = 1
             if executable('python3')
                 call SingleCompile#ChooseCompiler('python', 'python3')
             endif
@@ -775,5 +792,8 @@
     " localrc can be used to have system-specific settings
     if filereadable(expand("~/.after.local.vimrc"))
         source ~/.after.local.vimrc
+    endif
+    if filereadable(expand("~/.after.vimrc"))
+        source ~/.after.vimrc
     endif
 " }
