@@ -360,7 +360,7 @@
     " }
 
     " Easytags {
-        " set tags=./tags;
+        set tags=./tags;
         let g:easytags_by_filetype = "~/.tags/"
         let g:easytags_include_members = 1
     " }
