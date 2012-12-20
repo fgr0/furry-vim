@@ -201,7 +201,6 @@
 
         " Python {
             if count(g:furry_packages, 'python')
-                Bundle 'klen/python-mode'
                 Bundle 'davidhalter/jedi-vim'
             endif
         " }
