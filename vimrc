@@ -127,7 +127,9 @@
                 Bundle 'utl.vim'
 
                 Bundle 'Align'
+                Bundle 'tpope/vim-repeat'
                 Bundle 'tpope/vim-commentary'
+                Bundle 'tpope/vim-speeddating'
                 Bundle 'tpope/vim-surround'
                 Bundle 'Townk/vim-autoclose'
                 Bundle 'matchit.zip'
@@ -242,6 +244,21 @@
     " Autoclose {
         let g:AutoCloseSelectionWrapPrefix="<leader>a"
         let g:AutoCloseExpandSpace = 0
+    " }
+
+    " Speeddating {
+        " Format for standart 24h time ( 13:45 )
+        SpeedDatingFormat %H:%M
+
+        " Format for standart DD MM YY Dates
+        " 12. 12. 12
+        SpeedDatingFormat %d%?[.]%?[ ]%m%?[.]%?[ ]%?['"]%y
+        " 12. 12. 1212
+        SpeedDatingFormat %d%?[.]%?[ ]%m%?[.]%?[ ]%Y
+        " 12. Dec. 12
+        SpeedDatingFormat %d%?[.]%?[ ]%b%?[.]%?[ ]%?['"]%y
+        " 12. Dec. 1212
+        SpeedDatingFormat %d%?[.]%?[ ]%b%?[.]%?[ ]%Y
     " }
 
     " SingleCompile {
