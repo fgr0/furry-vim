@@ -129,7 +129,7 @@
                 Bundle 'Align'
                 Bundle 'tpope/vim-repeat'
                 Bundle 'tpope/vim-commentary'
-                Bundle 'tpope/vim-speeddating'
+                Bundle 'laerador/vim-speeddating'
                 Bundle 'tpope/vim-surround'
                 Bundle 'Townk/vim-autoclose'
                 Bundle 'matchit.zip'
