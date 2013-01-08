@@ -203,6 +203,7 @@
 
         " Python {
             if count(g:furry_packages, 'python')
+                Bundle 'klen/python-mode'
                 Bundle 'davidhalter/jedi-vim'
             endif
         " }
@@ -298,7 +299,7 @@
         let g:neocomplcache_auto_completion_start_length = 3
         let g:neocomplcache_enable_at_startup = 1
         let g:neocomplcache_enable_auto_delimiter = 1
-        let g:neocomplcache_enable_auto_select = 1
+        let g:neocomplcache_enable_auto_select = 0
         let g:neocomplcache_enable_camel_case_completion = 1
         let g:neocomplcache_enable_smart_case = 1
         let g:neocomplcache_enable_underbar_completion = 1
@@ -307,7 +308,6 @@
         autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS 
         autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags 
         autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS 
-        autocmd FileType python setlocal omnifunc=pythoncomplete#Complete 
         autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags 
 
         " " Enable heavy omni completion. 
@@ -336,11 +336,15 @@
     " Jedi {
         let g:jedi#auto_initialization = 1
         let g:jedi#show_function_definition = 0
-        " let g:jedi#popup_on_dot = 0
+        let g:jedi#popup_on_dot = 0
         autocmd FileType python setlocal omnifunc=jedi#complete
 
         " to work with Neocomplcache:
         let g:neocomplcache_omni_patterns.python = '[^. \t\.\w*'
+        if !exists('g:neocomplcache_force_omni_patterns')
+            let g:neocomplcache_force_omni_patterns = {}
+        endif
+        let g:neocomplcache_force_omni_patterns.python = '[^. \t]\.\w*'
 
         let g:jedi#goto_command = '<leader>jg'
         let g:jedi#get_definition_command = '<leader>jd'
@@ -380,6 +384,15 @@
         set tags=./tags;
         let g:easytags_by_filetype = "~/.tags/"
         let g:easytags_include_members = 1
+    " }
+
+    " Python Mode {
+        let g:pymode_doc_key = ""
+    " }
+
+    " Pandoc {
+        let g:pandoc_use_hard_wraps = 1
+        let g:pandoc_auto_format = 1
     " }
 " }
 
@@ -517,7 +530,7 @@
 
     " Format {
         set wrap 
-        set textwidth=72
+        set textwidth=80
 
         set linebreak
 
@@ -738,11 +751,13 @@
                 set ft=pandoc
             endif
             
+            set formatoptions+=t
             set conceallevel=0
         endfunction " }
 
         function! PythonFile() " {
             setlocal ft=python syntax=python3
+            setlocal commentstring=#\ %s
             let b:bib_ftplugin = 1
             if executable('python3')
                 call SingleCompile#ChooseCompiler('python', 'python3')
