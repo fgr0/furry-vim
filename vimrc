@@ -87,6 +87,8 @@
                         \'latex',
                         \'html',
                         \'python',
+                        \'go',
+                        \'osx',
                         \'ctags']
         endif
     " }
@@ -197,6 +199,7 @@
                 Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 
                 Bundle 'hail2u/vim-css3-syntax'
+                Bundle 'tpope/vim-haml'
                 Bundle 'jQuery'
             endif
         " }
@@ -205,6 +208,20 @@
             if count(g:furry_packages, 'python')
                 Bundle 'klen/python-mode'
                 Bundle 'davidhalter/jedi-vim'
+            endif
+        " }
+
+        " Go {
+            if count(g:furry_packages, 'go')
+                set rtp+=$GOROOT/misc/vim
+                Bundle 'jnwhiteh/vim-golang'
+                Bundle 'nsf/gocode', {'rtp': 'vim/'}
+            endif
+        " }
+
+        " OS X {
+            if count(g:furry_packages, 'osx')
+                Bundle 'zhaocai/applescript.vim'
             endif
         " }
 
@@ -303,6 +320,7 @@
         let g:neocomplcache_enable_camel_case_completion = 1
         let g:neocomplcache_enable_smart_case = 1
         let g:neocomplcache_enable_underbar_completion = 1
+        let g:neocomplcache_auto_close_preview = 1
 
         " Enable omni completion. 
         autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS 
@@ -560,6 +578,7 @@
             set guifont=Source\ Code\ Pro:h11
 
             set guioptions=mcg
+            set transparency=10
 
             if has('gui_macvim')
                 set fuopt+=maxvert,maxhorz
