@@ -1,5 +1,5 @@
 " Modeline and Notes  
-" vim: set foldlevel=0 foldmethod=marker foldmarker={,} ft=vim:
+" vim: set foldlevel=0 foldmethod=marker foldmarker={,} ft=vim:"{
 " 
 "        ________ ++     ________
 "       /VVVVVVVV\++++  /VVVVVVVV\
@@ -19,7 +19,7 @@
 "
 "   This is a Vim Config File (.vimrc) by Franz Greiling. It gives
 "   a general Idea of what Options and Configurations are possible. It
-"   should work on (hopefully) every System with at least Vim 7.2
+"   should work on (hopefully) every System with at least Vim 7.2"}
 "   installed. You can simply clone the repository, but it is probably
 "   better if you just cherry-pick the parts you want and understand.
 "
@@ -97,12 +97,10 @@
         " Colors {
             if count(g:furry_packages, 'colors')
                 Bundle 'Lokaltog/vim-powerline'
-
                 Bundle 'sjl/badwolf'
                 Bundle 'altercation/vim-colors-solarized'
                 Bundle 'chriskempson/vim-tomorrow-theme'
 
-                " Should only be used with 
                 Bundle 'ricardovaleriano/vim-github-theme'
                 Bundle 'roman/golden-ratio'
             endif
@@ -110,7 +108,6 @@
 
         " Environment {
             if count(g:furry_packages, 'environment')
-                Bundle 'kien/ctrlp.vim'
                 Bundle 'file-line'
 
                 if has('python') || has('python3')
@@ -125,17 +122,14 @@
         " Utility {
             if count(g:furry_packages, 'utility')
                 Bundle 'tpope/vim-unimpaired'
-
-                Bundle 'utl.vim'
-
                 Bundle 'Align'
+                Bundle 'nathanaelkane/vim-indent-guides'
                 Bundle 'tpope/vim-repeat'
-                Bundle 'tpope/vim-commentary'
+                Bundle 'tomtom/tcomment_vim'
                 Bundle 'laerador/vim-speeddating'
                 Bundle 'tpope/vim-surround'
                 Bundle 'Townk/vim-autoclose'
                 Bundle 'matchit.zip'
-
                 Bundle 'milkypostman/vim-togglelist'
             endif
         " }
@@ -152,7 +146,6 @@
                 " CARE! Restore view automates Views
                 " This can get some unintendet behavior!
                 Bundle 'vim-scripts/restore_view.vim'
-
                 Bundle 'xolox/vim-session'
             endif
         " }
@@ -168,7 +161,6 @@
             if count(g:furry_packages, 'git')
                 Bundle 'tpope/vim-fugitive'
                 Bundle 'gregsexton/gitv'
-
                 Bundle 'tpope/vim-git'
                 
                 if executable('curl')
@@ -182,7 +174,6 @@
             if count(g:furry_packages, 'markup')
                 Bundle 'tpope/vim-liquid'
                 Bundle 'vim-pandoc/vim-pandoc'
-
                 Bundle 'xolox/vim-notes'
             endif
         " }
@@ -197,7 +188,6 @@
             if count(g:furry_packages, 'html')
                 Bundle 'othree/html5.vim'
                 Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-
                 Bundle 'hail2u/vim-css3-syntax'
                 Bundle 'tpope/vim-haml'
                 Bundle 'jQuery'
@@ -206,7 +196,7 @@
 
         " Python {
             if count(g:furry_packages, 'python')
-                Bundle 'klen/python-mode'
+                " Bundle 'klen/python-mode'
                 Bundle 'davidhalter/jedi-vim'
             endif
         " }
@@ -214,7 +204,6 @@
         " Go {
             if count(g:furry_packages, 'go')
                 set rtp+=$GOROOT/misc/vim
-                Bundle 'jnwhiteh/vim-golang'
                 Bundle 'nsf/gocode', {'rtp': 'vim/'}
             endif
         " }
@@ -253,10 +242,13 @@
         let g:solarized_termcolors = 256
     " } 
     
-    " Utl {
-        let g:utl_cfg_hdl_scm_http = "exec 'silent !open %u#f' | redraw!"
-        " Mnoric is 'follow link'
-        nmap <Leader>fl :Utl<CR>
+    " Golden Ratio {
+        let g:golden_ratio_autocommand = 0   
+    " }
+    
+    " Indent Guides {
+        let g:indent_guides_start_level = 2
+        let g:indent_guides_guide_size = 1
     " }
 
     " Autoclose {
@@ -267,8 +259,14 @@
     " SingleCompile {
         let g:SingleCompile_usedialog = 0
         let g:SingleCompile_menumode = 0
+        let g:SingleCompile_showquickfixiferror = 1
+        let g:SingleCompile_silentcompileifshowquickfix = 1
+        let g:SingleComplie_showresultafterrun = 1 
+
         nmap <F9> :SCCompile<CR>
-        nmap <F10> :SCCompileRun<CR>
+        nmap <F10> :SCCompileRun<CR><CR>
+        nmap <S-F10> :SCCompileRunAsync<CR>
+        nmap <S-F11> :SCViewResult<CR>
     " }
 
     " netrw {
@@ -304,10 +302,11 @@
     " Syntastic {
         let g:syntastic_check_on_open = 1
         let g:syntastic_auto_loc_list = 2
+        let g:syntastic_always_populate_loc_list=1
 
         " Pyflakes
         if executable('pyflakes')
-            let g:syntastic_python_checker = 'pyflakes'
+            let g:syntastic_python_checkers = ['pyflakes']
         endif
     " }
 
@@ -327,15 +326,28 @@
         autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags 
         autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS 
         autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags 
+        autocmd FileType go setlocal omnifunc=gocomplete#Complete
+        autocmd FileType python setlocal omnifunc=jedi#complete
 
         " " Enable heavy omni completion. 
         if !exists('g:neocomplcache_omni_patterns') 
             let g:neocomplcache_omni_patterns = {} 
         endif 
 
+        if !exists('g:neocomplcache_force_omni_patterns')
+            let g:neocomplcache_force_omni_patterns = {}
+        endif
+
+        let g:neocomplcache_omni_patterns.python = '[^. \t]\.\w*'
+        let g:neocomplcache_force_omni_patterns.python = '[^. \t]\.\w*'
+        let g:neocomplcache_omni_patterns.go = '\h\w*\.\?'
+        let g:neocomplcache_force_omni_patterns.go = '\h\w*\.\?'
+
+
+
         " Plugin key-mappings.
-        imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-        smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+        vmap <TAB>     <Plug>(neosnippet_expand_target)
+        
 
         inoremap <expr><TAB>    pumvisible() ? "\<C-n>" : "\<TAB>"
         inoremap <expr><BS>     neocomplcache#smart_close_popup() . "\<C-h>"
@@ -355,14 +367,6 @@
         let g:jedi#auto_initialization = 1
         let g:jedi#show_function_definition = 0
         let g:jedi#popup_on_dot = 0
-        autocmd FileType python setlocal omnifunc=jedi#complete
-
-        " to work with Neocomplcache:
-        let g:neocomplcache_omni_patterns.python = '[^. \t\.\w*'
-        if !exists('g:neocomplcache_force_omni_patterns')
-            let g:neocomplcache_force_omni_patterns = {}
-        endif
-        let g:neocomplcache_force_omni_patterns.python = '[^. \t]\.\w*'
 
         let g:jedi#goto_command = '<leader>jg'
         let g:jedi#get_definition_command = '<leader>jd'
@@ -402,10 +406,6 @@
         set tags=./tags;
         let g:easytags_by_filetype = "~/.tags/"
         let g:easytags_include_members = 1
-    " }
-
-    " Python Mode {
-        let g:pymode_doc_key = ""
     " }
 
     " Pandoc {
@@ -806,6 +806,10 @@
         function! MaildropFile() " {
             setlocal syntax=perl ft=maildrop
         endfunction   " }
+
+        function! GoFile() " {
+            nmap <buffer> <Leader>gf :!gofmt -tabs=false -tabwidth=4 -w=true %<CR>
+        endfunction " }
         " }
 
         " Autocommands {
@@ -818,6 +822,7 @@
         autocmd FileType gitcommit                       call CommitFile()
         autocmd BufRead,BufNewFile *.html                call HtmlFile()
         autocmd BufRead,BufNewFile .maildrop*            call MaildropFile()
+        autocmd FileType go                              call GoFile()
         " }
     endif
 " }
