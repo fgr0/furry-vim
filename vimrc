@@ -261,7 +261,7 @@
         let g:SingleCompile_menumode = 0
         let g:SingleCompile_showquickfixiferror = 1
         let g:SingleCompile_silentcompileifshowquickfix = 1
-        let g:SingleComplie_showresultafterrun = 1 
+        let g:SingleCompile_showresultafterrun = 1 
 
         nmap <F9> :SCCompile<CR>
         nmap <F10> :SCCompileRun<CR><CR>
@@ -326,8 +326,10 @@
         autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags 
         autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS 
         autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags 
-        autocmd FileType go setlocal omnifunc=gocomplete#Complete
         autocmd FileType python setlocal omnifunc=jedi#complete
+        autocmd FileType go setlocal omnifunc=gocomplete#Complete
+
+        set completeopt-=preview
 
         " " Enable heavy omni completion. 
         if !exists('g:neocomplcache_omni_patterns') 
@@ -341,7 +343,7 @@
         let g:neocomplcache_omni_patterns.python = '[^. \t]\.\w*'
         let g:neocomplcache_force_omni_patterns.python = '[^. \t]\.\w*'
         let g:neocomplcache_omni_patterns.go = '\h\w*\.\?'
-        let g:neocomplcache_force_omni_patterns.go = '\h\w*\.\?'
+        " let g:neocomplcache_force_omni_patterns.go = '\h\w*\.\?'
 
 
 
