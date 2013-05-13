@@ -19,7 +19,7 @@ personal Vim Configuration.
 
 To use _Furry-Vim_, simply clone this repository and Sym-link the vimrc
 
-```
+```bash
 git clone --recursive git://github.com/laerador/furry-vim.git ~/.vim
 ln -s ~/.vim/vimrc ~/.vimrc
 ```
@@ -30,32 +30,35 @@ you are ready to go!
 ### Step-by-Step 
 
 #### Dependencies
-First, be aware that this `vimrc` should only work with at least Vim 7.3. It
-should just ignore older Versions, but if it does you should upgrade your Vim.
+First, be aware that this `vimrc` should only work with at least **Vim 7.3.** It
+should warn you about older Versions, but if it does you should consider 
+upgrading your Vim.
 
 Other than that, this `vimrc` should run without any problems. But to be able to use
-every Feature and Plugin, you will need some other Programms:
+every Feature and Plugin, you will need some other Programs:
 
-- For _ctag_-Related Plugins you will need to install [Exuberand
+- For _ctag_-related Plugins you will need to install [Exuberand
   Ctags](http://ctags.sourceforge.net/)
-- To use _Gist_ in Vim you will need to have curl
 - To use some Plugins like `VimCalc` and `Gundo` you will need to Install a
   Vim-Version with Python-Interface
+- To use _Gist_ in Vim you will need to have curl
 
 #### Installation
 
-To install _Furry-Vim_, use git and create a symlink to the `vimrc`
+To install _Furry-Vim_, use git to clone this repository and create a symlink to 
+the `vimrc`
 
-```
+```bash
 git clone --recursive git://github.com/laerador/furry-vim.git ~/.vim
 ln -s ~/.vim/vimrc ~/.vimrc
 ```
 
-_Furry-Vims_ Package Manager [Vundle][] now needs to install all your wonderful
-Plugins by issuing the following Command in Vim `:BundleInstall`. After that,
+Furry-Vims Package Manager [Vundle][] now needs to install all your wonderful
+Plugins by issuing the following command in Vim: `:BundleInstall`. After that,
 simply restart Vim.
 
 #### Configuration and Usage
+##### Configuration
 Furry-Vim is supposed to be used as a Core Configuration and is designed to be
 shared over several Systems. (For Example: Your computer at Work, at Home, the
 Server you connect too, ...) Because of this, _Furry-Vim_ looks for 2 files in
@@ -75,42 +78,80 @@ found.
 
     This enables you to overwrite some of the settings this vimrc sets
 
-At the moment, Furry-Vim has two settings which you can set in the. `g:furry_persistent` is an Integer-Variable with which you can controll if Persistent Undo, mksession and swap-settings are used. 
+3. `.theme.local.vimrc`
+    This file is sourced right before applying the colorsettings.
 
-`g:furry_packages` is a List-Style Variable in which you can choose which
-Plugin-Packages are installed.
+    It can be used to make sure that plugins have been loaded before setting the 
+    colorscheme. (All settings you can do in this vimrc can also be done in the 
+    other two files)
 
-## Included Plugins
+##### Settings
+At the moment, Furry-Vim has three variables which you can set inside the 
+`.local.vimrc`:
 
-_Furry-Vim_ includes several Plugins which are Categorized in 12 Packages to
-easily choose which Plugins you need and which not. To choose the Packages, use
-the `g:furry_persistent`-Variable in your .local.vimrc
+* `g:furry_packages` is a List-Style Variable in which you can choose which 
+  Plugin-Packages are installed. (see below)
+* `g:furry_persistent` is an Integer-Variable with which you can control if 
+  Persistent Undo, mksession and swap-settings are used:
+    - `0` : Only the global swap-directory is enabled
+    - `1` : In addition to `0`, also the stateless views are enabled (see `:h 
+      view`)
+    - `2` : In addition to `1`, also persistent undo is enabled (see `:h 
+      persistent-undo`)
 
-The 12 Packages:
+* `g:furry_usertheme` is an Integer-Variable which stops Furry-Vim to set 
+  theme-related settings. Set it to `0` to disable Furry-Vims theme settings.
+
+
+## Plugins
+
+_Furry-Vim_ does only include [Vundle][] as Plugin, which then takes care of 
+installing (and updating) all of your Plugins. When you first install this 
+vimrc, no Plugins will have been installed and you need to use `:BundleInstall` 
+to install the Plugins tracked by Vundle. 
+
+This allows you to control how big your installation is going to be and which 
+Plugins you want to use.
+
+### Included Plugins
+These are the Plugins Vundle will install when you run `:BundleInstall`. They 
+are categorized in 14 _Packages_ to easily choose which Plugins you need and 
+which not. To choose the Packages, use the `g:furry_packages`-Variable in your 
+`.local.vimrc`. If you do not set this variable, Furry-Vim will install all 
+Packages.
+
+##### Example:
+```vim
+let g:furry_packages = ['colors','environment']
+```
+This will only install Plugins from the Packages __Color__ and __Environment__. 
+
+#### Packages
+
 1. Color ( 'colors' )
     - Powerline, a fanzy and informative Statusline
-    - 3 Colorshemes - Solarized, Tomorrow and Badwolf
+    - 4 Colorshemes - Solarized, Tomorrow, Github and Badwolf
     - Golden Ration, a Plugin to Resize Splits
 
 2. Environment ( 'environment' )
-    - CtrlP, a Fuzzy File Finder
     - Gundo, a graphical Tree-Undo (req. Python-Interface)
     - VimCalc, a Calculator in Vim (req. Python-Interface)
     - file-line, allows to Open Files at a specific Line
-    - ZoomWin, to zoom Splits
 
 3. Utility ( 'utility' )
     - Align, aligns Text
-    - Commentary, easily comment Text
+    - tcomment, easily comment code
+    - vim-indent-guides
     - Unimpaired
+    - Speeddating
     - Surround
     - Autoclose
     - Matchit
-    - vim-space
+    - Togglelist
 
 4. Autocompletion and Snippets ( 'autocompletion' )
     - Neocomplcache, a powerful autocompletion-Engine
-    - vim-snipmate, a powerful Snippet Engine
+    - Neosnippet, a powerful Snippet Engine
 
 5. Views ( 'views' )
     - Restore_view, automatically save and restore Views
@@ -127,8 +168,9 @@ The 12 Packages:
     - Gist-vim, View and Publish Gists
 
 8. Markup ( 'markup' )
-    - vim-markdown, Github-Flavoured Markdown Syntax Highlighting
+    - vim-pandoc, Syntax Highlighting for Pandoc Files
     - Vim-liquid, Syntax Highlighting for Liquid Files
+    - Vim-Notes, Global Notes Plugin
 
 9. LaTeX ( 'latex' )
     - LaTeX-Box, a Latex-Plugin
@@ -138,13 +180,37 @@ The 12 Packages:
     - Sparkup, Zencoding for HTML5
     - Vim-CSS3-Syntax
     - jQuery, Syntax for jQuery Framework
-    - colorv, show Colors
+    - vim-haml
 
 11. Python ( 'python' )
-    - python-mode
+    - Jedi-vim
 
-12. Ctags ( 'ctags' )
+12. Go ( 'go' )
+    - Gocode
+
+13. Mac OS X Related ( 'osx' )
+    - Applescript.vim, Syntax Highlighting for Applescript
+    - Macvim-Skim, pdfsync for latexfiles (only with 'latex' )
+
+14. Ctags ( 'ctags' )
     - Tagbar
-    - Easytags
+
+### Installing your own Plugins
+You can simply add your own Plugins by using Vundle's `Bundle` statement inside 
+your `.local.vimrc` -- here an example adding a new colorscheme 
+_vim-distinguished_ from 
+[https://github.com/Lokaltog/vim-distinguished](https://github.com/Lokaltog/vim-distinguished)
+
+```vim
+Bundle 'Lokaltog/vim-distinguished'
+```
+
+That's it!
+
+## Development
+_Furry-Vim_ is mainly my personal configuration for Vim, so most of the settings 
+are chosen by my preference. But still, if you find mistakes, have comments or 
+different solutions, please let me know -- either via Pull Requests or simply 
+Issues.
 
 [Vundle]: http://google.com
