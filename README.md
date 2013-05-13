@@ -207,6 +207,11 @@ Bundle 'Lokaltog/vim-distinguished'
 
 That's it!
 
+### Updating Plugins
+To update all Plugins, that are installed by Vundle, use the command 
+`:BundleInstall!` (note the exclamation-mark). This installes all new Plugins 
+_and_ updates your old ones.
+
 ## Development
 _Furry-Vim_ is mainly my personal configuration for Vim, so most of the settings 
 are chosen by my preference. But still, if you find mistakes, have comments or 
