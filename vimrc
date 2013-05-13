@@ -96,7 +96,10 @@
     " Plugins themselfes {
         " Colors {
             if count(g:furry_packages, 'colors')
-                Bundle 'Lokaltog/vim-powerline'
+                if has('python') || has('python3')
+                    Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim'}
+                endif
+
                 Bundle 'sjl/badwolf'
                 Bundle 'altercation/vim-colors-solarized'
                 Bundle 'chriskempson/vim-tomorrow-theme'
@@ -211,13 +214,17 @@
         " OS X {
             if count(g:furry_packages, 'osx')
                 Bundle 'zhaocai/applescript.vim'
+
+                if count(g:furry_packages, 'latex')
+                    Bundle 'keflavich/macvim-skim'
+                endif
             endif
         " }
 
         " Ctags {
             if executable('ctags') && count(g:furry_packages, 'ctags')
                 Bundle 'majutsushi/tagbar'
-                Bundle 'xolox/vim-easytags'
+                " Bundle 'xolox/vim-easytags'
             elseif !executable('ctags') && count(g:furry_packages, 'ctags') && g:furry_local != 1
                 echo "To use ctags-Packages you must have ctags installed!"
             endif
@@ -256,6 +263,10 @@
         let g:AutoCloseExpandSpace = 0
     " }
 
+    " Togglelist {
+        let g:toggle_list_no_mappings = 1
+    " }
+
     " SingleCompile {
         let g:SingleCompile_usedialog = 0
         let g:SingleCompile_menumode = 0
@@ -263,7 +274,7 @@
         let g:SingleCompile_silentcompileifshowquickfix = 1
         let g:SingleCompile_showresultafterrun = 1 
 
-        nmap <F9> :SCCompile<CR>
+        nmap <F9> :SCCompile<CR><CR>
         nmap <F10> :SCCompileRun<CR><CR>
         nmap <S-F10> :SCCompileRunAsync<CR>
         nmap <S-F11> :SCViewResult<CR>
@@ -307,6 +318,11 @@
         " Pyflakes
         if executable('pyflakes')
             let g:syntastic_python_checkers = ['pyflakes']
+        endif
+
+        " LaTeX
+        if executable('lacheck')
+            let g:syntastic_tex_checkers = ['lacheck']
         endif
     " }
 
@@ -414,6 +430,20 @@
         let g:pandoc_use_hard_wraps = 1
         let g:pandoc_auto_format = 1
     " }
+
+    " LatexBox {
+        imap <buffer> [[ 		    \begin{
+        imap <buffer> ]]		    <Plug>LatexCloseCurEnv
+        nmap <buffer> <leader>lc	<Plug>LatexChangeEnv
+        vmap <buffer> <F7>		    <Plug>LatexWrapSelection
+        vmap <buffer> <S-TAB>		<Plug>LatexEnvWrapSelection
+        imap <buffer> (( 		    \eqref{
+    " } } }
+    
+    " Macvim-Skim {
+        let g:macvim_skim_app_path = "/Applications/Skim.app"
+    " }
+
 " }
 
 " Environment {
@@ -577,7 +607,7 @@
 
     " GUI Options {
         if has('gui_running')
-            set guifont=Source\ Code\ Pro:h11
+            set guifont=Source\ Code\ Pro\ for\ Powerline:h11
 
             set guioptions=mcg
             set transparency=10
@@ -643,10 +673,7 @@
         set laststatus=2
 
         if count(g:furry_packages, 'colors')
-            let g:Powerline_stl_path_style = "short"
-             
-            " For Fancy symbols you need a supporting Font!
-            let g:Powerline_symbols = "fancy"
+            let g:powerline_config_path = expand('~/.vim/bundle/powerline/powerline/config_files')
         endif
     " }
 " }
@@ -790,7 +817,9 @@
                 call SingleCompile#SetCompilerTemplate('tex','latexmk','latexmk','latexmk','-pdf','open %<.pdf')
                 call SingleCompile#ChooseCompiler('tex', 'latexmk')
             endif
-
+" 
+"             nmap <Leader>lt :LatexTOCToggle<CR>
+" 
             set conceallevel=0
         endfunction " }
 
