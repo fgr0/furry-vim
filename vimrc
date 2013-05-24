@@ -224,7 +224,7 @@
         " Ctags {
             if executable('ctags') && count(g:furry_packages, 'ctags')
                 Bundle 'majutsushi/tagbar'
-                " Bundle 'xolox/vim-easytags'
+                Bundle 'xolox/vim-easytags'
             elseif !executable('ctags') && count(g:furry_packages, 'ctags') && g:furry_local != 1
                 echo "To use ctags-Packages you must have ctags installed!"
             endif
@@ -328,13 +328,15 @@
 
     " neocomplcache {
         " Keine Ahnung was das hier eigentlich genau macht, aber es funktioniert.
-        let g:neocomplcache_auto_completion_start_length = 3
         let g:neocomplcache_enable_at_startup = 1
+
+        let g:neocomplcache_auto_completion_start_length = 3
         let g:neocomplcache_enable_auto_delimiter = 1
         let g:neocomplcache_enable_auto_select = 0
-        let g:neocomplcache_enable_camel_case_completion = 1
         let g:neocomplcache_enable_smart_case = 1
+        let g:neocomplcache_enable_camel_case_completion = 1
         let g:neocomplcache_enable_underbar_completion = 1
+        let g:neocomplcache_enable_fuzzy_completion = 1
         let g:neocomplcache_auto_close_preview = 1
 
         " Enable omni completion. 
@@ -361,18 +363,29 @@
         let g:neocomplcache_omni_patterns.go = '\h\w*\.\?'
         " let g:neocomplcache_force_omni_patterns.go = '\h\w*\.\?'
 
+        if !exists('g:neocomplcache_same_filetype_lists')
+            let g:neocomplcache_same_filetype_lists = {}
+        endif
 
+        let g:neocomplcache_same_filetype_lists.c = 'cpp,h'
+        let g:neocomplcache_ctags_program = "/usr/local/bin/ctags"
 
         " Plugin key-mappings.
         vmap <TAB>     <Plug>(neosnippet_expand_target)
         
-
         inoremap <expr><TAB>    pumvisible() ? "\<C-n>" : "\<TAB>"
         inoremap <expr><BS>     neocomplcache#smart_close_popup() . "\<C-h>"
 
         " SuperTab like snippets behavior.
         imap <expr><TAB> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
         smap <expr><TAB> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+        inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+        function! s:my_cr_function()
+            " return neocomplcache#smart_close_popup() . "\<CR>"
+            " For no inserting <CR> key.
+            return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+        endfunction
 
         " For snippet_complete marker.
         if has('conceal')
@@ -394,8 +407,9 @@
 
     " Session List {
         set sessionoptions=blank,buffers,curdir,folds,tabpages,winsize
-        nmap <leader>sl :SessionList<CR>
-        nmap <leader>ss :SessionSave<CR>
+        nmap <leader>sl :ListSession<CR>
+        nmap <leader>ss :SaveSession<CR>
+        let g:session_autosave = 'no'
     " }
 
     " Fugitive {
@@ -421,9 +435,27 @@
     " }
 
     " Easytags {
-        set tags=./tags;
+        set tags=$HOME/.tags/*
         let g:easytags_by_filetype = "~/.tags/"
         let g:easytags_include_members = 1
+        
+        if filereadable(expand('~/.vim/bundle/vim-easytags/README.md'))
+            call xolox#easytags#define_tagkind({
+                \ 'filetype': 'go',
+                \ 'hlgroup': 'goFunc',
+                \ 'tagkinds': '[f]'})
+            call xolox#easytags#define_tagkind({
+                \ 'filetype': 'go',
+                \ 'hlgroup': 'goType',
+                \ 'tagkinds': '[t]'})
+            call xolox#easytags#define_tagkind({
+                \ 'filetype': 'go',
+                \ 'hlgroup': 'goVar',
+                \ 'tagkinds': '[v]'})
+
+            highlight def link goFunc Function
+            highlight def link goType Type
+        endif
     " }
 
     " Pandoc {
@@ -840,6 +872,7 @@
 
         function! GoFile() " {
             nmap <buffer> <Leader>gf :!gofmt -tabs=false -tabwidth=4 -w=true %<CR>
+            set path+=$GOROOT/**
         endfunction " }
         " }
 
