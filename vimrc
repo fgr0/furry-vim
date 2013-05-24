@@ -703,10 +703,10 @@
 
     " Statusline -- Powerline {
         set laststatus=2
-
-        if count(g:furry_packages, 'colors')
-            let g:powerline_config_path = expand('~/.vim/bundle/powerline/powerline/config_files')
-        endif
+" 
+"         if count(g:furry_packages, 'colors')
+"             let g:powerline_config_path = expand('~/.vim/bundle/powerline/powerline/config_files')
+"         endif
     " }
 " }
 
