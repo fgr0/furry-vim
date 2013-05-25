@@ -134,6 +134,7 @@
                 Bundle 'Townk/vim-autoclose'
                 Bundle 'matchit.zip'
                 Bundle 'milkypostman/vim-togglelist'
+                Bundle 'terryma/vim-multiple-cursors'
 
                 if executable('ack')
                     Bundle 'mileszs/ack.vim'
