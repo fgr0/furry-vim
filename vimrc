@@ -169,6 +169,9 @@
                 Bundle 'tpope/vim-fugitive'
                 Bundle 'gregsexton/gitv'
                 Bundle 'tpope/vim-git'
+                if has('signs')
+                    Bundle 'airblade/vim-gitgutter'
+                endif
                 
                 if executable('curl')
                     Bundle 'mattn/webapi-vim'
