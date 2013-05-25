@@ -741,10 +741,9 @@
         vnoremap < <gv
         vnoremap > >gv
 
-        " Provide 'unimpaired' Mappings for Tabs
-        nmap <silent> <leader>t :tabnext<CR>
-        nmap <silent> <leader>T+ :tabmove +1<CR>
-        nmap <silent> <leader>T- :tabmove -1<CR>
+        " Quick mappings for 0 and $
+        nnoremap H 0
+        nnoremap L $
     " }
 
     " Code Folding {
