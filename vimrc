@@ -171,6 +171,8 @@
                 Bundle 'tpope/vim-git'
                 if has('signs')
                     Bundle 'airblade/vim-gitgutter'
+                    Bundle 'kana/vim-textobj-user'
+                    Bundle 'gilligan/textobj-gitgutter'
                 endif
                 
                 if executable('curl')
