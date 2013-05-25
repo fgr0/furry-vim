@@ -134,6 +134,10 @@
                 Bundle 'Townk/vim-autoclose'
                 Bundle 'matchit.zip'
                 Bundle 'milkypostman/vim-togglelist'
+
+                if executable('ack')
+                    Bundle 'mileszs/ack.vim'
+                endif
             endif
         " }
 
@@ -190,7 +194,7 @@
         " HTML & CSS {
             if count(g:furry_packages, 'html')
                 Bundle 'othree/html5.vim'
-                Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
+                Bundle 'mattn/zencoding-vim'
                 Bundle 'hail2u/vim-css3-syntax'
                 Bundle 'tpope/vim-haml'
                 Bundle 'jQuery'
