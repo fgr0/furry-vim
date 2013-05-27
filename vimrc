@@ -112,6 +112,7 @@
         " Environment {
             if count(g:furry_packages, 'environment')
                 Bundle 'file-line'
+                Bundle 'myusuf3/numbers.vim'
 
                 if has('python') || has('python3')
                     Bundle 'sjl/gundo.vim'
