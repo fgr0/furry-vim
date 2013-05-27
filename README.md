@@ -137,6 +137,7 @@ This will only install Plugins from the Packages __Color__ and __Environment__.
     - Gundo, a graphical Tree-Undo (req. Python-Interface)
     - VimCalc, a Calculator in Vim (req. Python-Interface)
     - file-line, allows to Open Files at a specific Line
+    - Numbers, a Plugin for _smart_ Linenumbers
 
 3. Utility ( 'utility' )
     - Align, aligns Text
@@ -148,6 +149,8 @@ This will only install Plugins from the Packages __Color__ and __Environment__.
     - Autoclose
     - Matchit
     - Togglelist
+    - Multiple Cursors (like in Sublime)
+    - Ack.vim, a Interface for ack
 
 4. Autocompletion and Snippets ( 'autocompletion' )
     - Neocomplcache, a powerful autocompletion-Engine
@@ -165,6 +168,8 @@ This will only install Plugins from the Packages __Color__ and __Environment__.
     - Fugitive, a Gitwrapper for vim
     - Gitv, a Gitk-like Gitbrowser
     - vim-git, Syntax Highlighting
+    - Gitgutter, shows Diff-Information in Signs-Column
+    - textobj-gitgutter, use humps for motions
     - Gist-vim, View and Publish Gists
 
 8. Markup ( 'markup' )
@@ -194,6 +199,7 @@ This will only install Plugins from the Packages __Color__ and __Environment__.
 
 14. Ctags ( 'ctags' )
     - Tagbar
+    - Easytags, automatically create and highlight ctags
 
 ### Installing your own Plugins
 You can simply add your own Plugins by using Vundle's `Bundle` statement inside 

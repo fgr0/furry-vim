@@ -112,6 +112,7 @@
         " Environment {
             if count(g:furry_packages, 'environment')
                 Bundle 'file-line'
+                Bundle 'myusuf3/numbers.vim'
 
                 if has('python') || has('python3')
                     Bundle 'sjl/gundo.vim'
@@ -134,6 +135,7 @@
                 Bundle 'Townk/vim-autoclose'
                 Bundle 'matchit.zip'
                 Bundle 'milkypostman/vim-togglelist'
+                Bundle 'terryma/vim-multiple-cursors'
 
                 if executable('ack')
                     Bundle 'mileszs/ack.vim'
@@ -169,6 +171,11 @@
                 Bundle 'tpope/vim-fugitive'
                 Bundle 'gregsexton/gitv'
                 Bundle 'tpope/vim-git'
+                if has('signs')
+                    Bundle 'airblade/vim-gitgutter'
+                    Bundle 'kana/vim-textobj-user'
+                    Bundle 'gilligan/textobj-gitgutter'
+                endif
                 
                 if executable('curl')
                     Bundle 'mattn/webapi-vim'
