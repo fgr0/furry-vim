@@ -155,6 +155,7 @@
                 " CARE! Restore view automates Views
                 " This can get some unintendet behavior!
                 Bundle 'vim-scripts/restore_view.vim'
+                Bundle 'xolox/vim-misc'
                 Bundle 'xolox/vim-session'
             endif
         " }
@@ -235,6 +236,7 @@
         " Ctags {
             if executable('ctags') && count(g:furry_packages, 'ctags')
                 Bundle 'majutsushi/tagbar'
+                Bundle 'xolox/vim-misc'
                 Bundle 'xolox/vim-easytags'
             elseif !executable('ctags') && count(g:furry_packages, 'ctags') && g:furry_local != 1
                 echo "To use ctags-Packages you must have ctags installed!"
