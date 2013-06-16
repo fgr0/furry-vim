@@ -189,7 +189,6 @@
             if count(g:furry_packages, 'markup')
                 Bundle 'tpope/vim-liquid'
                 Bundle 'vim-pandoc/vim-pandoc'
-                Bundle 'xolox/vim-notes'
             endif
         " }
 
