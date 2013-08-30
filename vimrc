@@ -116,7 +116,6 @@
 
                 if has('python') || has('python3')
                     Bundle 'sjl/gundo.vim'
-                    Bundle 'gregsexton/VimCalc'
                 elseif g:furry_local != 1
                     echo "To use some Bundles from the Environment-Package you need to have Pythonsupport in vim"
                 endif
@@ -559,7 +558,8 @@
             endif
         " }
 
-        set number
+        set nu
+        set rnu
         set ruler
         set cursorline
 
@@ -745,8 +745,8 @@
         vnoremap > >gv
 
         " Quick mappings for 0 and $
-        nnoremap H 0
-        nnoremap L $
+        noremap H 0
+        noremap L $
     " }
 
     " Code Folding {
