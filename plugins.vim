@@ -1,7 +1,6 @@
 " vim: set foldlevel=0 foldmethod=marker foldmarker={,} ft=vim:"
 " Plugins using Vundle
 
-
 " Setting up Vundle {
     " Initializing Vundle {
         filetype off
@@ -83,8 +82,6 @@
                 " CARE! Restore view automates Views
                 " This can get some unintendet behavior!
                 Bundle 'vim-scripts/restore_view.vim'
-                Bundle 'xolox/vim-misc'
-                Bundle 'xolox/vim-session'
             endif
         " }
 

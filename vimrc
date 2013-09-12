@@ -321,8 +321,8 @@
 
 " Source additional vimrcs {
     " Vim will look for your additional configurations at two places
-    " 1st vim will look for ~/.<file>.vimrc, if it can not find those
-    " it will use the defaults from ~/.vim/<file>.vimrc
+    " 1st vim will look for ~/.<file>.vim, if it can not find those
+    " it will use the defaults from ~/.vim/<file>.vim
 
     " Source local vimrc {
         " This file should be used to have systemspecific 
@@ -333,26 +333,26 @@
     " }
     
     " Source Plugin Vimrc {
-        if filereadable(expand("~/.plugins.vimrc"))
-            source ~/.plugins.vimrc
-        elseif filereadable(expand("~/.vim/plugins.vimrc"))
-            source ~/.vim/plugins.vimrc
+        if filereadable(expand("~/.plugins.vim"))
+            source ~/.plugins.vim
+        elseif filereadable(expand("~/.vim/plugins.vim"))
+            source ~/.vim/plugins.vim
         endif
     " }
 
     " Source .theme.vim vimrc {
-        if filereadable(expand("~/.theme.vimrc"))
-            source ~/.theme.vimrc
-        elseif filereadable(expand("~/.vim/theme.vimrc"))
-            source ~/.vim/theme.vimrc
+        if filereadable(expand("~/.theme.vim"))
+            source ~/.theme.vim
+        elseif filereadable(expand("~/.vim/theme.vim"))
+            source ~/.vim/theme.vim
         endif
     " }
 
     " Source .theme.vim vimrc {
-        if filereadable(expand("~/.filetypes.vimrc"))
-            source ~/.filetypes.vimrc
-        elseif filereadable(expand("~/.vim/filetypes.vimrc"))
-            source ~/.vim/filetypes.vimrc
+        if filereadable(expand("~/.filetypes.vim"))
+            source ~/.filetypes.vim
+        elseif filereadable(expand("~/.vim/filetypes.vim"))
+            source ~/.vim/filetypes.vim
         endif
     " }
 " }
