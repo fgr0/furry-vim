@@ -69,6 +69,7 @@
     " Backup, Swap & Undo {
         " Longer Commandhistory
         set history=1000
+        set backupskip=/tmp/*,/private/tmp/*
 
         " Persistent Undo and Session/view Magic
         " Need vim 7.3 + Compilerfeatures
