@@ -86,7 +86,12 @@
 
     " Autocompletion and Snippets {{{
         if count(g:furry_packages, 'autocompletion')
-            NeoBundle 'Shougo/neocomplcache'
+            if has('lua')
+                NeoBundle 'Shougo/neocomplete.vim'
+                NeoBundle 'Shougo/context_filetype.vim'
+            else
+                NeoBundle 'Shougo/neocomplcache'
+            endif
             NeoBundle 'Shougo/neosnippet'
         endif
     " }}}
@@ -292,72 +297,165 @@
     " }}}
 
     " neocomplcache {{{
-        " Keine Ahnung was das hier eigentlich genau macht, aber es funktioniert.
-        let g:neocomplcache_enable_at_startup = 1
+        if !has('lua')
+            " Keine Ahnung was das hier eigentlich genau macht, aber es funktioniert.
+            let g:neocomplcache_enable_at_startup = 1
 
-        let g:neocomplcache_auto_completion_start_length = 3
-        let g:neocomplcache_enable_auto_delimiter = 1
-        let g:neocomplcache_enable_auto_select = 0
-        let g:neocomplcache_enable_smart_case = 1
-        let g:neocomplcache_enable_camel_case_completion = 1
-        let g:neocomplcache_enable_underbar_completion = 1
-        let g:neocomplcache_enable_fuzzy_completion = 1
-        let g:neocomplcache_auto_close_preview = 1
+            let g:neocomplcache_auto_completion_start_length = 3
+            let g:neocomplcache_enable_auto_delimiter = 1
+            let g:neocomplcache_enable_auto_select = 0
+            let g:neocomplcache_enable_smart_case = 1
+            let g:neocomplcache_enable_camel_case_completion = 1
+            let g:neocomplcache_enable_underbar_completion = 1
+            let g:neocomplcache_enable_fuzzy_completion = 1
+            let g:neocomplcache_auto_close_preview = 1
 
-        " Enable omni completion. 
-        autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS 
-        autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags 
-        autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS 
-        autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags 
-        autocmd FileType python setlocal omnifunc=jedi#complete
-        autocmd FileType go setlocal omnifunc=gocomplete#Complete
+            " Enable omni completion. 
+            autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS 
+            autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags 
+            autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS 
+            autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags 
+            autocmd FileType python setlocal omnifunc=jedi#complete
+            autocmd FileType go setlocal omnifunc=gocomplete#Complete
 
-        set completeopt-=preview
+            set completeopt-=preview
 
-        " " Enable heavy omni completion. 
-        if !exists('g:neocomplcache_omni_patterns') 
-            let g:neocomplcache_omni_patterns = {} 
-        endif 
+            " " Enable heavy omni completion. 
+            if !exists('g:neocomplcache_omni_patterns') 
+                let g:neocomplcache_omni_patterns = {} 
+            endif 
 
-        if !exists('g:neocomplcache_force_omni_patterns')
-            let g:neocomplcache_force_omni_patterns = {}
-        endif
+            if !exists('g:neocomplcache_force_omni_patterns')
+                let g:neocomplcache_force_omni_patterns = {}
+            endif
 
-        let g:neocomplcache_omni_patterns.python = '[^. \t]\.\w*'
-        let g:neocomplcache_force_omni_patterns.python = '[^. \t]\.\w*'
-        let g:neocomplcache_omni_patterns.go = '\h\w*\.\?'
-        " let g:neocomplcache_force_omni_patterns.go = '\h\w*\.\?'
+            let g:neocomplcache_omni_patterns.python = '[^. \t]\.\w*'
+            let g:neocomplcache_force_omni_patterns.python = '[^. \t]\.\w*'
+            let g:neocomplcache_omni_patterns.go = '\h\w*\.\?'
+            " let g:neocomplcache_force_omni_patterns.go = '\h\w*\.\?'
 
-        if !exists('g:neocomplcache_same_filetype_lists')
-            let g:neocomplcache_same_filetype_lists = {}
-        endif
+            if !exists('g:neocomplcache_same_filetype_lists')
+                let g:neocomplcache_same_filetype_lists = {}
+            endif
 
-        let g:neocomplcache_same_filetype_lists.c = 'cpp,h'
-        let g:neocomplcache_ctags_program = "/usr/local/bin/ctags"
+            let g:neocomplcache_same_filetype_lists.c = 'cpp,h'
+            let g:neocomplcache_ctags_program = "/usr/local/bin/ctags"
 
-        " Plugin key-mappings.
-        vmap <TAB>     <Plug>(neosnippet_expand_target)
-        
-        inoremap <expr><TAB>    pumvisible() ? "\<C-n>" : "\<TAB>"
-        inoremap <expr><BS>     neocomplcache#smart_close_popup() . "\<C-h>"
+            " Plugin key-mappings.
+            vmap <TAB>     <Plug>(neosnippet_expand_target)
+            
+            inoremap <expr><TAB>    pumvisible() ? "\<C-n>" : "\<TAB>"
+            inoremap <expr><BS>     neocomplcache#smart_close_popup() . "\<C-h>"
 
-        " SuperTab like snippets behavior.
-        imap <expr><TAB> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-        smap <expr><TAB> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+            " SuperTab like snippets behavior.
+            imap <expr><TAB> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+            smap <expr><TAB> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
-        inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-        function! s:my_cr_function()
-            " return neocomplcache#smart_close_popup() . "\<CR>"
-            " For no inserting <CR> key.
-            return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
-        endfunction
+            inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+            function! s:my_cr_function()
+                " return neocomplcache#smart_close_popup() . "\<CR>"
+                " For no inserting <CR> key.
+                return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+            endfunction
 
-        " For snippet_complete marker.
-        if has('conceal')
-          set conceallevel=2
-          set concealcursor=""
+            " For snippet_complete marker.
+            if has('conceal')
+              set conceallevel=2
+              set concealcursor=""
+            endif
         endif
     " }}}
+
+    " Neocomplete {
+        if has('lua')
+            " Start Neocomplete
+            let g:neocomplete#enable_at_startup = 1
+
+            " Use Smartcase
+            let g:neocomplete#enable_ignore_case = 1
+            let g:neocomplete#enable_smart_case = 1
+
+            " Insert Delimiter Automatically
+            let g:neocomplete#enable_auto_delimiter = 1
+
+            " Set Completion Options
+            let g:neocomplete#enable_fuzzy_completion = 1
+            let g:neocomplete#enable_prefetch = 1
+
+            " Where is ctags?
+            let g:neocomplete#ctags_command = '/usr/local/bin/ctags'
+
+            " Enable omni completion. 
+            autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS 
+            autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags 
+            autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS 
+            autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags 
+            autocmd FileType python setlocal omnifunc=jedi#complete
+            autocmd FileType go setlocal omnifunc=gocomplete#Complete
+
+            set completeopt-=preview
+
+            " Enable heavy omni completion.
+            if !exists('g:neocomplete#sources#omni#input_patterns')
+                let g:neocomplete#sources#omni#input_patterns = {}
+            endif
+            if !exists('g:neocomplete#force_omni_input_patterns')
+                let g:neocomplete#force_omni_input_patterns = {}
+            endif
+            let g:neocomplete#sources#omni#input_patterns.python =
+                        \ '[^. \t]\.\w*'
+            let g:neocomplete#sources#omni#input_patterns.c =
+                        \ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?'
+            let g:neocomplete#sources#omni#input_patterns.go = 
+                        \ '\h\w*\.\?'
+
+            " Same Filetypes
+            if !exists('g:neocomplete#same_filetypes')
+                let g:neocomplete#same_filetypes = {}
+            endif
+            " In c buffers, completes from cpp and d buffers.
+            let g:neocomplete#same_filetypes.c = 'cpp,d,h'
+            " In cpp buffers, completes from c buffers.
+            let g:neocomplete#same_filetypes.cpp = 'c'
+            " In gitconfig buffers, completes from all buffers.
+            let g:neocomplete#same_filetypes.gitconfig = '_'
+            " In default, completes from all buffers.
+            let g:neocomplete#same_filetypes._ = '_'
+
+            " Recommended key-mappings.
+            " <CR>: close popup and save indent.
+            inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+            function! s:my_cr_function()
+                " return neocomplete#smart_close_popup() . "\<CR>"
+                " For no inserting <CR> key.
+                return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+            endfunction
+            " <TAB>: completion.
+            inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+            " <C-h>, <BS>: close popup and delete backword char.
+            inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+            inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+            inoremap <expr><C-y>  neocomplete#close_popup()
+            inoremap <expr><C-e>  neocomplete#cancel_popup()
+            " Close popup by <Space>.
+            inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
+
+            " For Neosnippets
+            " imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+            "             \ "\<Plug>(neosnippet_expand_or_jump)"
+            "             \: pumvisible() ? "\<C-n>" : "\<TAB>"
+            " smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+            "             \ "\<Plug>(neosnippet_expand_or_jump)"
+            "             \: "\<TAB>"
+            imap <expr><TAB> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+            smap <expr><TAB> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+            " For snippet_complete marker.
+            if has('conceal')
+                set conceallevel=2 concealcursor=i
+            endif
+        endif
+    " }
 
     " Jedi {{{
         let g:jedi#auto_initialization = 1
