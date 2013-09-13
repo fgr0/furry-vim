@@ -4,10 +4,10 @@
 
 " GUI Options {
     if has('gui_running')
-        set guifont=Source\ Code\ Pro\ for\ Powerline:h11
+        set guifont=Sauce\ Code\ Powerline\ Light:h11
 
         set guioptions=mcg
-        set transparency=10
+        set transparency=5
 
         if has('gui_macvim')
             set fuopt+=maxvert,maxhorz
@@ -39,4 +39,18 @@
     " Set Highlighting Options
     hi LineNR ctermfg=237 
     hi Folded ctermfg=darkgrey
+
+    " highlight lines in Sy and vimdiff etc.)
+    highlight DiffAdd           cterm=bold ctermbg=1 guibg=#004225
+    highlight DiffDelete        cterm=bold ctermbg=5 guibg=#343434
+    highlight DiffChange        cterm=bold ctermbg=9 guibg=#7C0A02
+
+    " highlight signs in Sy
+    highlight SignifySignAdd    cterm=bold ctermfg=155 guifg=#aeee00
+    highlight SignifySignChange cterm=bold ctermfg=215 guifg=#ffa724
+    highlight SignifySignDelete cterm=bold ctermfg=9 guifg=#7C0A02
+    highlight SignifyLineAdd    cterm=bold ctermfg=155 guifg=#aeee00
+    highlight SignifyLineChange cterm=bold ctermfg=215 guifg=#ffa724
+    highlight SignifyLineDelete cterm=bold ctermfg=9 guifg=#7C0A02
+    
 " }
