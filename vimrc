@@ -55,7 +55,7 @@
         set nofsync
 
         set autoread
-        set autochdir
+        " set autochdir
         set autowrite
         set clipboard+=unnamed
         set hidden
