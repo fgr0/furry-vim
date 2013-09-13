@@ -1,18 +1,18 @@
 " vim: set foldlevel=0 foldmethod=marker foldmarker={,} ft=vim:"
-" Plugins using Vundle
+" Plugins using NeoBundle
 
-" Setting up Vundle {
+" Setting up NeoBundle {
     " Initializing Vundle {
-        filetype off
+        if has('vim_starting')
+            set rtp+=~/.vim/bundle/neobundle.vim/
+        endif
 
-        " Use Bundle as Plugin Manager
-        set rtp+=~/.vim/bundle/vundle/
-        call vundle#rc()
+        call neobundle#rc(expand('~/.vim/bundle'))
 
-        " Update/Manage Vundle with Vundle
-        Bundle 'gmarik/vundle'
+        " Let NeoBundle manage NeoBundle
+        NeoBundleFetch 'Shougo/neobundle.vim'
     " }
-
+    
     " Set Package Groups {
         if ! exists('g:furry_packages')
             let g:furry_packages = [
@@ -32,144 +32,156 @@
                         \'ctags']
         endif
     " }
+" }
 
-    " Plugins themselfes {
-        " Colors {
-            if count(g:furry_packages, 'colors')
-                if has('python') || has('python3')
-                    Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim'}
-                endif
-
-                Bundle 'sjl/badwolf'
-                Bundle 'roman/golden-ratio'
+" Plugin Groups {
+    " Colors {
+        if count(g:furry_packages, 'colors')
+            if has('python') || has('python3')
+                NeoBundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim'}
             endif
-        " }
 
-        " Environment {
-            if count(g:furry_packages, 'environment')
-                Bundle 'myusuf3/numbers.vim'
-
-                if has('python') || has('python3')
-                    Bundle 'sjl/gundo.vim'
-                endif
-            endif
-        " }
-
-        " Utility {
-            if count(g:furry_packages, 'utility')
-                Bundle 'Align'
-                Bundle 'matchit.zip'
-                Bundle 'tpope/vim-unimpaired'
-                Bundle 'tpope/vim-surround'
-                Bundle 'tpope/vim-repeat'
-                Bundle 'laerador/vim-speeddating'
-                Bundle 'tomtom/tcomment_vim'
-                Bundle 'Townk/vim-autoclose'
-                Bundle 'milkypostman/vim-togglelist'
-                Bundle 'terryma/vim-multiple-cursors'
-            endif
-        " }
-
-        " Autocompletion and Snippets {
-            if count(g:furry_packages, 'autocompletion')
-                Bundle 'Shougo/neocomplcache'
-                Bundle 'Shougo/neosnippet'
-            endif
-        " }
-
-        " Views {
-            if count(g:furry_packages, 'views')
-                " CARE! Restore view automates Views
-                " This can get some unintendet behavior!
-                Bundle 'vim-scripts/restore_view.vim'
-            endif
-        " }
-
-        " Developing {
-            if count(g:furry_packages, 'devel')
-                Bundle 'xuhdev/SingleCompile'
-                Bundle 'scrooloose/syntastic'
-            endif
-        " }
-
-        " Git {
-            if count(g:furry_packages, 'git')
-                Bundle 'tpope/vim-fugitive'
-                Bundle 'tpope/vim-git'
-                if has('signs')
-                    Bundle 'airblade/vim-gitgutter'
-                    Bundle 'kana/vim-textobj-user'
-                    Bundle 'gilligan/textobj-gitgutter'
-                endif
-            endif
-        " }
-        
-        " Markup {
-            if count(g:furry_packages, 'markup')
-                Bundle 'tpope/vim-liquid'
-                Bundle 'vim-pandoc/vim-pandoc'
-            endif
-        " }
-
-        " LaTeX {
-            if count(g:furry_packages, 'latex')
-                Bundle 'LaTeX-Box-Team/LaTeX-Box'
-            endif
-        " }
-
-        " HTML & CSS {
-            if count(g:furry_packages, 'html')
-                Bundle 'othree/html5.vim'
-                Bundle 'mattn/zencoding-vim'
-                Bundle 'hail2u/vim-css3-syntax'
-                Bundle 'tpope/vim-haml'
-                Bundle 'jQuery'
-            endif
-        " }
-
-        " Python {
-            if count(g:furry_packages, 'python')
-                " Bundle 'klen/python-mode'
-                Bundle 'davidhalter/jedi-vim'
-            endif
-        " }
-
-        " Go {
-            if count(g:furry_packages, 'go')
-                set rtp+=$GOROOT/misc/vim
-                Bundle 'nsf/gocode', {'rtp': 'vim/'}
-            endif
-        " }
-
-        " OS X {
-            if count(g:furry_packages, 'osx')
-                Bundle 'zhaocai/applescript.vim'
-
-                if count(g:furry_packages, 'latex')
-                    Bundle 'keflavich/macvim-skim'
-                endif
-            endif
-        " }
-
-        " Ctags {
-            if executable('ctags') && count(g:furry_packages, 'ctags')
-                Bundle 'majutsushi/tagbar'
-                Bundle 'xolox/vim-misc'
-                Bundle 'xolox/vim-easytags'
-            endif
-        " }
+            NeoBundle 'sjl/badwolf'
+            NeoBundle 'roman/golden-ratio'
+        endif
     " }
 
-    " Finishing Up {
-        " Let the Magic happen
-        filetype plugin indent on
+    " Environment {
+        if count(g:furry_packages, 'environment')
+            NeoBundle 'myusuf3/numbers.vim'
+            NeoBundle 'Shougo/vimproc', {
+                \ 'build' : {
+                \   'windows' : 'make -f make_mingw32.mak',
+                \   'cygwin' : 'make -f make_cygwin.mak',
+                \   'mac' : 'make -f make_mac.mak',
+                \   'unix' : 'make -f make_unix.mak',
+                \   },
+                \ }
+            NeoBundle 'Shougo/vimshell.vim'
+
+            if has('python') || has('python3')
+                NeoBundle 'sjl/gundo.vim'
+            endif
+        endif
+    " }
+
+    " Utility {
+        if count(g:furry_packages, 'utility')
+            NeoBundle 'Align'
+            NeoBundle 'matchit.zip'
+            NeoBundle 'tpope/vim-unimpaired'
+            NeoBundle 'tpope/vim-surround'
+            NeoBundle 'tpope/vim-repeat'
+            NeoBundle 'laerador/vim-speeddating'
+            NeoBundle 'tomtom/tcomment_vim'
+            NeoBundle 'Townk/vim-autoclose'
+            NeoBundle 'milkypostman/vim-togglelist'
+            NeoBundle 'terryma/vim-multiple-cursors'
+        endif
+    " }
+
+    " Autocompletion and Snippets {
+        if count(g:furry_packages, 'autocompletion')
+            NeoBundle 'Shougo/neocomplcache'
+            NeoBundle 'Shougo/neosnippet'
+        endif
+    " }
+
+    " Views {
+        if count(g:furry_packages, 'views')
+            " CARE! Restore view automates Views
+            " This can get some unintendet behavior!
+            NeoBundle 'vim-scripts/restore_view.vim'
+        endif
+    " }
+
+    " Developing & Debugging {
+        if count(g:furry_packages, 'devel')
+            NeoBundle 'xuhdev/SingleCompile'
+            NeoBundle 'scrooloose/syntastic'
+        endif
+    " }
+
+    " Git {
+        if count(g:furry_packages, 'git')
+            NeoBundle 'tpope/vim-fugitive'
+            NeoBundle 'tpope/vim-git'
+            if has('signs')
+                NeoBundle 'airblade/vim-gitgutter'
+                NeoBundle 'kana/vim-textobj-user'
+                NeoBundle 'gilligan/textobj-gitgutter'
+            endif
+        endif
+    " }
+    
+    " Markup {
+        if count(g:furry_packages, 'markup')
+            NeoBundle 'tpope/vim-liquid'
+            NeoBundle 'vim-pandoc/vim-pandoc'
+        endif
+    " }
+
+    " LaTeX {
+        if count(g:furry_packages, 'latex')
+            NeoBundle 'LaTeX-Box-Team/LaTeX-Box'
+        endif
+    " }
+
+    " HTML & CSS {
+        if count(g:furry_packages, 'html')
+            NeoBundle 'othree/html5.vim'
+            NeoBundle 'mattn/zencoding-vim'
+            NeoBundle 'hail2u/vim-css3-syntax'
+            NeoBundle 'tpope/vim-haml'
+            NeoBundle 'jQuery'
+        endif
+    " }
+
+    " Python {
+        if count(g:furry_packages, 'python')
+            " NeoBundle 'klen/python-mode'
+            NeoBundle 'davidhalter/jedi-vim'
+        endif
+    " }
+
+    " Go {
+        if count(g:furry_packages, 'go')
+            set rtp+=$GOROOT/misc/vim
+            NeoBundle 'nsf/gocode', {'rtp': 'vim/'}
+        endif
+    " }
+
+    " OS X {
+        if count(g:furry_packages, 'osx')
+            NeoBundle 'zhaocai/applescript.vim'
+
+            if count(g:furry_packages, 'latex')
+                NeoBundle 'keflavich/macvim-skim'
+            endif
+        endif
+    " }
+
+    " Ctags {
+        if executable('ctags') && count(g:furry_packages, 'ctags')
+            NeoBundle 'majutsushi/tagbar'
+            NeoBundle 'xolox/vim-misc'
+            NeoBundle 'xolox/vim-easytags'
+        endif
     " }
 " }
 
+" Finishing Up {
+    " Let the Magic happen
+    filetype plugin indent on
+
+    NeoBundleCheck
+" }
+
 " Configuring Plugins {
-    " Define Leaders
-    let mapleader = ","
-    let maplocalleader = '\\'
+    " Define Leaders {
+        let mapleader = ","
+        let maplocalleader = '\\'
+    " }
     
     " Badwolf {
         let g:badwolf_tabline = 2
