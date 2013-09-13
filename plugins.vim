@@ -123,24 +123,31 @@
 
     " LaTeX {
         if count(g:furry_packages, 'latex')
-            NeoBundle 'LaTeX-Box-Team/LaTeX-Box'
+            NeoBundleLazy 'LaTeX-Box-Team/LaTeX-Box'
+            autocmd FileType latex,tex NeoBundleSource LaTeX-Box
         endif
     " }
 
     " HTML & CSS {
         if count(g:furry_packages, 'html')
-            NeoBundle 'othree/html5.vim'
-            NeoBundle 'mattn/zencoding-vim'
-            NeoBundle 'hail2u/vim-css3-syntax'
-            NeoBundle 'tpope/vim-haml'
-            NeoBundle 'jQuery'
+            NeoBundleLazy 'othree/html5.vim'
+            autocmd FileType html NeoBundleSource html5.vim
+            NeoBundleLazy 'mattn/zencoding-vim'
+            autocmd FileType html NeoBundleSource zenconding-vim
+            NeoBundleLazy 'hail2u/vim-css3-syntax'
+            autocmd FileType css NeoBundleSource vim-css3
+            NeoBundleLazy 'tpope/vim-haml'
+            autocmd FileType html,haml NeoBundleSource vim-haml
+            NeoBundleLazy 'jQuery'
+            autocmd FileType html NeoBundleSource jQuery
         endif
     " }
 
     " Python {
         if count(g:furry_packages, 'python')
             " NeoBundle 'klen/python-mode'
-            NeoBundle 'davidhalter/jedi-vim'
+            NeoBundleLazy 'davidhalter/jedi-vim'
+            autocmd FileType py NeoBundleSource jedi-vim
         endif
     " }
 
@@ -153,7 +160,8 @@
 
     " OS X {
         if count(g:furry_packages, 'osx')
-            NeoBundle 'zhaocai/applescript.vim'
+            NeoBundleLazy 'zhaocai/applescript.vim'
+            autocmd FileType scpt NeoBundleSource applescript.vim
 
             if count(g:furry_packages, 'latex')
                 NeoBundle 'keflavich/macvim-skim'
@@ -174,7 +182,7 @@
     " Let the Magic happen
     filetype plugin indent on
 
-    NeoBundleCheck
+    " NeoBundleCheck
 " }
 
 " Configuring Plugins {
