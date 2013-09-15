@@ -138,6 +138,8 @@
 
     set scrolloff=3
     set sidescroll=1
+    set selection=old
+    set virtualedit+=onemore,block
 
     set printoptions+=syntax:y
     set printoptions+=number:y
@@ -335,6 +337,7 @@
                 NeoBundleLazy 'Shougo/neocomplete.vim', { 'autoload':{'insert':1}, 'vim_version':'7.3.885' } " {{{
                     " Start Neocomplete
                     let g:neocomplete#enable_at_startup = 1
+                    let g:neocomplete#data_directory='~/.vim/neocomplete'
 
                     " Use Smartcase
                     let g:neocomplete#enable_ignore_case = 1
