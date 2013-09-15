@@ -174,8 +174,6 @@
         set shiftround
         set linebreak
         let &showbreak='↪ '
-
-        set list
     " }}}
 
     " Search {{{
