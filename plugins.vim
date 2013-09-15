@@ -63,9 +63,7 @@
             NeoBundle 'Shougo/vimshell.vim'
             NeoBundle 'bling/vim-bufferline'
 
-            if has('python') || has('python3')
-                NeoBundle 'sjl/gundo.vim'
-            endif
+            NeoBundle 'mbbill/undotree'
         endif
     " }}}
 
@@ -200,14 +198,23 @@
     
     " Airline {{{
         " let g:airline_powerline_fonts = 1
-        let g:airline_left_sep='⮀'
-        let g:airline_right_sep='⮂'
         let g:airline#extensions#whitespace#enabled = 0
         let g:airline#extensions#syntastic#enabled = 1
 
-        let g:airline_symbols = {}
+        if !exists('g:airline_symbols')
+            let g:airline_symbols = {}
+        endif
+        let g:airline_left_sep = '⮀'
+        let g:airline_left_alt_sep = '⮁'
+        let g:airline_right_sep = '⮂'
+        let g:airline_right_alt_sep = '⮃'
         let g:airline_symbols.branch = '⎇'
         let g:airline_symbols.linenr = '⭡'
+        let g:airline_symbols.readonly = '⭤'
+    " }}}
+
+    " Bufferline {{{
+        let g:bufferline_echo = 1
     " }}}
 
     " Badwolf {{{
@@ -221,6 +228,7 @@
 
     " Golden Ratio {{{
         let g:golden_ratio_autocommand = 0   
+        nmap <leader>- <Plug>(golden_ratio_toggle)
     " }}}
     
     " Indent Guides {{{
@@ -366,7 +374,14 @@
         endif
     " }}}
 
-    " Neocomplete {
+    " Undotree {{{
+        let g:undotree_SplitWidth = 50
+        let g:undotree_SetFocusWhenToggle = 1
+        nnoremap <F7> :UndotreeToggle<cr>
+        nnoremap <leader>gt :UndotreeToggle<cr>
+    " }}}
+
+    " Neocomplete {{{
         if has('lua')
             " Start Neocomplete
             let g:neocomplete#enable_at_startup = 1
@@ -455,7 +470,7 @@
                 set conceallevel=2 concealcursor=i
             endif
         endif
-    " }
+    " }}}
 
     " Jedi {{{
         let g:jedi#auto_initialization = 1
