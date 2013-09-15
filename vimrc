@@ -92,8 +92,8 @@
     " Backup, Swap & Undo {{{
         set history=1000
         set backupskip=/tmp/*,/private/tmp/*
-        " set nobackup
-        " set nowritebackup
+        set nobackup
+        set nowritebackup
 
         if has('persistent_undo')
             set undofile
@@ -151,7 +151,7 @@
 
     " Wildmenu {{{
         set wildmenu
-        set wildmode=list:full
+        " set wildmode=list:full
         set wildignorecase
 
         " Do not show these files in the Tabcompletion (in CMD)
