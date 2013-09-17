@@ -96,17 +96,17 @@
 
         if has('persistent_undo')
             set undofile
-            set undodir=$HOME/.vim/undo
+            set undodir=$HOME/.vim/cache/undo
             set undolevels=1000
             set undoreload=10000
         endif
 
         if has('mksession')
-            set viewdir=$HOME/.vim/view
+            set viewdir=$HOME/.vim/cache/view
             set viewoptions=folds,options,cursor,unix,slash
         endif
 
-        set directory=$HOME/.vim/swap
+        set directory=$HOME/.vim/cache/swap
     " }}}
 
     let mapleader=","
@@ -343,7 +343,7 @@
                 NeoBundleLazy 'Shougo/neocomplete.vim', { 'autoload':{'insert':1}, 'vim_version':'7.3.885' } " {{{
                     " Start Neocomplete
                     let g:neocomplete#enable_at_startup = 1
-                    let g:neocomplete#data_directory='~/.vim/neocomplete'
+                    let g:neocomplete#data_directory='~/.vim/cache/neocomplete'
 
                     " Use Smartcase
                     let g:neocomplete#enable_ignore_case = 1
