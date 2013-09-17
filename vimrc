@@ -24,8 +24,10 @@
         if !exists('g:furry_settings')
             let g:furry_settings = {}
         endif
+
         let s:settings = {}
         let s:settings.colorscheme = 'badwolf'
+        let s:settings.tabstopsize = 4
 
         " Set Plugin Groups
         if exists('g:furry_settings.plugin_groups')
@@ -36,6 +38,7 @@
             call add(s:settings.plugin_groups, 'colors')
             call add(s:settings.plugin_groups, 'editing')
             call add(s:settings.plugin_groups, 'autocompletion')
+            call add(s:settings.plugin_groups, 'unite')
             call add(s:settings.plugin_groups, 'development')
             call add(s:settings.plugin_groups, 'scm')
             call add(s:settings.plugin_groups, 'markup')
@@ -58,7 +61,7 @@
 
 " Base Config {{{
     set timeoutlen=300      " mapping timeout
-    set ttimeoutlen=100      " keycode timeout
+    set ttimeoutlen=150      " keycode timeout
 
     set ttyfast
     set encoding=utf-8
@@ -72,11 +75,7 @@
     set shortmess=aIoOtT
     set more
 
-    if exists('$TMUX')
-        set clipboard=
-    else
-        set clipboard+=unnamed
-    endif
+    set clipboard+=unnamed
 
     if has('mouse')
         set mouse=a
@@ -86,7 +85,7 @@
     silent! language en_US
     set nospell
 
-    set tags=$HOME/.tags/*
+    set tags=$HOME/.tags/*,./tags;/
     set showfulltag
 
     " Backup, Swap & Undo {{{
@@ -137,6 +136,7 @@
     set splitright
 
     set scrolloff=3
+    set scrolljump=5
     set sidescroll=1
     set selection=old
     set virtualedit+=onemore,block
@@ -169,9 +169,9 @@
         set autoindent
         set expandtab
         set smarttab
-        set tabstop=4
-        set softtabstop=4
-        set shiftwidth=4
+        let &tabstop     = s:settings.tabstopsize
+        let &softtabstop = s:settings.tabstopsize
+        let &shiftwidth  = s:settings.tabstopsize
         set copyindent
         set shiftround
         set linebreak
@@ -306,6 +306,9 @@
             NeoBundle 'tomasr/molokai'
             NeoBundle 'chriskempson/vim-tomorrow-theme'
             NeoBundle 'john2x/flatui.vim'
+            NeoBundle 'nanotech/jellybeans.vim'
+            NeoBundle 'w0ng/vim-hybrid'
+            NeoBundle 'jelera/vim-gummybears-colorscheme'
         endif " }}}
 
         if count(s:settings.plugin_groups, 'editing') " {{{
@@ -329,7 +332,10 @@
                 nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
                 vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
             " }}}
-            NeoBundle 'jiangmiao/auto-pairs'
+            NeoBundle 'jiangmiao/auto-pairs' " {{{
+                " let g:AutoPairsFlyMode = 1
+                " let g:AutoPairsShortcutBackInsert = '<C-b>'
+            " }}}
         endif " }}}
 
         if count(s:settings.plugin_groups, 'autocompletion') " {{{
@@ -464,6 +470,80 @@
             NeoBundle 'Shougo/neosnippet'
         endif " }}}
 
+        if count(s:settings.plugin_groups, 'unite') " {{{
+            NeoBundle 'Shougo/unite.vim' " {{{
+                let g:unite_data_directory = '~/.vim/unite'
+                let g:unite_enable_start_insert = 1
+                let g:unite_source_history_yank_enable = 1
+                let g:unite_source_rec_max_cache_files = 5000
+
+                let g:unite_prompt='» '
+
+                " To track long mru history.
+                let g:unite_source_file_mru_long_limit = 3000
+                let g:unite_source_directory_mru_long_limit = 3000
+
+                call unite#filters#matcher_default#use(['matcher_context'])
+                call unite#filters#sorter_default#use(['sorter_rank'])
+                call unite#set_profile('files', 'smartcase', 1)
+                call unite#custom#source('line,outline','matchers','matcher_fuzzy')
+
+                function! s:unite_settings()
+                    nmap <buffer> Q <plug>(unite_exit)
+                    nmap <buffer> <esc> <plug>(unite_exit)
+                    imap <buffer> <esc> <plug>(unite_exit)
+                endfunction
+                autocmd FileType unite call s:unite_settings()
+
+                if executable('ag')
+                    let g:unite_source_grep_command='ag'
+                    let g:unite_source_grep_default_opts='--nocolor --nogroup -S -C4'
+                    let g:unite_source_grep_recursive_opt=''
+                elseif executable('ack')
+                    let g:unite_source_grep_command='ack'
+                    let g:unite_source_grep_default_opts='--no-heading --no-color -C4'
+                    let g:unite_source_grep_recursive_opt=''
+                endif
+
+                " Keymaps {{{
+                    " Setting up Prefix Key
+                    nmap <space> [unite]
+                    nnoremap [unite] <Nop>
+
+                    " File-Search
+                    if s:is_windows
+                        nnoremap <silent> [unite]<space> :<C-u>Unite -toggle -auto-resize -buffer-name=mixed file_rec buffer file_mru bookmark<cr><c-u>
+                        nnoremap <silent> [unite]f :<C-u>Unite -toggle -auto-resize -buffer-name=files file_rec<cr><c-u>
+                    else
+                        nnoremap <silent> [unite]<space> :<C-u>Unite -toggle -auto-resize -buffer-name=mixed file_rec/async file/new buffer file_mru bookmark<cr><c-u>
+                        nnoremap <silent> [unite]f :<C-u>Unite -toggle -auto-resize -buffer-name=files file_rec/async:!<cr><c-u>
+                    endif
+                    nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks history/yank<cr>
+                    nnoremap <silent> [unite]l :<C-u>Unite -auto-resize -buffer-name=line line<cr>
+                    nnoremap <silent> [unite]b :<C-u>Unite -auto-resize -buffer-name=buffers buffer<cr>
+                    nnoremap <silent> [unite]/ :<C-u>Unite -no-quit -buffer-name=search grep:.<cr>
+                    nnoremap <silent> [unite]m :<C-u>Unite -auto-resize -buffer-name=mappings mapping<cr>
+                    nnoremap <silent> [unite]r :<C-u>Unite -toggle -auto-resize -buffer-name=mru file_mru directory_mru<cr>
+                    nnoremap <silent> [unite]s :<C-u>Unite -toggle -auto-resize -buffer-name=snippets snippet<cr>
+                " }}}
+            " }}}
+            NeoBundleLazy 'Shougo/unite-help', {'autoload':{'unite_sources':'help'}} "{{{
+                nnoremap <silent> [unite]h :<C-u>Unite -auto-resize -buffer-name=help help<cr>
+            "}}}
+            NeoBundleLazy 'Shougo/unite-outline', {'autoload':{'unite_sources':'outline'}} "{{{
+                nnoremap <silent> [unite]o :<C-u>Unite -vertical -buffer-name=outline outline<cr>
+            "}}}
+            NeoBundleLazy 'tsukkee/unite-tag', {'autoload':{'unite_sources':['tag','tag/file']}} "{{{
+                nnoremap <silent> [unite]t :<C-u>Unite -auto-resize -buffer-name=tag tag tag/file<cr>
+            "}}}
+            NeoBundleLazy 'osyo-manga/unite-airline_themes', {'autoload':{'unite_sources':'airline_themes'}} "{{{
+                nnoremap <silent> [unite]a :<C-u>Unite -winheight=10 -auto-preview -buffer-name=airline_themes airline_themes<cr>
+            "}}}
+            NeoBundleLazy 'ujihisa/unite-colorscheme', {'autoload':{'unite_sources':'colorscheme'}} "{{{
+                nnoremap <silent> [unite]c :<C-u>Unite -winheight=10 -auto-preview -buffer-name=colorschemes colorscheme<cr>
+            "}}}
+        endif " }}}
+
         if count(s:settings.plugin_groups, 'development') " {{{
             NeoBundle 'xuhdev/SingleCompile' " {{{
                 let g:SingleCompile_usedialog = 0
@@ -553,7 +633,7 @@
             NeoBundleLazy 'LaTeX-Box-Team/LaTeX-Box', {'autoload':{'filetypes':['latex','tex']}}
         endif " }}}
 
-        if count(s:settings.plugin_groups, 'latex') " {{{
+        if count(s:settings.plugin_groups, 'web') " {{{
             NeoBundleLazy 'othree/html5.vim', {'autoload':{'filetypes':['html']}}
             NeoBundleLazy 'mattn/zencoding-vim', {'autoload':{'filetypes':['html']}}
             NeoBundleLazy 'hail2u/vim-css3-syntax', {'autoload':{'filetypes':['css','html']}}
@@ -608,7 +688,7 @@
 " }}}
 
 " Keymaps {{{
-    " Movement {
+    " Movement {{{
         " Easier Move between Splits
         map <C-J> <C-W>j
         map <C-K> <C-W>k
@@ -632,9 +712,9 @@
         " Quick mappings for 0 and $
         noremap H 0
         noremap L $
-    " }
+    " }}}
 
-    " Code Folding {
+    " Code Folding {{{
         nmap <leader>f0 :set foldlevel=0<CR>
         nmap <leader>f1 :set foldlevel=1<CR>
         nmap <leader>f2 :set foldlevel=2<CR>
@@ -645,7 +725,7 @@
         nmap <leader>f7 :set foldlevel=7<CR>
         nmap <leader>f8 :set foldlevel=8<CR>
         nmap <leader>f9 :set foldlevel=9<CR>
-    " }
+    " }}}
 
     " Fast editing & saving of the vimrc
     map <leader>ev :e! ~/.vimrc<CR>
@@ -663,13 +743,13 @@
     " Adjust viewports to the same size
     map <Leader>= <C-W>=
     
-    " Funktionstasten {
+    " Funktionstasten {{{
         " Help Key!
         nnoremap <F1> :vert help<CR>
 
         nmap <silent> <F11> :call ToggleLocationList()<CR>
         nmap <silent> <F12> :call ToggleQuickfixList()<CR>
-    " }
+    " }}}
 " }}}
 
 " Finishing up {{{
