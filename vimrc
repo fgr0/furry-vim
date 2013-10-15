@@ -145,7 +145,7 @@
     set printoptions+=number:y
 
     if has('conceal')
-        set conceallevel=1
+        set conceallevel=2
         set listchars+=conceal:Δ
     endif
 
@@ -176,6 +176,7 @@
         set shiftround
         set linebreak
         let &showbreak='↪ '
+        set display=lastline
     " }}}
 
     " Search {{{
@@ -214,16 +215,6 @@
             set transparency=5
         else
             set t_Co=256
-            if $TERM_PROGRAM == 'iTerm.app'
-                " different cursors for insert vs normal mode
-                if exists('$TMUX')
-                    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-                    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-                else
-                    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-                    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-                endif
-            endif
 
             set restorescreen
         endif
@@ -376,32 +367,37 @@
                     if !exists('g:neocomplete#force_omni_input_patterns')
                         let g:neocomplete#force_omni_input_patterns = {}
                     endif
-                    let g:neocomplete#sources#omni#input_patterns.python =
-                                \ '[^. \t]\.\w*'
-                    let g:neocomplete#sources#omni#input_patterns.c =
-                                \ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?'
-                    let g:neocomplete#sources#omni#input_patterns.go = 
-                                \ '\h\w*\.\?'
+                    let g:neocomplete#sources#omni#input_patterns.python = '[^. \t]\.\w*'
+                    let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?'
+                    let g:neocomplete#sources#omni#input_patterns.go = '\h\w*\.\?'
 
                     " Same Filetypes
                     if !exists('g:neocomplete#same_filetypes')
                         let g:neocomplete#same_filetypes = {}
                     endif
-                    " In c buffers, completes from cpp and d buffers.
                     let g:neocomplete#same_filetypes.c = 'cpp,d,h'
-                    " In cpp buffers, completes from c buffers.
                     let g:neocomplete#same_filetypes.cpp = 'c'
-                    " In gitconfig buffers, completes from all buffers.
                     let g:neocomplete#same_filetypes.gitconfig = '_'
-                    " In default, completes from all buffers.
                     let g:neocomplete#same_filetypes._ = '_'
+
+                    " let g:neocomplete#enable_auto_select = 1
 
                     inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
                     inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 
+                    " Tab Completion
+                    imap <expr><TAB> pumvisible() ? "\<C-n>" : neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+                    " imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : (pumvisible() ? "\<C-n>" : "\<TAB>")
+                    smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+                    imap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
+                    smap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
 
-                    imap <expr><TAB> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-                    smap <expr><TAB> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+                    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+                    function! s:my_cr_function()
+                        " return neocomplete#smart_close_popup() . "\<CR>"
+                        " For no inserting <CR> key.
+                        return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+                    endfunction
                 " }}}
                 NeoBundle 'Shougo/context_filetype.vim'
             else
@@ -468,6 +464,20 @@
             endif
 
             NeoBundle 'Shougo/neosnippet'
+            NeoBundle 'honza/vim-snippets' " {{{
+                let g:neosnippet#snippets_directory = "~/.vim/bundle/vim-snippets/snippets,~/.vim/snippets"
+                let g:neosnippet#enable_snipmate_compatibility = 1
+
+                " Plugin key-mappings.
+                imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+                smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+                xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+                " For snippet_complete marker.
+                " if has('conceal')
+                "     " set conceallevel=2 concealcursor=i
+                " endif
+            " }}}
         endif " }}}
 
         if count(s:settings.plugin_groups, 'unite') " {{{
@@ -475,7 +485,7 @@
                 let g:unite_data_directory = '~/.vim/cache/unite'
                 let g:unite_enable_start_insert = 1
                 let g:unite_source_history_yank_enable = 1
-                let g:unite_source_rec_max_cache_files = 5000
+                let g:unite_source_rec_max_cache_files = 10000
 
                 let g:unite_prompt='» '
 
@@ -491,7 +501,7 @@
                 function! s:unite_settings()
                     nmap <buffer> Q <plug>(unite_exit)
                     nmap <buffer> <esc> <plug>(unite_exit)
-                    imap <buffer> <esc> <plug>(unite_exit)
+                    " inoremap <buffer> <esc> <plug>(unite_exit)
                 endfunction
                 autocmd FileType unite call s:unite_settings()
 
@@ -513,10 +523,10 @@
                     " File-Search
                     if s:is_windows
                         nnoremap <silent> [unite]<space> :<C-u>Unite -toggle -auto-resize -buffer-name=mixed file_rec buffer file_mru bookmark<cr><c-u>
-                        nnoremap <silent> [unite]f :<C-u>Unite -toggle -auto-resize -buffer-name=files file_rec<cr><c-u>
+                        nnoremap <silent> [unite]f :<C-u>Unite -toggle -auto-resize -buffer-name=files file_rec:!<cr><c-u>
                     else
                         nnoremap <silent> [unite]<space> :<C-u>Unite -toggle -auto-resize -buffer-name=mixed file_rec/async file/new buffer file_mru bookmark<cr><c-u>
-                        nnoremap <silent> [unite]f :<C-u>Unite -toggle -auto-resize -buffer-name=files file_rec/async:!<cr><c-u>
+                        nnoremap <silent> [unite]f :<C-u>Unite -toggle -auto-resize -buffer-name=files file file_rec/async:!<cr><c-u>
                     endif
                     nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks history/yank<cr>
                     nnoremap <silent> [unite]l :<C-u>Unite -auto-resize -buffer-name=line line<cr>
@@ -525,6 +535,7 @@
                     nnoremap <silent> [unite]m :<C-u>Unite -auto-resize -buffer-name=mappings mapping<cr>
                     nnoremap <silent> [unite]r :<C-u>Unite -toggle -auto-resize -buffer-name=mru file_mru directory_mru<cr>
                     nnoremap <silent> [unite]s :<C-u>Unite -toggle -auto-resize -buffer-name=snippets snippet<cr>
+                    nnoremap <silent> [unite]n :<C-u>Unite -toggle -auto-resize -buffer-name=new file/new directory/new<cr>
                 " }}}
             " }}}
             NeoBundleLazy 'Shougo/unite-help', {'autoload':{'unite_sources':'help'}} "{{{
@@ -635,7 +646,7 @@
 
         if count(s:settings.plugin_groups, 'web') " {{{
             NeoBundleLazy 'othree/html5.vim', {'autoload':{'filetypes':['html']}}
-            NeoBundleLazy 'mattn/zencoding-vim', {'autoload':{'filetypes':['html']}}
+            NeoBundleLazy 'mattn/emmet-vim', {'autoload':{'filetypes':['html']}}
             NeoBundleLazy 'hail2u/vim-css3-syntax', {'autoload':{'filetypes':['css','html']}}
             NeoBundleLazy 'tpope/vim-haml', {'autoload':{'filetypes':['haml']}}
             NeoBundleLazy 'jQuery', {'autoload':{'filetypes':['html','javascript']}}
@@ -653,6 +664,10 @@
 
         if count(s:settings.plugin_groups, 'osx') " {{{
             NeoBundleLazy 'zhaocai/applescript.vim', {'autoload':{'filetypes':['applescript']}}
+            NeoBundleDepends 'rizzatti/funcoo.vim'
+            NeoBundleLazy 'rizzatti/dash.vim', {'autoload':{'commands':[ 'Dash', 'Dash!', 'DashKeywords', 'DashSettings' ]}, 'depends': 'rizzatti/funcoo.vim' } " {{{
+                nmap <leader>d <Plug>DashSearch
+            " }}}
 
             if count(s:settings.plugin_groups, 'latex')
                 NeoBundleLazy 'keflavich/macvim-skim', {'autoload':{'filetypes':['latex']}} " {{{
@@ -670,7 +685,7 @@
                     let g:vimshell_editor_command='vim'
                 endif
                 let g:vimshell_right_prompt='getcwd()'
-                let g:vimshell_temporary_directory='~/.vim/.cache/vimshell'
+                let g:vimshell_temporary_directory='~/.vim/cache/vimshell'
             "}}}
             NeoBundleLazy 'zhaocai/GoldenView.Vim', {'autoload':{'mappings':['<Plug>ToggleGoldenViewAutoResize']}} "{{{
                 let g:goldenview__enable_default_mapping=0
@@ -700,8 +715,8 @@
         noremap k gk
         noremap 0 g0
         noremap $ g$
-        inoremap <Down> <C-o>gj
-        inoremap <Up> <C-o>gk
+        " inoremap <Down> <C-o>gj
+        " inoremap <Up> <C-o>gk
 
         nnoremap Y y$
 
