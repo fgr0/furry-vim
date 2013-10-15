@@ -415,7 +415,7 @@
 
                     " Enable omni completion. 
                     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS 
-                    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags 
+                    autocmd FileType html,markdown,pandoc setlocal omnifunc=htmlcomplete#CompleteTags 
                     autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS 
                     autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags 
                     autocmd FileType python setlocal omnifunc=jedi#complete
