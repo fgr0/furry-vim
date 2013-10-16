@@ -650,6 +650,7 @@
             NeoBundleLazy 'hail2u/vim-css3-syntax', {'autoload':{'filetypes':['css','html']}}
             NeoBundleLazy 'tpope/vim-haml', {'autoload':{'filetypes':['haml']}}
             NeoBundleLazy 'jQuery', {'autoload':{'filetypes':['html','javascript']}}
+            NeoBundle 'leshill/vim-json'
         endif " }}}
 
         if count(s:settings.plugin_groups, 'python') " {{{
