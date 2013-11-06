@@ -121,7 +121,6 @@
 
     " Cursorline {{{
         set cursorline
-        set cursorline
         autocmd WinLeave * setlocal nocursorline
         autocmd WinEnter * setlocal cursorline
     " }}}
@@ -144,10 +143,10 @@
     set printoptions+=syntax:y
     set printoptions+=number:y
 
-    if has('conceal')
-        set conceallevel=2
-        set listchars+=conceal:Δ
-    endif
+    " if has('conceal')
+    "     set conceallevel=2
+    "     set listchars+=conceal:Δ
+    " endif
 
     " Wildmenu {{{
         set wildmenu
@@ -205,7 +204,7 @@
     " Folds {{{
         set foldenable
         set foldlevelstart=99
-        set foldmethod=syntax
+        " set foldmethod=syntax
     " }}}
 
     " GUI & Terminal Settings {{{
@@ -245,7 +244,7 @@
         call neobundle#rc(expand('~/.vim/bundle'))
 
         " Let NeoBundle manage NeoBundle
-        NeoBundleFetch 'Shougo/neobundle.vim'
+        NeoBundleFetch 'Shougo/neobundle.vim', 'master'
     " }}}
 
     " Set Package Groups {{{
@@ -253,17 +252,18 @@
             NeoBundle 'bling/vim-airline' " {{{
                 let g:airline#extensions#whitespace#enabled = 0
                 let g:airline#extensions#syntastic#enabled = 1
+                let g:airline_powerline_fonts = 1
 
-                if !exists('g:airline_symbols')
-                    let g:airline_symbols = {}
-                endif
-                let g:airline_left_sep = '⮀'
-                let g:airline_left_alt_sep = '⮁'
-                let g:airline_right_sep = '⮂'
-                let g:airline_right_alt_sep = '⮃'
-                let g:airline_symbols.branch = '⎇'
-                let g:airline_symbols.linenr = '⭡'
-                let g:airline_symbols.readonly = '⭤'
+                " if !exists('g:airline_symbols')
+                "     let g:airline_symbols = {}
+                " endif
+                " let g:airline_left_sep = '⮀'
+                " let g:airline_left_alt_sep = '⮁'
+                " let g:airline_right_sep = '⮂'
+                " let g:airline_right_alt_sep = '⮃'
+                " let g:airline_symbols.branch = '⎇'
+                " let g:airline_symbols.linenr = '⭡'
+                " let g:airline_symbols.readonly = '⭤'
             " }}}
             NeoBundle 'bling/vim-bufferline' "{{{
                 let g:bufferline_echo = 0
@@ -354,6 +354,7 @@
                     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS 
                     autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags 
                     autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS 
+                    autocmd FileType java setlocal omnifunc=javaapi#complete
                     autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags 
                     autocmd FileType python setlocal omnifunc=jedi#complete
                     autocmd FileType go setlocal omnifunc=gocomplete#Complete
@@ -641,7 +642,15 @@
         endif " }}}
 
         if count(s:settings.plugin_groups, 'latex') " {{{
-            NeoBundleLazy 'LaTeX-Box-Team/LaTeX-Box', {'autoload':{'filetypes':['latex','tex']}}
+            NeoBundle 'LaTeX-Box-Team/LaTeX-Box' " {{{
+                let g:LatexBox_Folding = 1
+                let g:LatexBox_show_warnings = 0
+                let g:LatexBox_latexmk_async = 1
+                let g:LatexBox_viewer = "open -a Skim"
+
+                nmap <Leader>ce <Plug>LatexChangeEnv
+                vmap <Leader>we <Plug>LatexWrapSelection
+            " }}}
         endif " }}}
 
         if count(s:settings.plugin_groups, 'web') " {{{
@@ -654,7 +663,10 @@
         endif " }}}
 
         if count(s:settings.plugin_groups, 'python') " {{{
-            NeoBundleLazy 'davidhalter/jedi-vim', {'autoload':{'filetypes':['python']}}
+            NeoBundleLazy 'davidhalter/jedi-vim', {'autoload':{'filetypes':['python']}} " {{{
+                let g:jedi#show_call_signatures = 0
+                let g:jedi#popup_on_dot = 0
+            " }}}
         endif " }}}
 
         if count(s:settings.plugin_groups, 'go') "{{{
@@ -667,11 +679,12 @@
             NeoBundleLazy 'zhaocai/applescript.vim', {'autoload':{'filetypes':['applescript']}}
             NeoBundleDepends 'rizzatti/funcoo.vim'
             NeoBundleLazy 'rizzatti/dash.vim', {'autoload':{'commands':[ 'Dash', 'Dash!', 'DashKeywords', 'DashSettings' ]}, 'depends': 'rizzatti/funcoo.vim' } " {{{
-                nmap <leader>d <Plug>DashSearch
+                nmap <silent> <leader>d <Plug>DashSearch
+                vmap <silent> <leader>d <Plug>DashSearch
             " }}}
 
             if count(s:settings.plugin_groups, 'latex')
-                NeoBundleLazy 'keflavich/macvim-skim', {'autoload':{'filetypes':['latex']}} " {{{
+                NeoBundleLazy 'keflavich/macvim-skim', {'autoload':{'filetypes':['latex','tex']}} " {{{
                     let g:macvim_skim_app_path = "/Applications/Skim.app"
                 " }}}
             endif
@@ -697,6 +710,12 @@
                 nmap <silent> <F11> :call ToggleLocationList()<CR>
                 nmap <silent> <F12> :call ToggleQuickfixList()<CR>
             " }}}
+            NeoBundleLazy 'yuratomo/java-api-complete', {'autoload':{'filetypes':['java']}}
+            NeoBundleLazy 'yuratomo/java-api-javax', {'autoload':{'filetypes':['java']}}
+            NeoBundleLazy 'yuratomo/java-api-org', {'autoload':{'filetypes':['java']}}
+            NeoBundleLazy 'yuratomo/java-api-sun', {'autoload':{'filetypes':['java']}}
+            NeoBundleLazy 'yuratomo/java-api-servlet2.3', {'autoload':{'filetypes':['java']}}
+            NeoBundleLazy 'yuratomo/java-api-android', {'autoload':{'filetypes':['java']}}
         endif " }}}
      " }}}
 
