@@ -277,6 +277,7 @@
             NeoBundle 'matchit.zip'
             NeoBundle 'tpope/vim-unimpaired'
             NeoBundle 'tpope/vim-repeat'
+            NeoBundle 'bogado/file-line'
 
             NeoBundle 'Shougo/vimproc.vim', {
                         \ 'build': {
