@@ -311,18 +311,18 @@
             NeoBundle 'terryma/vim-expand-region'
             NeoBundle 'terryma/vim-multiple-cursors'
             NeoBundleLazy 'godlygeek/tabular', {'autoload':{'commands':'Tabularize'}} "{{{
-                nmap <Leader>a& :Tabularize /&<CR>
-                vmap <Leader>a& :Tabularize /&<CR>
-                nmap <Leader>a= :Tabularize /=<CR>
-                vmap <Leader>a= :Tabularize /=<CR>
-                nmap <Leader>a: :Tabularize /:<CR>
-                vmap <Leader>a: :Tabularize /:<CR>
-                nmap <Leader>a:: :Tabularize /:\zs<CR>
-                vmap <Leader>a:: :Tabularize /:\zs<CR>
-                nmap <Leader>a, :Tabularize /,<CR>
-                vmap <Leader>a, :Tabularize /,<CR>
-                nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-                vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+                nmap <Leader>t& :Tabularize /&<CR>
+                vmap <Leader>t& :Tabularize /&<CR>
+                nmap <Leader>t= :Tabularize /=<CR>
+                vmap <Leader>t= :Tabularize /=<CR>
+                nmap <Leader>t: :Tabularize /:<CR>
+                vmap <Leader>t: :Tabularize /:<CR>
+                nmap <Leader>t:: :Tabularize /:\zs<CR>
+                vmap <Leader>t:: :Tabularize /:\zs<CR>
+                nmap <Leader>t, :Tabularize /,<CR>
+                vmap <Leader>t, :Tabularize /,<CR>
+                nmap <Leader>t<Bar> :Tabularize /<Bar><CR>
+                vmap <Leader>t<Bar> :Tabularize /<Bar><CR>
             " }}}
             NeoBundle 'jiangmiao/auto-pairs' " {{{
                 " let g:AutoPairsFlyMode = 1
@@ -631,9 +631,12 @@
             NeoBundle 'tpope/vim-git'
             if has('signs')
                 NeoBundle 'mhinz/vim-signify'
-                let g:signify_mapping_toggle_highlight = '<leader>ct'
+                let g:signify_mapping_toggle_highlight = 'cog'
+                let g:signify_mapping_next_hung = ']h'
+                let g:signify_mapping_prev_hung = '[h'
                 let g:signify_vcs_list = [ 'git', 'hg', 'svn' ]
                 let g:signify_sign_change = '~'
+                let g:signify_difftool = 'vimdiff'
             endif
         endif " }}}
 
@@ -748,6 +751,11 @@
         " Quick mappings for 0 and $
         noremap H 0
         noremap L $
+
+        nmap [t :tabprevious<CR>
+        nmap [T :tabfirst<CR>
+        nmap ]t :tabnext<CR>
+        nmap ]T :tablast<CR>
     " }}}
 
     " Code Folding {{{
