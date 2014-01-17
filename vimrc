@@ -39,18 +39,19 @@
             call add(s:settings.plugin_groups, 'editing')
             call add(s:settings.plugin_groups, 'autocompletion')
             call add(s:settings.plugin_groups, 'unite')
-            call add(s:settings.plugin_groups, 'development')
+            " call add(s:settings.plugin_groups, 'development')
             call add(s:settings.plugin_groups, 'scm')
-            call add(s:settings.plugin_groups, 'markup')
-            call add(s:settings.plugin_groups, 'latex')
-            call add(s:settings.plugin_groups, 'web')
-            call add(s:settings.plugin_groups, 'python')
-            call add(s:settings.plugin_groups, 'go')
-            call add(s:settings.plugin_groups, 'osx')
+            " call add(s:settings.plugin_groups, 'markup')
+            " call add(s:settings.plugin_groups, 'latex')
+            " call add(s:settings.plugin_groups, 'web')
+            " call add(s:settings.plugin_groups, 'python')
+            " call add(s:settings.plugin_groups, 'go')
+            " call add(s:settings.plugin_groups, 'osx')
+            " call add(s:settings.plugin_groups, 'java')
             call add(s:settings.plugin_groups, 'misc')
         endif
 
-        " override defaults with the ones specified in g:dotvim_settings
+        " override defaults with the ones specified in g:furry_settings
         for key in keys(s:settings)
             if has_key(g:furry_settings, key)
                 let s:settings[key] = g:furry_settings[key]
@@ -269,7 +270,8 @@
                 let g:bufferline_echo = 0
             " }}}
             NeoBundleLazy 'mbbill/undotree', {'autoload':{'commands':'UndotreeToggle'}} "{{{
-                let g:undotree_SplitWidth = 50
+                let g:undotree_SplitWidth = 40
+                let g:undotree_SetFocusWhenToggle = 1
                 nnoremap <F5> :UndotreeToggle<cr>
                 nnoremap <leader>gt :UndotreeToggle<cr>
             "}}}
@@ -300,7 +302,6 @@
             NeoBundle 'john2x/flatui.vim'
             NeoBundle 'nanotech/jellybeans.vim'
             NeoBundle 'w0ng/vim-hybrid'
-            NeoBundle 'jelera/vim-gummybears-colorscheme'
         endif " }}}
 
         if count(s:settings.plugin_groups, 'editing') " {{{
@@ -694,6 +695,15 @@
             endif
         endif " }}}
 
+        if count (s:settings.plugin_groups, 'java') " {{{
+            NeoBundleLazy 'yuratomo/java-api-complete', {'autoload':{'filetypes':['java']}}
+            NeoBundleLazy 'yuratomo/java-api-javax', {'autoload':{'filetypes':['java']}}
+            NeoBundleLazy 'yuratomo/java-api-org', {'autoload':{'filetypes':['java']}}
+            NeoBundleLazy 'yuratomo/java-api-sun', {'autoload':{'filetypes':['java']}}
+            NeoBundleLazy 'yuratomo/java-api-servlet2.3', {'autoload':{'filetypes':['java']}}
+            NeoBundleLazy 'yuratomo/java-api-android', {'autoload':{'filetypes':['java']}}
+        endif " }}}
+
         if count(s:settings.plugin_groups, 'misc') " {{{
             NeoBundleLazy 'tpope/vim-scriptease', {'autoload':{'filetypes':['vim']}}
             NeoBundleLazy 'Shougo/vimshell.vim', {'autoload':{'commands':[ 'VimShell', 'VimShellInteractive' ]}} "{{{
@@ -714,12 +724,6 @@
                 nmap <silent> <F11> :call ToggleLocationList()<CR>
                 nmap <silent> <F12> :call ToggleQuickfixList()<CR>
             " }}}
-            NeoBundleLazy 'yuratomo/java-api-complete', {'autoload':{'filetypes':['java']}}
-            NeoBundleLazy 'yuratomo/java-api-javax', {'autoload':{'filetypes':['java']}}
-            NeoBundleLazy 'yuratomo/java-api-org', {'autoload':{'filetypes':['java']}}
-            NeoBundleLazy 'yuratomo/java-api-sun', {'autoload':{'filetypes':['java']}}
-            NeoBundleLazy 'yuratomo/java-api-servlet2.3', {'autoload':{'filetypes':['java']}}
-            NeoBundleLazy 'yuratomo/java-api-android', {'autoload':{'filetypes':['java']}}
         endif " }}}
      " }}}
 
