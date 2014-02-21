@@ -302,6 +302,9 @@
             NeoBundle 'john2x/flatui.vim'
             NeoBundle 'nanotech/jellybeans.vim'
             NeoBundle 'w0ng/vim-hybrid'
+            
+            let g:solarized_termtrans = 1
+            NeoBundle 'illicium/vim-colors-solarized'
         endif " }}}
 
         if count(s:settings.plugin_groups, 'editing') " {{{
@@ -577,9 +580,11 @@
                 let g:syntastic_always_populate_loc_list=1
 
                 " Pyflakes
-                if executable('pyflakes')
-                    let g:syntastic_python_checkers = ['pyflakes']
+                if executable('flake8')
+                    let g:syntastic_python_checkers = ['flake8']
                 endif
+
+                hi link SyntasticStyleErrorSign SyntasticStyleWarningSign
 
                 " LaTeX
                 if executable('lacheck')
@@ -672,6 +677,26 @@
                 let g:jedi#show_call_signatures = 0
                 let g:jedi#popup_on_dot = 0
             " }}}
+            NeoBundle 'klen/python-mode' " {{{ 
+                let g:pymode_doc = 0
+                let g:pymode_lint = 0
+                let g:pymode_virtualenv = 0
+
+                let g:pymode_run = 0
+                let g:pymode_run_bind = "<leader>pr"
+
+                let g:pymode_rope_autoimport = 1
+                let g:pymode_rope_autoimport_modules = ['os', 'sys', 'shutil', 'datetime', 'django.*']
+                let g:pymode_rope_show_doc_bind = ''
+                let g:pymode_rope_goto_definition_bind = '<leader>pg'
+                let g:pymode_rope_rename_bind = '<leader>rr'
+                let g:pymode_rope_rename_module_bind = '<leader>r1r'
+                let g:pymode_rope_organize_imports_bind = '<leader>ro'
+                let g:pymode_rope_autoimport_bind = '<leader>ra'
+                let g:pymode_rope_change_signature_bind = '<leader>rs'
+
+                let g:pymode_syntax_space_errors = 0
+            " " }}}
         endif " }}}
 
         if count(s:settings.plugin_groups, 'go') "{{{
