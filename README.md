@@ -42,6 +42,7 @@ every Feature and Plugin, you will need some other Programs:
 - To use some Plugins like `VimCalc` and `Gundo` you will need to Install a
   Vim-Version with Python-Interface
 - To use _Gist_ in Vim you will need to have curl
+- Mac only, for vim-airline you need Powerline fonts https://github.com/Lokaltog/powerline-fonts
 
 #### Installation
 
