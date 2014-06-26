@@ -85,6 +85,7 @@
 
     silent! language en_US
     set nospell
+    set spellfile=$HOME/.vim/cache/spell/utf-8.add
 
     set tags=$HOME/.tags/*,./tags;/
     set showfulltag
@@ -177,6 +178,8 @@
         set linebreak
         let &showbreak='↪ '
         set display=lastline
+
+        set textwidth=79
     " }}}
 
     " Search {{{
@@ -209,6 +212,7 @@
     " }}}
 
     " GUI & Terminal Settings {{{
+        set background=dark
         if has('gui_running')
             set guifont=Sauce\ Code\ Powerline\ Light:h11
             set guioptions=mcg
@@ -266,9 +270,9 @@
                 " let g:airline_symbols.linenr = '⭡'
                 " let g:airline_symbols.readonly = '⭤'
             " }}}
-            NeoBundle 'bling/vim-bufferline' "{{{
-                let g:bufferline_echo = 0
-            " }}}
+            " NeoBundle 'bling/vim-bufferline' "{{{
+            "     let g:bufferline_echo = 0
+            " " }}}
             NeoBundleLazy 'mbbill/undotree', {'autoload':{'commands':'UndotreeToggle'}} "{{{
                 let g:undotree_SplitWidth = 40
                 let g:undotree_SetFocusWhenToggle = 1
@@ -303,7 +307,7 @@
             NeoBundle 'nanotech/jellybeans.vim'
             NeoBundle 'w0ng/vim-hybrid'
             
-            let g:solarized_termtrans = 1
+            " let g:solarized_termtrans = 1
             NeoBundle 'illicium/vim-colors-solarized'
         endif " }}}
 
@@ -361,7 +365,7 @@
                     autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS 
                     autocmd FileType java setlocal omnifunc=javaapi#complete
                     autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags 
-                    autocmd FileType python setlocal omnifunc=jedi#complete
+                    " autocmd FileType python setlocal omnifunc=jedi#complete
                     autocmd FileType go setlocal omnifunc=gocomplete#Complete
 
                     set completeopt-=preview
@@ -373,7 +377,8 @@
                     if !exists('g:neocomplete#force_omni_input_patterns')
                         let g:neocomplete#force_omni_input_patterns = {}
                     endif
-                    let g:neocomplete#sources#omni#input_patterns.python = '[^. \t]\.\w*'
+                    " let g:neocomplete#sources#omni#input_patterns.python = '[^. \t]\.\w*'
+                    " let g:neocomplete#force_omni_input_patterns.python = '[^. \t]\.\w*'
                     let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?'
                     let g:neocomplete#sources#omni#input_patterns.go = '\h\w*\.\?'
 
@@ -424,7 +429,7 @@
                     autocmd FileType html,markdown,pandoc setlocal omnifunc=htmlcomplete#CompleteTags 
                     autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS 
                     autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags 
-                    autocmd FileType python setlocal omnifunc=jedi#complete
+                    " autocmd FileType python setlocal omnifunc=jedi#complete
                     autocmd FileType go setlocal omnifunc=gocomplete#Complete
 
                     set completeopt-=preview
@@ -438,8 +443,8 @@
                         let g:neocomplcache_force_omni_patterns = {}
                     endif
 
-                    let g:neocomplcache_omni_patterns.python = '[^. \t]\.\w*'
-                    let g:neocomplcache_force_omni_patterns.python = '[^. \t]\.\w*'
+                    " let g:neocomplcache_omni_patterns.python = '[^. \t]\.\w*'
+                    " let g:neocomplcache_force_omni_patterns.python = '[^. \t]\.\w*'
                     let g:neocomplcache_omni_patterns.go = '\h\w*\.\?'
                     " let g:neocomplcache_force_omni_patterns.go = '\h\w*\.\?'
 
@@ -470,6 +475,7 @@
             endif
 
             NeoBundle 'Shougo/neosnippet'
+            NeoBundle 'Shougo/neosnippet-snippets'
             NeoBundle 'honza/vim-snippets' " {{{
                 let g:neosnippet#snippets_directory = "~/.vim/bundle/vim-snippets/snippets,~/.vim/snippets"
                 let g:neosnippet#enable_snipmate_compatibility = 1
@@ -647,12 +653,12 @@
         endif " }}}
 
         if count(s:settings.plugin_groups, 'markup') " {{{
-            NeoBundle 'tpope/vim-liquid'
-            NeoBundle 'vim-pandoc/vim-pandoc'
+            NeoBundleLazy 'tpope/vim-liquid', {'autoload':{'filetypes':['html','liquid']}}
+            NeoBundle 'vim-pandoc/vim-pandoc', {'autoload':{'filetypes':['markdown','pandoc']}}
         endif " }}}
 
         if count(s:settings.plugin_groups, 'latex') " {{{
-            NeoBundle 'LaTeX-Box-Team/LaTeX-Box' " {{{
+            NeoBundleLazy 'LaTeX-Box-Team/LaTeX-Box', {'autoload':{'filetypes':['latex','tex']}} " {{{
                 let g:LatexBox_Folding = 1
                 let g:LatexBox_show_warnings = 0
                 let g:LatexBox_latexmk_async = 1
@@ -665,7 +671,9 @@
 
         if count(s:settings.plugin_groups, 'web') " {{{
             NeoBundleLazy 'othree/html5.vim', {'autoload':{'filetypes':['html']}}
-            NeoBundleLazy 'mattn/emmet-vim', {'autoload':{'filetypes':['html']}}
+            NeoBundleLazy 'mattn/emmet-vim', {'autoload':{'filetypes':['html']}} " {{{
+                let g:user_emmet_leader_key = '<leader>h'
+            " }}}
             NeoBundleLazy 'hail2u/vim-css3-syntax', {'autoload':{'filetypes':['css','html']}}
             NeoBundleLazy 'tpope/vim-haml', {'autoload':{'filetypes':['haml']}}
             NeoBundleLazy 'jQuery', {'autoload':{'filetypes':['html','javascript']}}
@@ -673,11 +681,7 @@
         endif " }}}
 
         if count(s:settings.plugin_groups, 'python') " {{{
-            NeoBundleLazy 'davidhalter/jedi-vim', {'autoload':{'filetypes':['python']}} " {{{
-                let g:jedi#show_call_signatures = 0
-                let g:jedi#popup_on_dot = 0
-            " }}}
-            NeoBundle 'klen/python-mode' " {{{ 
+            NeoBundleLazy 'klen/python-mode', {'autoload':{'filetypes':['python']}} " {{{ 
                 let g:pymode_doc = 0
                 let g:pymode_lint = 0
                 let g:pymode_virtualenv = 0
@@ -686,8 +690,8 @@
                 let g:pymode_run_bind = "<leader>pr"
 
                 let g:pymode_rope_autoimport = 1
-                let g:pymode_rope_autoimport_modules = ['os', 'sys', 'shutil', 'datetime', 'django.*']
-                let g:pymode_rope_show_doc_bind = ''
+                let g:pymode_rope_autoimport_modules = ['os', 'sys', 'shutil', 'datetime', 'django']
+                let g:pymode_rope_show_doc_bind = '<leader>pd'
                 let g:pymode_rope_goto_definition_bind = '<leader>pg'
                 let g:pymode_rope_rename_bind = '<leader>rr'
                 let g:pymode_rope_rename_module_bind = '<leader>r1r'
@@ -697,6 +701,7 @@
 
                 let g:pymode_syntax_space_errors = 0
             " " }}}
+            NeoBundleLazy 'django.vim', {'autoload':{'filetypes':['html','htmldjango']}}
         endif " }}}
 
         if count(s:settings.plugin_groups, 'go') "{{{
@@ -709,8 +714,8 @@
             NeoBundleLazy 'zhaocai/applescript.vim', {'autoload':{'filetypes':['applescript']}}
             NeoBundleDepends 'rizzatti/funcoo.vim'
             NeoBundleLazy 'rizzatti/dash.vim', {'autoload':{'commands':[ 'Dash', 'Dash!', 'DashKeywords', 'DashSettings' ]}, 'depends': 'rizzatti/funcoo.vim' } " {{{
-                nmap <silent> <leader>d <Plug>DashSearch
-                vmap <silent> <leader>d <Plug>DashSearch
+                nmap <silent> <leader>d <Plug>Dash
+                vmap <silent> <leader>d <Plug>Dash
             " }}}
 
             if count(s:settings.plugin_groups, 'latex')
@@ -756,6 +761,11 @@
 " }}}
 
 " Keymaps {{{
+
+    " Insane Magic {{{ 
+        map ; :
+    " }}}
+
     " Movement {{{
         " Easier Move between Splits
         map <C-J> <C-W>j
