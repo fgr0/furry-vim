@@ -17,10 +17,6 @@ let g:unite_prompt='» '
 let g:unite_source_file_mru_long_limit = 3000
 let g:unite_source_directory_mru_long_limit = 3000
 
-call unite#filters#matcher_default#use(['matcher_context'])
-call unite#filters#sorter_default#use(['sorter_rank'])
-call unite#set_profile('files', 'context.smartcase', 1)
-call unite#custom#source('line,outline','matchers','matcher_fuzzy')
 
 function! s:unite_settings()
     nmap <buffer> Q <plug>(unite_exit)

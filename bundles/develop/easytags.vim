@@ -11,20 +11,3 @@ let g:easytags_suppress_ctags_waring = 1
 let g:easytags_by_filetype = "~/.tags/"
 let g:easytags_include_members = 1
 
-if filereadable(expand('~/.vim/cache/bundles/vim-easytags/README.md'))
-    call xolox#easytags#define_tagkind({
-                \ 'filetype': 'go',
-                \ 'hlgroup': 'goFunc',
-                \ 'tagkinds': '[f]'})
-    call xolox#easytags#define_tagkind({
-                \ 'filetype': 'go',
-                \ 'hlgroup': 'goType',
-                \ 'tagkinds': '[t]'})
-    call xolox#easytags#define_tagkind({
-                \ 'filetype': 'go',
-                \ 'hlgroup': 'goVar',
-                \ 'tagkinds': '[v]'})
-
-    highlight def link goFunc Function
-    highlight def link goType Type
-endif

@@ -8,7 +8,7 @@ if has('vim_starting')
 endif
 
 " Start Neobundle
-call neobundle#rc(expand('~/.vim/cache/bundles/'))
+call neobundle#begin(expand('~/.vim/cache/bundles/'))
 
 " Let NeoBundle manage NeoBundle
 NeoBundleFetch 'Shougo/neobundle.vim', 'master'
@@ -17,6 +17,7 @@ NeoBundleFetch 'Shougo/neobundle.vim', 'master'
 if !exists("g:furry_ignore_bundle_groups")
     let g:furry_ignore_bundle_groups = []
 endif
+call add(g:furry_ignore_bundle_groups, 'after')
 
 let s:bundles_directory = '~/.vim/bundles'
 for bdir in glob(fnameescape(s:bundles_directory).'/*/', 1, 1)
@@ -31,7 +32,14 @@ for bdir in glob(fnameescape(s:bundles_directory).'/*/', 1, 1)
     endfor
 endfor
 
-" Activate file type plugin
+" Finish NeoBundle setup
+call neobundle#end()
+
+" Load final Bundle settings
+for fpath in sort(split(globpath('~/.vim/bundles/after', '*.vim'), '\n'))
+    exe 'source' fpath
+endfor
+
 filetype plugin indent on
 
 " Check for uninstalled Bundles
