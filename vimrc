@@ -169,29 +169,6 @@
     " }}}
 " }}}
 
-" Plugin Config {{{
-    " Initializing Neobundle {{{
-        if has('vim_starting')
-            set rtp+=~/.vim/bundle/neobundle.vim/
-        endif
-
-        call neobundle#rc(expand('~/.vim/bundle'))
-
-        " Let NeoBundle manage NeoBundle
-        NeoBundleFetch 'Shougo/neobundle.vim', 'master'
-    " }}}
-    
-    " Source bundles config {{{
-        if filereadable(expand("~/.vimrc.bundles"))
-            source ~/.vimrc.bundles
-        elseif filereadable(expand("~/.vim/vimrc.bundles"))
-            source ~/.vim/vimrc.bundles
-        endif
-    " }}} 
-
-     filetype plugin indent on
-" }}}
-
 " Keymaps {{{
     " Insane Magic {{{ 
         map ; :
@@ -260,7 +237,11 @@
     if filereadable(expand("~/.vimrc.local"))
         source ~/.vimrc.local
     endif
-    
-    " Check for new Plugins
-    NeoBundleCheck
+
+    " Source Bundle Config {{{
+        source ~/.vim/bundles/bundles.vim
+    " }}} 
+
+    colorscheme gray_solarized
+    set background=dark
 " }}}
