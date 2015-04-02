@@ -19,6 +19,7 @@ if !exists("g:furry_ignore_bundle_groups")
 endif
 call add(g:furry_ignore_bundle_groups, 'after')
 
+
 let s:bundles_directory = '~/.vim/bundles'
 for bdir in glob(fnameescape(s:bundles_directory).'/*/', 1, 1)
     " Skip bundle group if in ignore_bundle_groups
@@ -27,8 +28,8 @@ for bdir in glob(fnameescape(s:bundles_directory).'/*/', 1, 1)
     endif
 
     " Get bundle-files inside group and source them
-    for fpath in sort(split(globpath(bdir, '*.vim'), '\n'))
-        exe 'source' fpath
+    for fpath in glob(fnameescape(bdir).'/*.vim', 1, 1)
+        exec 'source' fpath
     endfor
 endfor
 
@@ -36,11 +37,11 @@ endfor
 call neobundle#end()
 
 " Load final Bundle settings
-for fpath in sort(split(globpath('~/.vim/bundles/after', '*.vim'), '\n'))
-    exe 'source' fpath
+for fpath in glob(fnameescape('~/.vim/bundles/after').'/*.vim', 1, 1)
+    exec 'source' fpath
 endfor
 
 filetype plugin indent on
 
 " Check for uninstalled Bundles
-NeoBundleCheck
+" NeoBundleCheck

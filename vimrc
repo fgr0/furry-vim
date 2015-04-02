@@ -5,8 +5,6 @@
     if has('vim_starting')
         set all&                " Reset everything to their defaults
     endif
-
-    set rtp+=~/.vim
 " }}}
 
 " Base Config {{{

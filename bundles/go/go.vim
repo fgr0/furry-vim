@@ -4,8 +4,6 @@
 " DESC: Go development plugin for Vim
 " URL:  https://github.com/fatih/vim-go
 
-set rtp+=$GOROOT/misc/vim
-
 " You will want to install gocode:
 " go get github.com/nsf/gocode
 NeoBundle 'fatih/vim-go'
