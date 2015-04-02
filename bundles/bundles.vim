@@ -8,7 +8,7 @@ if has('vim_starting')
 endif
 
 " Start Neobundle
-call neobundle#begin(expand('~/.vim/cache/bundles'))
+call neobundle#rc(expand('~/.vim/cache/bundles/'))
 
 " Let NeoBundle manage NeoBundle
 NeoBundleFetch 'Shougo/neobundle.vim', 'master'
@@ -26,14 +26,12 @@ for bdir in glob(fnameescape(s:bundles_directory).'/*/', 1, 1)
     endif
 
     " Get bundle-files inside group and source them
-    for fpath in split(globpath(bdir, '*.vim'), '\n')
+    for fpath in sort(split(globpath(bdir, '*.vim'), '\n'))
         exe 'source' fpath
     endfor
 endfor
 
-" Finish neobundle setup
-call neobundle#end()
-
+" Activate file type plugin
 filetype plugin indent on
 
 " Check for uninstalled Bundles

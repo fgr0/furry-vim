@@ -4,5 +4,5 @@
 " DESC: A Vim color scheme
 " URL:  https://github.com/sjl/badwolf
 
-Neobundle 'sjl/badwolf'
+NeoBundle 'sjl/badwolf'
 

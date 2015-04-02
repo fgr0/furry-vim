@@ -11,7 +11,7 @@ let g:easytags_suppress_ctags_waring = 1
 let g:easytags_by_filetype = "~/.tags/"
 let g:easytags_include_members = 1
 
-if filereadable(expand('~/.vim/bundle/vim-easytags/README.md'))
+if filereadable(expand('~/.vim/cache/bundles/vim-easytags/README.md'))
     call xolox#easytags#define_tagkind({
                 \ 'filetype': 'go',
                 \ 'hlgroup': 'goFunc',
