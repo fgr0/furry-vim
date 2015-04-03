@@ -16,6 +16,8 @@
 
 let mapleader=","
 
+inoremap jk <esc>
+
 " Movement {{{ {{{
     " Easier Move between Splits
     map <C-J> <C-W>j
