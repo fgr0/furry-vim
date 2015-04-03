@@ -27,7 +27,7 @@
 
 " Load local bundle rc {{{
     if filereadable(expand('~/.vimrc.bundles.local'))
-        source '~/.vimrc.bundles.local'
+        source ~/.vimrc.bundles.local
     endif
 
     " Set nonoverwritten varialbes
