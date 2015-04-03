@@ -7,6 +7,18 @@ if has('vim_starting')
     set rtp+=~/.vim/external/neobundle/
 endif
 
+if filereadable(expand('~/.vimrc.bundles.local'))
+    source '~/.vimrc.bundles.local'
+endif
+
+if !exists("g:furry_ignore_bundle_groups")
+    let g:furry_ignore_bundle_groups = []
+endif
+
+if !exists("g:furry_bundles_directory")
+    let g:furry_bundles_directory = '~/.vim/bundles'
+endif
+
 " Start Neobundle
 call neobundle#begin(expand('~/.vim/cache/bundles/'))
 
@@ -14,15 +26,10 @@ call neobundle#begin(expand('~/.vim/cache/bundles/'))
 NeoBundleFetch 'Shougo/neobundle.vim', 'master'
 
 " Source bundle groups
-if !exists("g:furry_ignore_bundle_groups")
-    let g:furry_ignore_bundle_groups = []
-endif
-
 let s:after_bundles = []
-let s:bundles_directory = '~/.vim/bundles'
 
 " Match bundle groups and files
-for bdir in glob(fnameescape(s:bundles_directory).'/*/', 1, 1)
+for bdir in glob(fnameescape(g:furry_bundles_directory).'/*/', 1, 1)
     " Skip bundle group if in ignore_bundle_groups
     if count(g:furry_ignore_bundle_groups, fnamemodify(bdir, ":h:t"))
         continue
