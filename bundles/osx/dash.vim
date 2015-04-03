@@ -9,9 +9,9 @@ if !has('macunix')
 endif
 
 NeoBundle 'rizzatti/funcoo.vim'
-NeoBundleLazy 'rizzatti/dash.vim', {'autoload': {
-            \ 'commands': [ 'Dash', 'Dash!', 'DashKeywords', 'DashSettings' ]}, 
-            \ 'depends': 'rizzatti/funcoo.vim' }
+NeoBundle 'rizzatti/dash.vim', { 'depends': 'rizzatti/funcoo.vim' }
 
-nmap <silent> <leader>d <Plug>Dash
-vmap <silent> <leader>d <Plug>Dash
+nmap <silent> <leader>d <Plug>DashSearch
+vmap <silent> <leader>d <Plug>DashSearch
+nmap <silent> <leader>dg <Plug>DashGlobalSearch
+vmap <silent> <leader>dg <Plug>DashGlobalSearch
