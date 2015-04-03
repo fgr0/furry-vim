@@ -29,6 +29,9 @@ set autoread
 set shortmess=aIoOtT
 set more
 
+let mapleader=","
+
+
 if has('clipboard')
     if has('unnamedplus')
         set clipboard=unnamedplus

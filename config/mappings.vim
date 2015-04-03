@@ -14,8 +14,6 @@
 " }}}
 
 
-let mapleader=","
-
 inoremap jk <esc>
 
 " Movement {{{ {{{
