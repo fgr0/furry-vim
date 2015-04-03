@@ -68,6 +68,9 @@
     " Finish NeoBundle setup
     call neobundle#end()
 
+    " Check for uninstalled Bundles
+    NeoBundleCheck
+
     " Some settings (like 'call') need to be executed after 
     " call neobundle#end()
     for fpath in s:after_bundles
@@ -76,6 +79,3 @@
 
     filetype plugin indent on
 " }}} }}}
-
-" Check for uninstalled Bundles
-NeoBundleCheck
