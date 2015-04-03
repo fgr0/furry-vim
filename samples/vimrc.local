@@ -1,0 +1,15 @@
+" vim: fdm=marker fdl=1 ts=4 sts=4 sw=4 ft=vim
+" Notes {{{
+"
+" Local rc file for custom vim configuration
+"
+" Usage: This is a sample file. To use this file, copy it to
+"   '~/.vimrc.local' and add your settings.
+"
+" Note: This file is read last, therefore it should be used to overwrite or add
+"   any settings
+" }}}
+
+
+" Example Settings -- PLEASE CHANGE ACORDINGLY
+colorscheme desert
