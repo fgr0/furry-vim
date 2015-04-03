@@ -31,7 +31,7 @@ for fpath in glob(fnameescape(s:config_directory).'/*.vim', 1, 1)
 endfor
 " }}}
 
-" Source defered files {{{
+" Source deferred files {{{
 for fpath in s:after_config
     exec 'source' fpath
 endfor
