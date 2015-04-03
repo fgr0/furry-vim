@@ -237,7 +237,7 @@
     endif
 
     " Source Bundle Config {{{
-        source ~/.vim/bundles/bundles.vim
+        source ~/.vim/bundles.vim
     " }}} 
 
     colorscheme gray_solarized

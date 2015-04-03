@@ -17,10 +17,11 @@ NeoBundleFetch 'Shougo/neobundle.vim', 'master'
 if !exists("g:furry_ignore_bundle_groups")
     let g:furry_ignore_bundle_groups = []
 endif
-call add(g:furry_ignore_bundle_groups, 'after')
 
-
+let s:after_bundles = []
 let s:bundles_directory = '~/.vim/bundles'
+
+" Match bundle groups and files
 for bdir in glob(fnameescape(s:bundles_directory).'/*/', 1, 1)
     " Skip bundle group if in ignore_bundle_groups
     if count(g:furry_ignore_bundle_groups, fnamemodify(bdir, ":h:t"))
@@ -29,6 +30,13 @@ for bdir in glob(fnameescape(s:bundles_directory).'/*/', 1, 1)
 
     " Get bundle-files inside group and source them
     for fpath in glob(fnameescape(bdir).'/*.vim', 1, 1)
+        " Checks if second extention is 'after'
+        " e.g. matches 'foo.after.vim' but not 'after.vim' or 'vim.after'
+        if fnamemodify(fpath, ':t:r:e') ==? "after"
+            call add(s:after_bundles, fpath)
+            continue
+        endif
+        " Source bundle file
         exec 'source' fpath
     endfor
 endfor
@@ -37,11 +45,13 @@ endfor
 call neobundle#end()
 
 " Load final Bundle settings
-for fpath in glob(fnameescape('~/.vim/bundles/after').'/*.vim', 1, 1)
+" Some settings (like 'call') need to be executed after 
+" call neobundle#end()
+for fpath in s:after_bundles
     exec 'source' fpath
 endfor
 
 filetype plugin indent on
 
 " Check for uninstalled Bundles
-" NeoBundleCheck
+NeoBundleCheck
