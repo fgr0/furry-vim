@@ -19,7 +19,14 @@
     endif
 
     " Start Neobundle
-    call neobundle#begin(expand('~/.vim/cache/bundles/'))
+    try " Will fail if submodule is not installed
+        call neobundle#begin(expand('~/.vim/cache/bundles/'))
+    catch /E117/
+        " Display an appropriate message about the missing plugin
+        echo "Neobundle submodule is not installed!"
+        echo "You must install it with 'git submodule update --init --recursive'!"
+        finish
+    endtry
 
     " Let NeoBundle manage NeoBundle
     NeoBundleFetch 'Shougo/neobundle.vim', 'master'
