@@ -9,5 +9,6 @@ NeoBundle 'xolox/vim-easytags'
 
 let g:easytags_suppress_ctags_warning = 1
 let g:easytags_by_filetype = "~/.tags/"
+" let g:easytags_dynamic_files = 1
 let g:easytags_include_members = 1
 

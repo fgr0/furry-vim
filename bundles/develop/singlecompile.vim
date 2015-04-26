@@ -10,6 +10,7 @@ NeoBundle 'xuhdev/SingleCompile'
 let g:SingleCompile_usedialog = 0
 let g:SingleCompile_menumode = 0
 let g:SingleCompile_showquickfixiferror = 1
+let g:SingleCompile_showquickfixifwarning = 1
 let g:SingleCompile_silentcompileifshowquickfix = 1
 let g:SingleCompile_showresultafterrun = 1 
 
