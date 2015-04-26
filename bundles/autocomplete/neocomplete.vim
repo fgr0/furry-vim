@@ -47,8 +47,12 @@ endif
 if !exists('g:neocomplete#force_omni_input_patterns')
     let g:neocomplete#force_omni_input_patterns = {}
 endif
+" if !exists('g:neocomplete#sources#omni#input_patterns')
+"     let g:neocomplete#sources#omni#input_patterns = {}
+" endif
 " let g:neocomplete#sources#omni#input_patterns.python = '[^. \t]\.\w*'
 " let g:neocomplete#force_omni_input_patterns.python = '[^. \t]\.\w*'
+" let g:neocomplete#sources#omni#input_patterns.rust = '[^.[:digit:] *\t]\%(\.\|\::\)\%(\h\w*\)\?''))'
 let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?'
 let g:neocomplete#sources#omni#input_patterns.go = '\h\w*\.\?'
 
