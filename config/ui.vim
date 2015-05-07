@@ -40,6 +40,8 @@ set sidescroll=1
 set selection=old
 set virtualedit+=onemore,block
 
+set diffopt+=vertical
+
 set printoptions+=syntax:y
 set printoptions+=number:y
 
