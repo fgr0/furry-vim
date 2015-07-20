@@ -100,7 +100,7 @@ set printoptions+=number:y
     set background=dark
 
     if has('gui_running')
-        set guifont=Sauce\ Code\ Powerline:h12
+        set guifont=Source\ Code\ Pro:h12
         set guioptions=mcg
         set transparency=1
     else
