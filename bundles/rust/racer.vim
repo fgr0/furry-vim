@@ -17,4 +17,4 @@ NeoBundle 'phildawes/racer'
 " because the plugins are only loaded after all bundle.vim files have been
 " parsed. Use the *.after.vim file to call such functions.
 let g:racer_cmd = exepath('racer')
-let $RUST_SRC_PATH=expand("~/.local/rust/rust-beta/src/")
+let $RUST_SRC_PATH=expand("~/.local/rust/src/")
