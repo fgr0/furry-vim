@@ -102,7 +102,7 @@ set printoptions+=number:y
     if has('gui_running')
         set guifont=Source\ Code\ Pro:h12
         set guioptions=mcg
-        set transparency=1
+        set transparency=0
     else
         set t_Co=256
         set t_ut=
