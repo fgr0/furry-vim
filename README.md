@@ -1,3 +1,5 @@
+<div style="text-align:center"><a href="https://github.com/laerador/furry-vim"><img src="http://f.lc3dyr.de/furry-vim.png" width=150px /></a></div>
+
 # Furry VIM 2.0
 
 *This repository is a personal Vim configuration and not intended for widespread
