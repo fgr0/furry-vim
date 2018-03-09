@@ -66,12 +66,12 @@ set printoptions+=number:y
     set expandtab
     set smarttab
     set tabstop=4
-    set softtabstop=4
-    set shiftwidth=4
+    set softtabstop=2
+    set shiftwidth=2
     set copyindent
     set shiftround
     set linebreak
-    let &showbreak='↪ '
+    set list
     set display=lastline
 
     set textwidth=80
@@ -96,6 +96,7 @@ set printoptions+=number:y
     set foldlevelstart=99
 " }}}
 
+
 " GUI & Terminal Settings {{{
     set background=dark
 
@@ -103,10 +104,16 @@ set printoptions+=number:y
         set guifont=Source\ Code\ Pro:h12
         set guioptions=mcg
         set transparency=0
+
+        set showbreak="↪ \ "
+        set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
     else
         set t_Co=256
         set t_ut=
 
         set restorescreen
+
+        set showbreak="\\\ "
+        set listchars=tab:»\ ,extends:>,precedes:<,nbsp:~,trail:~
     endif
 " }}} }}}

@@ -16,6 +16,11 @@
 
 inoremap jk <esc>
 
+" Simpler paste
+noremap <Leader>p "0p
+noremap <Leader>P "0P
+vnoremap <Leader>p "0p
+
 " Movement {{{ {{{
     " Easier Move between Splits
     map <C-J> <C-W>j
