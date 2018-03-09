@@ -13,6 +13,7 @@ let g:pymode_virtualenv = 0
 let g:pymode_run = 0
 let g:pymode_run_bind = "<leader>pr"
 
+let g:pymode_rope_complete_on_dot = 0
 let g:pymode_rope_autoimport = 1
 let g:pymode_rope_autoimport_modules = ['os', 'sys', 'shutil', 'datetime', 'django']
 let g:pymode_rope_show_doc_bind = '<leader>pd'

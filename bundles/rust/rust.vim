@@ -9,7 +9,6 @@
 NeoBundle 'rust-lang/rust.vim'
 
 " Set plugin options like mappings after this point
-" WARN: things like 'call some#plugin#function()' will not! work in this file,
-" because the plugins are only loaded after all bundle.vim files have been
-" parsed. Use the *.after.vim file to call such functions.
 hi def link rustModPathSep    Include
+let g:rust_recommended_style = 0
+let g:rust_fold = 1
